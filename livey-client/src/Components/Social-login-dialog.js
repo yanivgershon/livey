@@ -55,6 +55,10 @@ const SocialLoginDialog = forwardRef((props, ref) =>
   }
   
   
+  
+  
+  
+  
   const handleSocialLogin = (user) => {
       console.log(user);
       setSocialUser(user);
