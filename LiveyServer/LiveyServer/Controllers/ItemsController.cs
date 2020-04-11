@@ -29,7 +29,15 @@ namespace LiveyServer.Controllers
             }
             catch(Exception ee)
             {
-                return null;
+                Item item = new Item();
+                item.ItemTitle = ee.Message;
+                item.ItemDescription = ee.StackTrace.ToString();
+                List<Item> lst = new List<Item>();
+                lst.Add(item);
+                return lst;
+
+
+               
             }
         }
 

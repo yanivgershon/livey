@@ -1,0 +1,40 @@
+.category-button {
+    display: grid;
+    grid-row: 1;
+    width: 11vw;
+    height: 10vh;
+    border-radius: 15px;
+    align-self: center;
+    opacity: 1;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.category-button:hover {
+    -webkit-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2); 
+    cursor: pointer;
+    opacity: 0.9;
+
+}
+    
+.category-button:active {
+    opacity: 0.7;
+}
+
+.category-button-regular {
+    text-align: center;
+    align-self: center;
+    text-transform: uppercase;
+    font-size: 1.7vw;
+    font-weight: 300;
+}
+
+.category-button-selected {
+    text-align: center;
+    align-self: center;
+    text-transform: uppercase;
+    font-size: 1.7vw;
+    font-weight: 700;
+}
