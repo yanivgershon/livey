@@ -30,6 +30,11 @@ namespace StreamHubCore2
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +53,7 @@ namespace StreamHubCore2
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
+            app.UseCors(options => options.AllowAnyOrigin());
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
