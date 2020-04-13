@@ -6,7 +6,7 @@ import { faShareSquare, faUser, faStar, faFlag } from '@fortawesome/free-regular
 import { faShareSquare as solidShare, faUser as solidUser, faStar as solidStar, faFlag as solidFlag } from '@fortawesome/free-solid-svg-icons'
 
 
-//{props.feed.ItemTitle}
+//{props.feed.itemTitle}
 
 class FeedItem extends Component{
   constructor(props){
@@ -27,7 +27,7 @@ class FeedItem extends Component{
   }
 
   componentDidMount(){
-    const itemCategoryArr = eval(this.props.feed.ItemTags)
+    const itemCategoryArr = eval(this.props.feed.itemTags)
     const itemCategory = itemCategoryArr[0]
     if(itemCategory === "kids"){this.setState({catColor: "rgba(241, 49, 255, 0.65)"})}
     else if(itemCategory === "lectures"){this.setState({catColor: "rgba(158, 120, 228, 0.65)"})}
@@ -42,7 +42,7 @@ class FeedItem extends Component{
 
   handleShare(){
     this.setState({share: true})
-    const shareURL = `https://www.facebook.com/sharer/sharer.php?u=${this.props.feed.ItemURL}`
+    const shareURL = `https://www.facebook.com/sharer/sharer.php?u=${this.props.feed.itemURL}`
     setTimeout(() => {
       window.open(shareURL, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')
       this.setState({share: false})
@@ -52,7 +52,7 @@ class FeedItem extends Component{
   handleHost(){
     this.setState({host: true})
     setTimeout(() => {
-      window.open(this.props.feed.ItemURL, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')
+      window.open(this.props.feed.itemURL, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')
       this.setState({host: false})}, 200);
   }
 
@@ -60,31 +60,31 @@ class FeedItem extends Component{
     this.setState({report: true})
     setTimeout(() => {
       window.location = `mailto:roigfrey@gmail.com
-                      ?subject=streamHub: I would like to report Item #${this.props.feed.ItemID}
-                      &body=I would like to report the event "${this.props.feed.ItemTitle}". please list the reason for reporting below:`
+                      ?subject=streamHub: I would like to report Item #${this.props.feed.itemID}
+                      &body=I would like to report the event "${this.props.feed.itemTitle}". please list the reason for reporting below:`
                       this.setState({report: false})}, 200);
   }
 
   render(){  
   
   const imgURL = this.props.feed.categories && this.props.feed.categories[0]
-  const timeObj = moment(this.props.feed.ItemStartDateObj).format("DD/MM | HH:mm")
-  const timeEnd = moment(this.props.feed.ItemStartDateObj).add(this.props.feed.ItemDuration, "seconds").format("HH:mm")
-  const timeLabel = moment(this.props.feed.ItemStartDateObj).format("h:mmA")
+  const timeObj = moment(this.props.feed.itemStartDateObj).format("DD/MM | HH:mm")
+  const timeEnd = moment(this.props.feed.itemStartDateObj).add(this.props.feed.itemDuration, "seconds").format("HH:mm")
+  const timeLabel = moment(this.props.feed.itemStartDateObj).format("h:mmA")
   
     return (
       <div className="feed-item">
           <img src={this.props.image} alt="Event Image"/>
           <div className="feed-item-title">
-            <h2 onClick={() => console.log(timeObj)}>{this.props.feed.ItemTitle}</h2>
+            <h2 onClick={() => console.log(timeObj)}>{this.props.feed.itemTitle}</h2>
             <h3>{`${timeObj}-${timeEnd}`}</h3>
           </div>
           <div className="feed-item-timelabel" style={{background: this.state.catColor}}>
             <h2>{timeLabel}</h2>
           </div>
           <div className="feed-item-description">
-            <p>{this.props.feed.ItemDescription}</p>
-            <a href={this.props.feed.ItemURL} target="_blank">Link to Live Event</a>
+            <p>{this.props.feed.itemDescription}</p>
+            <a href={this.props.feed.itemURL} target="_blank">Link to Live Event</a>
           </div>
           <div className="feed-item-icons">
             <div className="feed-item-icons-class" onClick={this.handleSave}>

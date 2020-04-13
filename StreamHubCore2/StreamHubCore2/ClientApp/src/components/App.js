@@ -34,7 +34,7 @@ function App() {
 
   let myRef;
  
-  window.baseUrl="https://localhost:44339/api/";
+  //window.baseUrl="https://localhost:44339/api/";
   window.baseUrl="http://stream-hub.net/api/";
   const [isAddFeedOpen, setAddFeedOpen] = React.useState(false);
   const [isLoginDialogOpen, setLoginDialogOpen] = React.useState(false);
@@ -58,7 +58,7 @@ function App() {
   const fetchItems=async ()=>
   {
     
-    const apiCall =await fetch(`${window.baseUrl}Items/`);
+    const apiCall =await fetch(`${window.baseUrl}items/`);
     const items=await apiCall.json();
     //const items = db
     console.log('items',items);
@@ -71,7 +71,7 @@ function App() {
   
  const fetchCategories=async ()=>
  {
-    const apiCall =await fetch(`${window.baseUrl}Categories/`);
+    const apiCall =await fetch(`${window.baseUrl}categories/`);
     const _categories=await apiCall.json();
     
     setCategories(_categories);
@@ -117,7 +117,7 @@ function App() {
   let top100Films=[];
   let  defaultProps = {
     options: autoComleteFeed,
-    getOptionLabel: (option) => option.ItemTitle,
+    getOptionLabel: (option) => option.itemTitle,
   };
   const handleLogoClick = () => {
     window.location.reload()

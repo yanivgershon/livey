@@ -25,8 +25,8 @@ function AddFeedItem({openLoginDialog,openAddFeedDialog,handleAddFeedClose}) {
   }
  const addItem=(data)=>
   {
-    data.PlatformID=1;
-    data.ItemStartDateObj =selectedDate;
+    data.platformID=1;
+    data.itemStartDateObj =selectedDate;
     fetch(`${window.baseUrl}items/`, {
       headers: {
         'Accept': 'application/json',
@@ -68,13 +68,13 @@ function AddFeedItem({openLoginDialog,openAddFeedDialog,handleAddFeedClose}) {
       <div className="formFlex">
         <div>
         <label>Titley</label>
-        <input name="ItemTitle" defaultValue="" ref={register} />
+        <input name="itemTitle" defaultValue="" ref={register} />
         <label>URL</label>
-        <input name="ItemURL" defaultValue="" ref={register} />
+        <input name="itemURL" defaultValue="" ref={register} />
         <label>Description</label>
-        <input name="ItemDescription" defaultValue="" ref={register} />
+        <input name="itemDescription" defaultValue="" ref={register} />
         <label>Tags</label>
-        <input name="ItemTags" defaultValue="" ref={register} />
+        <input name="itemTags" defaultValue="" ref={register} />
         <label>Start Time</label>
         <DatePicker
         selected={selectedDate}
@@ -89,11 +89,11 @@ function AddFeedItem({openLoginDialog,openAddFeedDialog,handleAddFeedClose}) {
         <label>Duration</label>
         <InputMask name="duration" mask="99:99:99" defaultValue="01:00:00" maskChar=" " ref={register} />
         <label>Owner</label>
-        <input name="ItemOwner" defaultValue="" ref={register} />
+        <input name="itemOwner" defaultValue="" ref={register} />
         <label>Platform</label>
-        <input name="PlatformID" defaultValue="" ref={register} />
+        <input name="platformID" defaultValue="" ref={register} />
         <label>ImgURL</label>
-        <input name="ItemImgURL" defaultValue="" ref={register} />
+        <input name="itemImgURL" defaultValue="" ref={register} />
         
       {/*<input
           name="exampleRequired"
