@@ -30,7 +30,15 @@ i18n.use(LanguageDetector).init({
         "Share":"Share",
         "View Host":"View Host",
         "Report":"Report",
-        "Views":"Views"
+        "Views":"Views",
+        "Title":"Title",
+        "Description":"Description",
+        "Start Date":"Start Date",
+        "Duration":"Duration",
+        "Owner":"Owner",
+        "Platform":"Platform",
+        "ImgURL":"ImgURL",
+        
       }
     },
     he: {
@@ -59,7 +67,14 @@ i18n.use(LanguageDetector).init({
         "Share":"שיתוף",
         "View Host":"עמוד המארח",
         "Report":"דיווח",
-        "Views":"צפיות"
+        "Views":"צפיות",
+        "Title":"Title",
+        "Description":"Description",
+        "Start Date":"Start Date",
+        "Duration":"Duration",
+        "Owner":"Owner",
+        "Platform":"Platform",
+        "ImgURL":"ImgURL",
       }
     }
   },

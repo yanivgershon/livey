@@ -56,6 +56,7 @@ function Header(props){
     const onAutoCompleteChange = (event, values) => {
         props.search()
     }
+
     return (
         <div className="header-container">
 
