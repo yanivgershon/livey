@@ -1,5 +1,6 @@
 import React, {Component} from "react"
 import moment from "moment"
+import { withTranslation } from 'react-i18next';
 import RangeSlider from "./RangeSlider"
 import "./days-panel.css"
 
@@ -16,10 +17,11 @@ class DaysPanel extends Component{
     }
 
     calcDay(add){
-        const weekDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+        const { t } = this.props
+        const weekDays = [t('Sunday'),t('Monday'),t('Tuesday'),t('Wednesday'),t('Thursday'),t('Friday'),t('Saturday')]
         const result = weekDays[moment().add(add, 'days').day()]
         if (result === weekDays[moment().day()]){
-            return "Today"
+            return t("Today")
         } return result
     }
 
@@ -47,10 +49,12 @@ class DaysPanel extends Component{
     }
     
     render(){
-        
+
+        const { t } = this.props
+
         return(
             <div className="days-panel">
-                <h1 className="days-panel-title">Select Date &nbsp; &nbsp;</h1>
+                <h1 className="days-panel-title">{t("Select Date")} &nbsp; &nbsp;</h1>
                 <div className="days-panel-dates">
                     <h1 
                     className={this.state.currentDay === 1 ? "days-panel-day-bold" : "days-panel-day-regular"}
@@ -97,4 +101,4 @@ class DaysPanel extends Component{
     }
 }
 
-export default DaysPanel
+export default withTranslation()(DaysPanel)

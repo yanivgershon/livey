@@ -1,7 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './category-button.css';
 
 function CategoryButton(props) {
+
+  const { t } = useTranslation()
 
   //console.log('props',props);
   return (
@@ -10,7 +13,7 @@ function CategoryButton(props) {
       onClick={() => props.handleClick(props.name)}>
         <h1 className={
           props.selected === props.name ? "category-button-selected" : "category-button-regular"
-        }>{props.category}</h1>
+        }>{t(props.category)}</h1>
     </div>
   );
 }

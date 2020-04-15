@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from "moment"
+import { withTranslation } from 'react-i18next';
 import './feed-item.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShareSquare, faUser, faStar, faFlag } from '@fortawesome/free-regular-svg-icons'
@@ -67,14 +68,15 @@ class FeedItem extends Component{
 
   render(){  
   
-  const imgURL = this.props.feed.categories && this.props.feed.categories[0]
-  const timeObj = moment(this.props.feed.itemStartDateObj).format("DD/MM | HH:mm")
-  const timeEnd = moment(this.props.feed.itemStartDateObj).add(this.props.feed.itemDuration, "seconds").format("HH:mm")
-  const timeLabel = moment(this.props.feed.itemStartDateObj).format("h:mmA")
+    const { t } = this.props
+
+    const timeObj = moment(this.props.feed.itemStartDateObj).format("DD/MM | HH:mm")
+    const timeEnd = moment(this.props.feed.itemStartDateObj).add(this.props.feed.itemDuration, "seconds").format("HH:mm")
+    const timeLabel = moment(this.props.feed.itemStartDateObj).format("h:mmA")
   
     return (
       <div className="feed-item">
-          <img src={this.props.image} alt="Event Image"/>
+          <img src={this.props.image} alt="Event"/>
           <div className="feed-item-title">
             <h2 onClick={() => console.log(timeObj)}>{this.props.feed.itemTitle}</h2>
             <h3>{`${timeObj}-${timeEnd}`}</h3>
@@ -84,28 +86,28 @@ class FeedItem extends Component{
           </div>
           <div className="feed-item-description">
             <p>{this.props.feed.itemDescription}</p>
-            <a href={this.props.feed.itemURL} target="_blank">Link to Live Event</a>
+            <a href={this.props.feed.itemURL} target="_blank" rel="noopener noreferrer">{t("Link to Live Event")}</a>
           </div>
           <div className="feed-item-icons">
             <div className="feed-item-icons-class" onClick={this.handleSave}>
               <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.save ? solidStar : faStar} size="lg"/>
-              <h3>Save</h3>
+              <h3>{t("Save")}</h3>
             </div>
             <div className="feed-item-icons-class" onClick={this.handleShare}>
               <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.share ? solidShare : faShareSquare} size="lg"/>
-              <h3>Share</h3>
+              <h3>{t("Share")}</h3>
             </div>
             <div className="feed-item-icons-class" onClick={this.handleHost}>
               <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.host ? solidUser : faUser} size="lg"/>
-              <h3>View Host</h3>
+              <h3>{t("View Host")}</h3>
             </div>
             <div className="feed-item-icons-class" onClick={this.handleReport}>
               <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.report ? solidFlag : faFlag} size="lg"/>
-              <h3>Report</h3>
+              <h3>{t("Report")}</h3>
             </div>
             <div className="feed-item-icons-counter">
               <h2>{this.state.views}</h2>
-              <h3>Views</h3>
+              <h3>{t("Views")}</h3>
             </div>
 
           </div>
@@ -114,4 +116,4 @@ class FeedItem extends Component{
   }
 }
 
-export default FeedItem;
+export default withTranslation()(FeedItem)

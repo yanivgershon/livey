@@ -1,4 +1,6 @@
 import React, {Component} from "react"
+import { withTranslation } from 'react-i18next';
+
 import "./category-panel.css"
 import CategoryButton from "./CategoryButton"
 
@@ -10,13 +12,13 @@ class CategoryPanel extends Component{
             kidsLine: null,
             lecturesLine: null,
             fitnessLine: null,
-            funLine: null
-        }
-        
+            funLine: null,
+        }   
         this.handleClick = this.handleClick.bind(this)
         this.handleClear = this.handleClear.bind(this)
     }
     handleClick(name){
+        console.log("cat Name:",name)
         this.setState({selectedCategory: name})
         if (name === 1) {this.setState({kidsLine: 1, lecturesLine: null, fitnessLine: null, funLine: null})
             this.props.cat("kids")} else
@@ -39,11 +41,17 @@ class CategoryPanel extends Component{
         this.props.cat(null)
     }
 
+    componentWillMount(){
+    }
+
     render(){
+
+        const { t } = this.props
+
         //console.log('categories',this.props);
         
         const categoryTypes = [
-            {id: 1, type: "kids", color:"rgba(241, 49, 255, 0.65)"}, 
+            {id: 1, type: "Kids", color:"rgba(241, 49, 255, 0.65)"}, 
             {id: 2, type: "Lectures", color:"rgba(158, 120, 228, 0.65)"}, 
             {id: 3, type: "Fitness", color:"rgba(91, 178, 206, 0.65)"}, 
             {id: 4, type: "Fun", color:"rgba(32, 212, 159, 0.65)"}
@@ -78,7 +86,11 @@ class CategoryPanel extends Component{
                 style={this.state.funLine ? {background: categoryTypes[3].color} : null}
                 className="category-underline-lines">
                 </div>
-            </div> : null
+            </div> : 
+            <div className="category-underline">
+                <div className="category-underline-lines">
+                </div>
+            </div>
 
 
 
@@ -86,17 +98,17 @@ class CategoryPanel extends Component{
                                     
         return(
             <div className="category-panel-flex">
-                <h2 className="category-panel-title">Select Topic</h2>
+                <h2 className="category-panel-title">{t("Select Topic")}</h2>
                 <div className="category-panel-grid">
                     <div className="category-panel">
                         {categoryButtons}                
                     </div>
                     {underLine}
                 </div>
-                <button className="category-panel-clear" type="button" onClick={this.handleClear}>Clear</button>
+                <button className="category-panel-clear" type="button" onClick={this.handleClear}>{t("Clear")}</button>
             </div>
         )
     }
 }
 
-export default CategoryPanel
+export default withTranslation()(CategoryPanel)

@@ -1,6 +1,5 @@
 import 'date-fns';
 import React,{useState} from 'react';
-import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
 import './add-feed-item.css';
 import {getSocialUser,setSocialUse} from '../Services/localStorageService';

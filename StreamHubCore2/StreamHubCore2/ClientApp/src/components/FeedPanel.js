@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import moment from "moment"
+import { withTranslation } from 'react-i18next';
 import FeedItem from "./FeedItem";
 import './feed-panel.css';
 
@@ -15,6 +15,8 @@ class FeedPanel extends Component{
     }
     
     render(){
+
+        const { t } = this.props
 
         const feedItems = this.props.feeds && this.props.feeds.map(item => {
             const itemDate = item.itemStartDateObj &&item.itemStartDateObj.slice(0,10)
@@ -41,8 +43,8 @@ class FeedPanel extends Component{
 
         return(
             <div className="feed-panel">
-                <h2 className="feed-panel-title">Search Results</h2>
-                <h3 className="feed-panel-title-items">{results} Results</h3>
+                <h2 className="feed-panel-title">{t("Search Results")}</h2>
+                <h3 className="feed-panel-title-items">{results} {t("Results")}</h3>
                 <div className="feed-scroll-container">
                     <div className="feed-item-container">
                         {feedItems}
@@ -53,4 +55,4 @@ class FeedPanel extends Component{
     }
 }
 
-export default FeedPanel
+export default withTranslation()(FeedPanel)

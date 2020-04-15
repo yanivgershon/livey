@@ -8,15 +8,17 @@
     padding: 30px;
     align-content: flex-start;
     overflow: scroll;
-    overflow-x: hidden
+    overflow-x: hidden;
 }
 
 .app-header-container{
     display: flex;
     grid-column: 1;
     grid-row: 1;
-    height: 10vh;
+    height: calc(3vh + 40px);
     border-radius: 15px;
+    justify-content: center;
+    align-content: center;
 }
 
 .app-categories-container{
@@ -24,7 +26,7 @@
     flex-direction: row;
     grid-column: 1;
     grid-row: 2;
-    height: calc(8vh + 50px);
+    height: calc(9vh + 50px);
     background: #F9F9F9;
     border-radius: 15px;
     margin-top: 30px;
