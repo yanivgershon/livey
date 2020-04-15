@@ -1,6 +1,6 @@
 // Deps
 import React, { useState, useEffect, useRef, createRef } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next' 
 import './header.css'
 
 // Components
@@ -53,11 +53,9 @@ function Header(props){
     
     const doLogout = () => {
     }
-
-
-
-
-
+    const onAutoCompleteChange = (event, values) => {
+        props.search()
+    }
     return (
         <div className="header-container">
 
@@ -69,7 +67,9 @@ function Header(props){
 
             <div  className="header-search">
                 {true && /*autoComleteFeed.length>0*/ 
-                    <Autocomplete className="app-autocomple" style={{width:300,height:60, marginTop:0}}
+                    <Autocomplete 
+                    onChange={onAutoCompleteChange}
+                    className="app-autocomple" style={{width:300,height:60, marginTop:0}}
                     {...defaultProps}
                     id="auto-complete"
                     autoComplete
@@ -94,10 +94,10 @@ function Header(props){
                         <Button style={{marginTop:30,marginLeft:"auto"}} variant="outlined" onClick={()=>{console.log('setAddFeedOpen');  childSocialLoginRef.current.doLogout()}} type="button">Logout</Button>
                     </div>
                 }
-                {/* <div className="add-feed-item-container">
-                    //{<Drawer ref={myRef} anchor={'right'} open={isAddFeedOpen} onClose={toggleDrawer( false)}>}
+                { <div className="add-feed-item-container">
+                  
                     <AddFeedItem openLoginDialog={openLoginDialog} openAddFeedDialog={isAddFeedOpen}  handleAddFeedClose={()=>setAddFeedOpen(false)}></AddFeedItem>
-                </div> */}
+                </div> }
                 <SocialLoginDialog  open={isLoginDialogOpen} onClose={handleLoginDialogClose}  ref={childSocialLoginRef}/>
             </div>
         </div>

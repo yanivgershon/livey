@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import { withTranslation } from 'react-i18next';
 import FeedItem from "./FeedItem";
 import './feed-panel.css';
+import { th } from "date-fns/locale";
 
 
 
@@ -17,21 +18,23 @@ class FeedPanel extends Component{
     render(){
 
         const { t } = this.props
-
+        
         const feedItems = this.props.feeds && this.props.feeds.map(item => {
             const itemDate = item.itemStartDateObj &&item.itemStartDateObj.slice(0,10)
-            const itemCategoryArr = eval(item.itemTags)
+            const itemCategoryArr = eval(item.itemTags) 
             const itemCategory =itemCategoryArr && itemCategoryArr[0]
             console.log("tagName:",itemCategory)        
-            const randomImg = `https://i.picsum.photos/id/${Math.round(Math.random() * 1000)}/200/300.jpg`           
+            const randomImg = `https://i.picsum.photos/id/${Math.round(Math.random() * 1000)}/200/300.jpg`;
+            let isNull=true;     
+
             if (this.props.dayFilter === itemDate) {
-                if(this.props.catFilter === itemCategory) {
-                    return <FeedItem key={item.itemID} feed={item} image={randomImg} handleCount={this.handleCount}/>}
-                else if(this.props.catFilter === null) {
-                    return <FeedItem key={item.itemID} feed={item} image={randomImg} handleCount={this.handleCount}/>}
-            } else {
-                return null
-            } 
+                if(this.props.catFilter === null || this.props.catFilter === itemCategory) 
+                {
+                   isNull=(this.props.searchFilter==="" || this.props.searchFilter===item.title)?false:true;
+                }
+            }
+           
+            return isNull?null:<FeedItem key={item.itemID} feed={item} image={randomImg} handleCount={this.handleCount}/>
         })
   
 

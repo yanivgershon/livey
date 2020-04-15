@@ -10,6 +10,7 @@ import InputMask from 'react-input-mask';
 import MaterialInput from '@material-ui/core/Input';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
+import { useTranslation } from 'react-i18next'
 
 function AddFeedItem({openLoginDialog,openAddFeedDialog,handleAddFeedClose}) {
 
@@ -17,7 +18,7 @@ function AddFeedItem({openLoginDialog,openAddFeedDialog,handleAddFeedClose}) {
   const [selectedDate, handleDateChange] = useState(new Date());
   const [selectedTime, handleTimeChange] = useState(new Date());
   const [duration, setDuration] = useState(new Date());
-  
+  const { t } = useTranslation()
   const handleFeedDialogClose=()=>
   {
     handleAddFeedClose(false);
@@ -42,6 +43,11 @@ function AddFeedItem({openLoginDialog,openAddFeedDialog,handleAddFeedClose}) {
     const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = data => {
     console.log(data);
+    if (window.allowPostWithoutLogin)
+    {
+      addItem(data);
+    }
+    else
     if (!getSocialUser())
     {
         openLoginDialog();
@@ -56,8 +62,6 @@ function AddFeedItem({openLoginDialog,openAddFeedDialog,handleAddFeedClose}) {
   }; // your form submit function which will invoke after successful validation
 
   console.log(watch("example")); // you can watch individual input by pass the name of the input
-
-
     return (
       <Dialog onClose={()=>{console.log('onclose'); handleFeedDialogClose();}} aria-labelledby="simple-dialog-title" open={openAddFeedDialog}>
       <div style={{textAlign:"right",backgroundColor:"whitesmoke",padding:20,cursor:"pointer"}} onClick={()=>handleFeedDialogClose()}>X</div>
@@ -66,15 +70,15 @@ function AddFeedItem({openLoginDialog,openAddFeedDialog,handleAddFeedClose}) {
       <form onSubmit={handleSubmit(onSubmit)}>
       <div className="formFlex">
         <div>
-        <label>Titley</label>
+        <label>{t("Title")}</label>
         <input name="itemTitle" defaultValue="" ref={register} />
         <label>URL</label>
         <input name="itemURL" defaultValue="" ref={register} />
-        <label>Description</label>
+        <label>{t("Description")} </label>
         <input name="itemDescription" defaultValue="" ref={register} />
-        <label>Tags</label>
+        <label>{t("Tags")}</label>
         <input name="itemTags" defaultValue="" ref={register} />
-        <label>Start Time</label>
+        <label>{t("Start Date")} </label>
         <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}
@@ -85,13 +89,13 @@ function AddFeedItem({openLoginDialog,openAddFeedDialog,handleAddFeedClose}) {
         </div>
      
         <div style={{marginLeft:30}}>
-        <label>Duration</label>
+        <label>{t("Duration")} </label>
         <InputMask name="duration" mask="99:99:99" defaultValue="01:00:00" maskChar=" " ref={register} />
-        <label>Owner</label>
+        <label>{t("Owner")}</label>
         <input name="itemOwner" defaultValue="" ref={register} />
-        <label>Platform</label>
+        <label>{t("Platform")} </label>
         <input name="platformID" defaultValue="" ref={register} />
-        <label>ImgURL</label>
+        <label>{t("ImgURL")} </label>
         <input name="itemImgURL" defaultValue="" ref={register} />
         
       {/*<input
