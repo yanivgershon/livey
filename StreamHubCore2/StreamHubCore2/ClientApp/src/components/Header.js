@@ -54,10 +54,6 @@ function Header(props){
     const doLogout = () => {
     }
 
-
-
-
-
     return (
         <div className="header-container">
 
