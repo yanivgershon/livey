@@ -3,10 +3,10 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 import pickle
 from datetime import datetime
 from catergoryDict import categories as cDict
-import os
+import os.path
+from os import path
 
 print("Scrapping data from: Google Calendars")
-
 ### configuration ###
 scopes = ['https://www.googleapis.com/auth/calendar']
 
@@ -16,7 +16,10 @@ scopes = ['https://www.googleapis.com/auth/calendar']
 # pickle.dump(credentials, open("/GoogleCal/token.pkl", "wb"))
 
 # After getting pickle from first time creds
-credentials = pickle.load(open("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping/GoogleCal/token.pkl", "rb"))
+if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
+    credentials = pickle.load(open("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping/GoogleCal/token.pkl", "rb"))
+else:
+    credentials = pickle.load(open("/home/site/scraping/googlecal/token.pkl", "rb"))
 
 service = build("calendar", "v3", credentials=credentials)
 
@@ -32,11 +35,11 @@ with open(filename, "w", encoding="utf=16") as f:
     ### Get calendars and events ###
 
     # StreamHub.net@gmail.com's calendar:
-    # sh_cal = service.calendarList().list().execute()
-    # calendar_id = sh_cal['items'][0]['id']
+    sh_cal = service.calendarList().list().execute()
+    calendar_id = sh_cal['items'][0]['id']
 
     # Meetup girls' calendar
-    calendar_id = "b3nqcakt7rveo0o2n57ev1jql0@group.calendar.google.com"
+    # calendar_id = "b3nqcakt7rveo0o2n57ev1jql0@group.calendar.google.com"
 
     example = "2020-04-01T10:00:00+03:00"
     now = datetime.now()
@@ -45,12 +48,9 @@ with open(filename, "w", encoding="utf=16") as f:
     sh_events = service.events().list(calendarId=calendar_id, timeMin=time_min).execute()['items']
 
     ### Get info from events ###
-
-    for e in sh_events:
+    def write_event():
         title = e['summary']
-        # print(title)
-        status = e['status']
-        # print(status)
+        print(title)
 
         start = e['start']
         if 'dateTime' in start:
@@ -82,7 +82,23 @@ with open(filename, "w", encoding="utf=16") as f:
         print(eCat)
 
         print(sDate + ".," + sTime + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")
-        #write data in csv
+        # write data in csv
         f.write(sDate + ".," + sTime + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")
+
+    ### Only confirmed events or events created by streamhub
+
+    for e in sh_events:
+        status = e['status']
+        print(e)
+
+        if 'attendees' in e:
+            attendees = e['attendees']
+            # print(attendees)
+            for a in attendees:
+                if a['email'] == 'streamhub.net@gmail.com' and a['responseStatus'] == 'accepted':
+                    write_event()
+
+        elif e['organizer']['email'] == 'streamhub.net@gmail.com':
+            write_event()
 
 f.close()

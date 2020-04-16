@@ -35,11 +35,12 @@ with open(filename, "w", encoding="utf=16") as f:
     eIndex = 0
     for i, e in enumerate(events):
         if pattern.search(str(e)) is not None:
+            print(e)
             eIndex = i
     # dateday = events[eIndex+1].find("strong").text.split("-")
 
 
-    eList = str(events[eIndex+1]).split("<br/>")
+    eList = str(events[eIndex+2]).split("<br/>")
     eList = [soup(l, "html.parser").text for l in eList]
     dateDay = eList.pop(0).split(" - ")
     date = dateDay.pop().strip()
