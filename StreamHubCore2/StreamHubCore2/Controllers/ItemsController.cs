@@ -36,7 +36,7 @@ namespace StreamHubCore2.Controllers
                 return BadRequest(ModelState);
             }
 
-            var item = await _context.Items.FindAsync(id);
+            var item = await _context.Items.Where(x => x.ItemID==id && x.ItemStartDateObj >= DateTime.Now).FirstOrDefaultAsync();
 
             if (item == null)
             {
