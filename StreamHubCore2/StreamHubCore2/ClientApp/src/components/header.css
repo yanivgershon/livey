@@ -1,0 +1,48 @@
+.header-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 40px);
+}
+
+
+.header-search{
+    display: flex;
+    align-self: center;
+    margin: 0;
+}
+
+.header-logo{
+    display: flex;
+    width: 240px;
+    cursor: pointer; 
+    object-fit: contain;
+    margin-bottom: 16px;
+}
+
+
+.right-header-container{
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+}
+
+.header-add-event{
+    display: flex;
+    height: 40px;
+}
+
+.header-login{
+    display: flex;
+    height: 40px;
+}
+
+.header-logout{
+    display: flex;
+    height: 40px;
+}
+
+.MuiFormControl-marginNormal{
+    margin-top:0 !important;
+    margin-bottom:0 !important;
+}

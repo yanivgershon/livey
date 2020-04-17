@@ -17,16 +17,16 @@ class FeedPanel extends Component{
     render(){
 
         const feedItems = this.props.feeds && this.props.feeds.map(item => {
-            const itemDate = item.ItemStartDateObj.slice(0,10)
-            const itemCategoryArr = eval(item.ItemTags)
+            const itemDate = item.itemStartDateObj.slice(0,10)
+            const itemCategoryArr = eval(item.itemTags)
             const itemCategory = itemCategoryArr[0]
             console.log("tagName:",itemCategory)        
             const randomImg = `https://i.picsum.photos/id/${Math.round(Math.random() * 1000)}/200/300.jpg`           
             if (this.props.dayFilter === itemDate) {
                 if(this.props.catFilter === itemCategory) {
-                    return <FeedItem key={item.ItemID} feed={item} image={randomImg} handleCount={this.handleCount}/>}
+                    return <FeedItem key={item.itemID} feed={item} image={randomImg} handleCount={this.handleCount}/>}
                 else if(this.props.catFilter === null) {
-                    return <FeedItem key={item.ItemID} feed={item} image={randomImg} handleCount={this.handleCount}/>}
+                    return <FeedItem key={item.itemID} feed={item} image={randomImg} handleCount={this.handleCount}/>}
             } else {
                 return null
             } 

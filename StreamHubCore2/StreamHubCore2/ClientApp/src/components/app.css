@@ -1,0 +1,67 @@
+.app{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+    height: 100vh;
+    background: linear-gradient(135deg, #711778, #007853);
+    box-sizing: border-box;
+    padding: 30px;
+    align-content: flex-start;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.app-header-container{
+    display: flex;
+    grid-column: 1;
+    grid-row: 1;
+    height: calc(3vh + 40px);
+    border-radius: 15px;
+    justify-content: center;
+    align-content: center;
+}
+
+.app-categories-container{
+    display: flex;
+    flex-direction: row;
+    grid-column: 1;
+    grid-row: 2;
+    height: calc(9vh + 50px);
+    background: #F9F9F9;
+    border-radius: 15px;
+    margin-top: 30px;
+}
+
+.app-days-container{
+    display: flex;
+    flex-direction: column;
+    grid-column: 1;
+    grid-row: 3;
+    height: 4vh;
+    border-radius: 15px;
+    margin-top: 30px;
+    align-content: center;
+    justify-content: center;
+}
+
+.app-feed-container{
+    display: flex;
+    flex-direction: column;
+    grid-column: 1;
+    grid-row: 4;
+    background: #F9F9F9;
+    border-radius: 15px;
+    box-sizing: border-box;
+    margin-top: 30px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.app-autocomple .MuiAutocomplete-inputRoot
+{
+background-color: white;
+}
+.app-autocomple .MuiAutocomplete-groupLabel
+{
+    color: black;
+}
