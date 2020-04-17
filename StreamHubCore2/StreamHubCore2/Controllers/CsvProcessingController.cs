@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EFCore.BulkExtensions;
 using LiveyServer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,26 +37,29 @@ namespace StreamHubCore2.Controllers
         }
 
         // POST: api/CsvProcessing
-        // [HttpPost]
-        [HttpGet]
+        [HttpPost]
+        //[HttpGet]
         public void Post([FromBody] string value)
         {
-            value = $@"Date., Time., Title., Caterogies., Url
-14.4.2020.,9:00.,ODSC Virtual Conference.,['lectures'].,https://www.meetup.com/Tel-Aviv-Data-Science-ODSC/events/269601942/
-14.4.2020.,16:30.,Evening Zen: Mindful Practices for Creativity & Relaxation.,['fitness'].,https://www.meetup.com/mindfuladventuresIL/events/wxkmlrybccbcc/
+            try
+            {
+
+                var value1 = $@"Date., Time., Title., Caterogies., Url /N
+14.4.2020.,9:00.,ODSC Virtual Conference.,['lectures'].,https://www.meetup.com/Tel-Aviv-Data-Science-ODSC/events/269601942/ 
+14.4.2020.,16:30.,Evening Zen: Mindful Practices for Creativity & Relaxation.,['fitness'].,https://www.meetup.com/mindfuladventuresIL/events/wxkmlrybccbcc/ 
 14.4.2020.,17:30.,Evening Zen: Mindful Practices for Creativity & Relaxation.,['fitness'].,https://www.meetup.com/mindfuladventuresIL/events/wxkmlrybcgbsb/
-14.4.2020.,18:00.,tinyML Talk: \Adaptive AI for a Smarter Edge by Sek Chai, Latent AI.,[].,https://www.meetup.com/tinyML-Enabling-ultra-low-Power-ML-at-the-edge-Herzeliyya-IL/events/269905393/
-14.4.2020., 18:00., KaggleIL #10 - WiDS Challenge 1st Place Overview.,[].,https://www.meetup.com/DataHack/events/270028110/
-15.4.2020., 10:30.,[Free event] Virtual AI Career Expo.,['lectures'].,https://www.meetup.com/Tel-Aviv-Data-Science-ODSC/events/269500187/
-15.4.2020.,19:00.,Online Global Startup Pitching Event.,['lectures'].,https://www.meetup.com/StartupBlink-Haifa/events/dsbfrrybcgbtb/
-15.4.2020.,19:00.,Online Global Startup Pitching Event.,['lectures'].,https://www.meetup.com/Startups-in-Tel-Aviv/events/jpbjrrybcgbtb/
-15.4.2020.,20:00.,deeplearning.ai free mini course: Real-world AI Applications in Medicine.,['lectures'].,https://www.meetup.com/Caesarea-Machine-Learning/events/269968767/
-15.4.2020.,20:00.,deeplearning.ai free mini mourse: Real-world AI Applications in Medicine.,['lectures'].,https://www.meetup.com/deeplearning-ai-tel-aviv/events/269968825/
-15.4.2020.,20:30.,Visual Program Represtentation Ideas & Hacking - Virtual Edition.,['lectures'].,https://www.meetup.com/Building-Visual-Support-Tooling-for-Programmers-Workshop/events/khsrdrybcgbtb/
-15.4.2020.,21:00.,What is the Product-C initiative?        a Corona-time PM task force.,[].,https://www.meetup.com/P-PS-Product-Product-Strategy-by-Y-Perspective/events/270006332/
-16.4.2020.,9:00.,Community Day - Learn AI.,['lectures'].,https://www.meetup.com/Big-Data-Developers-in-Tel-Aviv-Yafo/events/269902510/
-16.4.2020.,9:00.,Community Day - Learn AI.,['lectures'].,https://www.meetup.com/Tel-Aviv-Streams/events/269913592/
-16.4.2020.,10:00.,SNAP LIVE TALK UX.,['lectures'].,https://www.meetup.com/SNAP-Web-UX-Graphic-Design-Meetup/events/269872549/
+14.4.2020.,18:00.,tinyML Talk: \Adaptive AI for a Smarter Edge by Sek Chai, Latent AI.,[].,https://www.meetup.com/tinyML-Enabling-ultra-low-Power-ML-at-the-edge-Herzeliyya-IL/events/269905393/ 
+14.4.2020., 18:00., KaggleIL #10 - WiDS Challenge 1st Place Overview.,[].,https://www.meetup.com/DataHack/events/270028110/ 
+15.4.2020., 10:30.,[Free event] Virtual AI Career Expo.,['lectures'].,https://www.meetup.com/Tel-Aviv-Data-Science-ODSC/events/269500187/ 
+15.4.2020.,19:00.,Online Global Startup Pitching Event.,['lectures'].,https://www.meetup.com/StartupBlink-Haifa/events/dsbfrrybcgbtb/ 
+15.4.2020.,19:00.,Online Global Startup Pitching Event.,['lectures'].,https://www.meetup.com/Startups-in-Tel-Aviv/events/jpbjrrybcgbtb/ 
+15.4.2020.,20:00.,deeplearning.ai free mini course: Real-world AI Applications in Medicine.,['lectures'].,https://www.meetup.com/Caesarea-Machine-Learning/events/269968767/ 
+15.4.2020.,20:00.,deeplearning.ai free mini mourse: Real-world AI Applications in Medicine.,['lectures'].,https://www.meetup.com/deeplearning-ai-tel-aviv/events/269968825/ 
+15.4.2020.,20:30.,Visual Program Represtentation Ideas & Hacking - Virtual Edition.,['lectures'].,https://www.meetup.com/Building-Visual-Support-Tooling-for-Programmers-Workshop/events/khsrdrybcgbtb/ 
+15.4.2020.,21:00.,What is the Product-C initiative?        a Corona-time PM task force.,[].,https://www.meetup.com/P-PS-Product-Product-Strategy-by-Y-Perspective/events/270006332/ 
+16.4.2020.,9:00.,Community Day - Learn AI.,['lectures'].,https://www.meetup.com/Big-Data-Developers-in-Tel-Aviv-Yafo/events/269902510/ 
+16.4.2020.,9:00.,Community Day - Learn AI.,['lectures'].,https://www.meetup.com/Tel-Aviv-Streams/events/269913592/ 
+16.4.2020.,10:00.,SNAP LIVE TALK UX.,['lectures'].,https://www.meetup.com/SNAP-Web-UX-Graphic-Design-Meetup/events/269872549/ 
 16.4.2020.,10:30.,[Free Event]
         ODSC Virtual AI Expo.,[].,https://www.meetup.com/Tel-Aviv-Data-Science-ODSC/events/269601959/
 16.4.2020.,15:00.,Dr. Matan Protter: AlphaZero- Reinforcement Learning is a Game Changer.,['lectures'].,https://www.meetup.com/Tel-Aviv-Yafo-Deep-Corona-Academy-Alibaba/events/269906477/
@@ -144,28 +146,62 @@ namespace StreamHubCore2.Controllers
 23.4.2020.,19:30., Model and Data Driven Approach for Object Tracking., ['lectures']., https://www.meetup.com/Computer-Vision-Israel-Meetup/events/270009928/
 23.4.2020.,20:00., Unsupervised Learning and Deep Learning Based Time-Series Forecasting., ['lectures']., https://www.meetup.com/Tel-Aviv-AI-Tech-Talks/events/269946524/
                 ";
-            List<string> lines = value.Split("/N").ToList();
-            List<Item> items = new List<Item>();
-            lines.ForEach(line =>
-            {
-                string[] column = line.Split(".,");
-                items.Add(new Item
+                List<string> lines = value.Split("\r\n").ToList();
+                List<Item> items = new List<Item>();
+                lines.ForEach(line =>
                 {
-                    ItemStartDateObj = convertDateAndTimeToDateTime(column[0],column[1]),
-                    ItemTitle = column[2],
-                    ItemTags = column[3],
-                    ItemURL = column[4]
-                });
-            });
+                    if (line.IndexOf("Date") != 0)
+                    {
+                        string[] column = line.Split(".,");
+                        if (column.Length == 5)
+                        {
+                            items.Add(new Item
+                            {
+                                ItemStartDateObj = convertDateAndTimeToDateTime(column[0], column[1]),
+                                ItemTitle = column[2],
+                                ItemTags = column[3],
+                                ItemURL = column[4],
+                                ItemDuration = 60 * 60,
+                                PlatformID = 1
 
-            _context.BulkInsert(items);
+
+                            }); ;
+                        }
+                    }
+                });
+                //List<Item> itemsToInsert = new List<Item>();
+                DateTime minDate = new DateTime(items.Min(x => x.ItemStartDateObj.Ticks));
+                DateTime maxDate = new DateTime(items.Max(x => x.ItemStartDateObj.Ticks));
+                List<Item> itemsLookup = _context.Items.Where(x => x.ItemStartDateObj.Ticks >= minDate.Ticks && x.ItemStartDateObj.Ticks <= maxDate.Ticks).ToList();
+                items.ForEach(x =>
+                {
+                    if (!itemsLookup.Exists(y => x.ItemTags == y.ItemTags
+                    && x.ItemTitle == y.ItemTitle && x.ItemURL == y.ItemURL
+                    && x.ItemStartDateObj == y.ItemStartDateObj))
+                        _context.Add(x);
+                });
+                //_context.Add(itemsToInsert);
+                _context.SaveChanges();
+            }
+            catch (Exception ee)
+            {
+
+            }
         }
-        private DateTime convertDateAndTimeToDateTime(string dateStr,string timeStr)
+        private DateTime convertDateAndTimeToDateTime(string dateStr, string timeStr)
         {
-            var splitDate = dateStr.Split(":").Select(x => Int32.Parse(x)).ToList();
-            var splitTime = dateStr.Split(":").Select(x => Int32.Parse(x)).ToList();
-            DateTime dateTime = new DateTime(splitDate[2], splitDate[1], splitDate[0], timeStr[0], timeStr[1], 0);
-            return dateTime;
+            try
+            {
+                var splitDate = dateStr.Split(".").Select(x => Int32.Parse(x)).ToList();
+                var splitTime = timeStr.Split(":").Select(x => Int32.Parse(x)).ToList();
+                if (splitTime[0] == 24) splitTime[0] = 0;
+                DateTime dateTime = new DateTime(splitDate[2], splitDate[1], splitDate[0], splitTime[0], splitTime[1], 0);
+                return dateTime;
+            }
+            catch (Exception ee)
+            {
+                return new DateTime();
+            }
         }
         // PUT: api/CsvProcessing/5
         [HttpPut("{id}")]
