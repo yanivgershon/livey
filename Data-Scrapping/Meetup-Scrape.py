@@ -3,10 +3,16 @@ from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import io
 from catergoryDict import categories as cDict
+from os import path
 
 print("Scrapping data from: Meetup.com")
 
 myurl = "https://www.meetup.com/find/events/?allMeetups=true&radius=100&userFreeform=Tel+Aviv%2C+Israel&mcName=Tel+Aviv%2C+IL&lat=32.066498&lon=34.765198"
+
+if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
+    the_path = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"
+else:
+    the_path = "/home/streamhub/datascrape"
 
 #Grapping page
 uClient = uReq(myurl)
@@ -17,7 +23,7 @@ uClient.close()
 page_soup = soup(page_html, "html.parser")
 
 #create csv file
-filename = "./Data/Meetups.csv"
+filename = the_path + "/data/Meetups.csv"
 with open(filename, "w", encoding="utf=16") as f:
 
     #csv headers

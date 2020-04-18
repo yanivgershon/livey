@@ -3,12 +3,17 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 import pickle
 from datetime import datetime
 from catergoryDict import categories as cDict
-import os
+from os import path
 
 print("Scrapping data from: Google Calendars")
 
 ### configuration ###
 scopes = ['https://www.googleapis.com/auth/calendar']
+
+if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
+    the_path = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"
+else:
+    the_path = "/home/streamhub/datascrape"
 
 # Run in first time to get creds and store in pickle file
 # flow = InstalledAppFlow.from_client_secrets_file("/GoogleCal/client_secret.json", scopes=scopes)
@@ -16,13 +21,13 @@ scopes = ['https://www.googleapis.com/auth/calendar']
 # pickle.dump(credentials, open("/GoogleCal/token.pkl", "wb"))
 
 # After getting pickle from first time creds
-credentials = pickle.load(open("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping/GoogleCal/token.pkl", "rb"))
+credentials = pickle.load(open(the_path + "/googlecal/token.pkl", "rb"))
 
 service = build("calendar", "v3", credentials=credentials)
 
 
 #create csv file
-filename = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping/Data/GoogleCalendar.csv"
+filename = the_path + "/data/streamhub-gcal.csv"
 with open(filename, "w", encoding="utf=16") as f:
 
     #csv headers

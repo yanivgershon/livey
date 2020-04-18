@@ -4,7 +4,6 @@ import pickle
 from datetime import datetime
 from catergoryDict import categories as cDict
 import os.path
-from os import path
 
 print("Scrapping data from: Google Calendars")
 ### configuration ###
@@ -16,16 +15,19 @@ scopes = ['https://www.googleapis.com/auth/calendar']
 # pickle.dump(credentials, open("/GoogleCal/token.pkl", "wb"))
 
 # After getting pickle from first time creds
+
 if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
-    credentials = pickle.load(open("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping/GoogleCal/token.pkl", "rb"))
+    the_path = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"
 else:
-    credentials = pickle.load(open("/home/site/scraping/googlecal/token.pkl", "rb"))
+    the_path = "/home/streamhub/datascrape"
+
+credentials = pickle.load(open(the_path + "/googlecal/token.pkl", "rb"))
 
 service = build("calendar", "v3", credentials=credentials)
 
 
 #create csv file
-filename = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping/Data/GoogleCalendar.csv"
+filename = the_path + "/data/streamhub-gcal.csv"
 with open(filename, "w", encoding="utf=16") as f:
 
     #csv headers
