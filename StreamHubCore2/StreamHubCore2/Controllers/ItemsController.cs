@@ -24,7 +24,7 @@ namespace StreamHubCore2.Controllers
         [HttpGet]
         public IEnumerable<Item> GetItems()
         {
-            return _context.Items;
+            return _context.Items.Where(x => x.ItemStartDateObj >= DateTime.Now);
         }
 
         // GET: api/Items/5
