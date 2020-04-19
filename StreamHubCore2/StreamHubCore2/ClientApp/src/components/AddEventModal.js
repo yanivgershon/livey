@@ -58,7 +58,12 @@ function AddEventModal(props){
     }
 
     const handleSubmit = () => {
-        if(state.itemTitle && state.itemDuration && state.itemStartDateObj && state.itemURL && state.itemTags != "[]"){
+        if(state.itemTitle && 
+           state.itemDuration && 
+           state.itemStartDateObj && 
+           state.itemURL && 
+           state.itemTags != "[]"){
+               
             console.log("All Items Complete!")
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json")

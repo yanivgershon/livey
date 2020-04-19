@@ -37,8 +37,14 @@ function App() {
   const [language, setLanguage] = useState("en")
   const [searchFilter, setSearchFilter] = useState("")
 
+  
+
+
+
+  window.baseUrl="https://stream-hub.net/api/";
+  window.allowPostWithoutLogin=true;
   const fetchItems = async () => {
-    const apiCall = await fetch("http://stream-hub.net/api/items/");
+    const apiCall = await fetch(`${ window.baseUrl}/items/`);
     const items = await apiCall.json()
     setAutoComleteFeed(items)
     setFeedItems(items)
