@@ -9,7 +9,7 @@ from catergoryDict import categories as cDict
 from os import path
 import json
 import requests
-
+################# insert to DB code ############################
 conn = pyodbc.connect('Driver={ODBC Driver 13 for SQL Server};'
                     'Server=stream-hub.database.windows.net;'
                     'Database=streamHub;'
@@ -17,6 +17,7 @@ conn = pyodbc.connect('Driver={ODBC Driver 13 for SQL Server};'
                      'PWD=sS8370098;'
                      'Integrated Security=False;'                                        
                      )
+################# insert to DB code ############################
 print("Scrapping data from: Baavir.com")
 myurl = "https://www.baavir.com/"
 
@@ -65,7 +66,10 @@ with open(filename, "w", encoding="utf=16") as f:
 
         titleL = title.lower().split(" ")
         eCat = {cDict[key] for key in cDict.keys() & set(titleL)}
-        print(eCat)
+################# insert to DB code ############################
+        datespl=date.split('.')
+        dateSql=datespl[2]+"-"+datespl[1]+"-"+datespl[0]+" "+time
+        #print(eCat)
         the_str+=date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n";
         print(date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")
         #write data in csv
@@ -74,7 +78,7 @@ with open(filename, "w", encoding="utf=16") as f:
         catsReal=(str(list(eCat))).replace("'","''")
     #a = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
         data =  {'ItemTitle':title.replace("'", "''"),'ItemURL':eUrl,'ItemDescription':'','ItemTags':catsReal,'ItemStartDate':'0',
-        'ItemStartDateObj':'2020-04-19 12:05:00','ItemDuration': 3600,'ItemOwner':'','PlatformID': 1,'ItemImgURL':'',
+        'ItemStartDateObj':dateSql,'ItemDuration': 3600,'ItemOwner':'','PlatformID': 1,'ItemImgURL':'',
         'UserFavoriteItemID':'NULL'}
 
         data = (
@@ -83,12 +87,12 @@ with open(filename, "w", encoding="utf=16") as f:
         data['PlatformID'], data['ItemImgURL'],data['UserFavoriteItemID']
         )
 
-        print(data)
-        insertStr="insert into [dbo].[Items] ([ItemTitle],[ItemURL],[ItemDescription],[ItemTags],[ItemStartDate],[ItemStartDateObj],[ItemDuration],[ItemOwner],[PlatformID],[ItemImgURL],[UserFavoriteItemID])VALUES ('%s', '%s','%s', '%s', '%s', '%s', '%s', '%s','%s','%s',%s)" % data
-        print(insertStr)
+        #print(data)
+        insertStr="insert into [dbo].[Items] ([ItemTitle],[ItemURL],[ItemDescription],[ItemTags],[ItemStartDate],[ItemStartDateObj],[ItemDuration],[ItemOwner],[PlatformID],[ItemImgURL],[UserFavoriteItemID])VALUES (N'%s', '%s','%s', '%s', '%s', '%s', '%s', '%s','%s','%s',%s)" % data
+        #print(insertStr)
         cursor.execute(insertStr)
         conn.commit()
-
+################# insert to DB code ############################
 
         #insertStr='''
         #       INSERT INTO [dbo].[Items]
