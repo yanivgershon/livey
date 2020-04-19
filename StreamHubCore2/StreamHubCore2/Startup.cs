@@ -23,6 +23,8 @@ namespace StreamHubCore2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<LiveyTvContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:LiveyTvDb"]));
+            //services.AddDbContext<LiveyTvContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:LiveyTvDbDev"]));
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory

@@ -9,6 +9,9 @@
     align-content: flex-start;
     overflow: scroll;
     overflow-x: hidden;
+    scrollbar-color: rgb(0, 0, 0) rgb(201, 201, 201);
+    scrollbar-width: thin;
+    scrollbar-base-color: blue;
 }
 
 .app-header-container{

@@ -34,14 +34,15 @@ function App() {
   const [daySelected, setDaySelected] = useState(moment().format('YYYY-MM-DD'))
   const [catSelected, setCatSelected] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [language, setLanguage] = useState("en");
-  const [searchValue, setSearchValue] = useState("");
+  const [language, setLanguage] = useState("en")
+  const [searchFilter, setSearchFilter] = useState("")
+
   
 
 
 
   window.baseUrl="https://stream-hub.net/api/";
-  window.baseUrl="https://localhost:44339/api";
+ // window.baseUrl="https://localhost:44339/api";
   window.allowPostWithoutLogin=true;
   const fetchItems = async () => {
     const apiCall = await fetch(`${ window.baseUrl}/items/`);
@@ -53,17 +54,17 @@ function App() {
     setLanguage(i18n.language)
   }
 
-  const fetchCategories = async () => {
-    const apiCall = await fetch(`${ window.baseUrl}/categories/`)
-    const _categories = await apiCall.json()
-    setCategories(_categories)
-  }
+  // const fetchCategories = async () => {
+  //   const apiCall = await fetch("http://stream-hub.net/api/categories/")
+  //   const _categories = await apiCall.json()
+  //   setCategories(_categories)
+  // }
 
   useEffect(() => {
     if (!isFetchedData){
       setIsFetchedData(true)
       fetchItems()
-      fetchCategories()
+      //fetchCategories()
     }
   })
 
@@ -73,16 +74,33 @@ function App() {
     <div className="app" style={language === "he" ? {direction: "rtl"} : null}>
       
       <div className="app-header-container">
-        <Header autoComleteFeed={autoComleteFeed} language={language} changeLanguage={changeLanguage} search={setSearchValue}/>
+        <Header 
+        autoComleteFeed={autoComleteFeed} 
+        language={language} 
+        changeLanguage={changeLanguage} 
+        setSearchFilter={setSearchFilter}
+        searchFilter={searchFilter}
+        />
       </div>
       <div className="app-categories-container">
-        <CategoryPanel categories={categories} cat={setCatSelected}/>
+        <CategoryPanel 
+        categories={categories} 
+        cat={setCatSelected}
+        />
       </div>
       <div className="app-days-container">
-        <DaysPanel dayChange={setDaySelected} day={setDaySelected}/>
+        <DaysPanel 
+        dayChange={setDaySelected} 
+        day={setDaySelected}
+        />
       </div>
       <div className="app-feed-container">
-        <FeedPanel  feeds={feedItems} dayFilter={daySelected} catFilter={catSelected} searchFilter={searchValue}/>
+        <FeedPanel 
+        feeds={feedItems} 
+        dayFilter={daySelected} 
+        catFilter={catSelected} 
+        searchFilter={searchFilter}
+        />
       </div>
     </div>
 
