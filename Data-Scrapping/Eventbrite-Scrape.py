@@ -5,6 +5,20 @@ from datetime import datetime, timedelta
 import io
 from catergoryDict import categories as cDict
 from os import path
+import pyodbc
+import pandas as pa
+import json
+import requests
+################# insert to DB code ############################
+conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
+                    'Server=stream-hub.database.windows.net;'
+                    'Database=streamHub;'
+                     'UID=stream-hub;'
+                     'PWD=sS8370098;'
+                     'Integrated Security=False;'
+                     )
+the_str=""
+################# insert to DB code ############################
 
 print("Scrapping data from: Eventbrite.com")
 
@@ -13,7 +27,7 @@ myurl = "https://www.eventbrite.com/d/online/israel/?page=1"
 if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
     the_path = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"
 else:
-    the_path = "/home/streamhub/datascrape"
+    the_path = "/root/bin/datascrape"
 
 #Grapping page
 uClient = uReq(myurl)
@@ -119,10 +133,36 @@ with open(filename, "w", encoding="utf=16") as f:
 
             titleL = title.lower().split(" ")
             eCat = {cDict[key] for key in cDict.keys() & set(titleL)}
-            print(eCat)
+#            print(eCat)
 
+            ################# insert to DB code ############################
+            datespl = date.split('.')
+            dateSql = datespl[2] + "-" + datespl[1] + "-" + datespl[0] + " " + time
+            # print(eCat)
+            the_str += date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n";
             print(date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")
-            #write data in csv
+            # write data in csv
             f.write(date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")
+            cursor = conn.cursor()
+            catsReal = (str(list(eCat))).replace("'", "''")
+            # a = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
+            data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': catsReal,
+                    'ItemStartDate': '0',
+                    'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 1,
+                    'ItemImgURL': '',
+                    'UserFavoriteItemID': 'NULL'}
+
+            data = (
+                data['ItemTitle'], data['ItemURL'], data['ItemDescription'], data['ItemTags'],
+                data['ItemStartDate'], data['ItemStartDateObj'], data['ItemDuration'], data['ItemOwner'],
+                data['PlatformID'], data['ItemImgURL'], data['UserFavoriteItemID']
+            )
+
+            # print(data)
+            insertStr = "insert into [dbo].[Items] ([ItemTitle],[ItemURL],[ItemDescription],[ItemTags],[ItemStartDate],[ItemStartDateObj],[ItemDuration],[ItemOwner],[PlatformID],[ItemImgURL],[UserFavoriteItemID])VALUES (N'%s', '%s','%s', '%s', '%s', '%s', '%s', '%s','%s','%s',%s)" % data
+            # print(insertStr)
+            cursor.execute(insertStr)
+            conn.commit()
+        ################# insert to DB code ############################
 
 f.close()
