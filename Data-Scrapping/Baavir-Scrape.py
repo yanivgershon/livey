@@ -4,9 +4,15 @@ from bs4 import BeautifulSoup as soup
 import io
 import re
 from catergoryDict import categories as cDict
+from os import path
 
 print("Scrapping data from: Baavir.com")
 myurl = "https://www.baavir.com/"
+
+if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
+    the_path = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"
+else:
+    the_path = "/home/streamhub/datascrape"
 
 #Grapping page
 uClient = uReq(myurl)
@@ -17,7 +23,7 @@ uClient.close()
 page_soup = soup(page_html, "html.parser")
 
 #create csv file
-filename = "./Data/Baavir.csv"
+filename = the_path + "/data/Baavir.csv"
 with open(filename, "w", encoding="utf=16") as f:
 
     #csv headers

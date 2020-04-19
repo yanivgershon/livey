@@ -37,9 +37,8 @@ function App() {
   const [language, setLanguage] = useState("en")
   const [searchFilter, setSearchFilter] = useState("")
 
-  
   const fetchItems = async () => {
-    const apiCall = await fetch("http://stream-hub.net/api/items/")
+    const apiCall = await fetch("http://stream-hub.net/api/items/");
     const items = await apiCall.json()
     setAutoComleteFeed(items)
     setFeedItems(items)

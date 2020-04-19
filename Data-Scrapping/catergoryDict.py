@@ -44,6 +44,7 @@ categories = {
 
     'children':'kids',
     'ילדים':'kids',
+    'לילדים':'kids',
     'child':'kids',
     'נוער':'kids',
     'kid':'kids',

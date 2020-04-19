@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import { withTranslation } from 'react-i18next';
 import FeedItem from "./FeedItem";
 import './feed-panel.css';
+import { th } from "date-fns/locale";
 import categorypics from "./categorypics/categorypics"
 
 /*// Category Stock Photo Imports
@@ -45,6 +46,8 @@ import lectures6 from "./categorypics/lectures6.jpg"
 import lectures7 from "./categorypics/lectures7.jpg"
 import lectures8 from "./categorypics/lectures8.jpg"
 import lectures9 from "./categorypics/lectures9.jpg" */
+
+
 
 
 

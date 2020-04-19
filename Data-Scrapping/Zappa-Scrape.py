@@ -5,10 +5,16 @@ from bs4 import BeautifulSoup as soup
 import io
 import re
 from catergoryDict import categories as cDict
+from os import path
 
 print("Scrapping data from: Zappa.co.il")
 
 myurl = "https://www.zappa-club.co.il/content/the-show-must-go-on/"
+
+if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
+    the_path = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"
+else:
+    the_path = "/home/streamhub/datascrape"
 
 #Grapping page
 req = Request(myurl, headers={'User-Agent': 'Mozilla/5.0'})
@@ -20,7 +26,7 @@ uClient.close()
 page_soup = soup(page_html, "html.parser")
 
 #create csv file
-filename = "./Data/Zappa.csv"
+filename = the_path + "/data/Zappa.csv"
 with open(filename, "w", encoding="utf=16") as f:
 
     #csv headers
@@ -35,11 +41,12 @@ with open(filename, "w", encoding="utf=16") as f:
     eIndex = 0
     for i, e in enumerate(events):
         if pattern.search(str(e)) is not None:
+            print(e)
             eIndex = i
     # dateday = events[eIndex+1].find("strong").text.split("-")
 
 
-    eList = str(events[eIndex+1]).split("<br/>")
+    eList = str(events[eIndex+2]).split("<br/>")
     eList = [soup(l, "html.parser").text for l in eList]
     dateDay = eList.pop(0).split(" - ")
     date = dateDay.pop().strip()

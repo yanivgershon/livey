@@ -4,10 +4,16 @@ from bs4 import BeautifulSoup as soup
 from datetime import datetime, timedelta
 import io
 from catergoryDict import categories as cDict
+from os import path
 
 print("Scrapping data from: Eventbrite.com")
 
 myurl = "https://www.eventbrite.com/d/online/israel/?page=1"
+
+if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
+    the_path = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"
+else:
+    the_path = "/home/streamhub/datascrape"
 
 #Grapping page
 uClient = uReq(myurl)
@@ -21,7 +27,7 @@ page_soup = soup(page_html, "html.parser")
 pages = int(page_soup.find("li", {"class": "eds-pagination__navigation-minimal"}).text.strip()[-1:])
 
 #create csv file
-filename = "./Data/Eventbrite.csv"
+filename = the_path + "/data/Eventbrite.csv"
 with open(filename, "w", encoding="utf=16") as f:
 
     #csv headers

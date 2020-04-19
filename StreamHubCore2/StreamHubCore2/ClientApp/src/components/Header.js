@@ -1,6 +1,6 @@
 // Deps
 import React, { useState, useEffect, useRef, createRef } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next' 
 import './header.css'
 
 // Components
@@ -91,6 +91,9 @@ export default Header;
     }
  
     const doLogout = () => {
+    }
+    const onAutoCompleteChange = (event, values) => {
+        props.search()
     }
 
     const  openLoginDialog = () => {

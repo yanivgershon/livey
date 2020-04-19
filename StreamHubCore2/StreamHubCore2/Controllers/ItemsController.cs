@@ -24,7 +24,7 @@ namespace StreamHubCore2.Controllers
         [HttpGet]
         public IEnumerable<Item> GetItems()
         {
-            return _context.Items;
+            return _context.Items.Where(x => x.ItemStartDateObj >= DateTime.Now);
         }
 
         // GET: api/Items/5
@@ -36,7 +36,7 @@ namespace StreamHubCore2.Controllers
                 return BadRequest(ModelState);
             }
 
-            var item = await _context.Items.FindAsync(id);
+            var item = await _context.Items.Where(x => x.ItemID==id && x.ItemStartDateObj >= DateTime.Now).FirstOrDefaultAsync();
 
             if (item == null)
             {
