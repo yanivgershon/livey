@@ -6,6 +6,7 @@ i18n.use(LanguageDetector).init({
   resources: {
     en: {
       translations: {
+        "lang":"en",
         "Add Event":"Add Event",
         "Login":"Login",
         "Select Topic":"Select Topic",
@@ -30,11 +31,22 @@ i18n.use(LanguageDetector).init({
         "Share":"Share",
         "View Host":"View Host",
         "Report":"Report",
-        "Views":"Views"
+        "Views":"Views",
+        "Search":"Search",
+        "momenttimelabel":"h:mmA",
+        "Tell us about your event":"Tell us about your event:",
+        "Short description of your event...":"Short description of your event...",
+        "When is it?":"When is it?",
+        "Event Date":"Event Date:",
+        "Start Time":"Start Time:",
+        "End Time":"End Time:",
+        "Enter your event's URL":"Enter your event's URL:",
+        "Choose Category":"Choose Category:"
       }
     },
     he: {
       translations: {
+        "lang":"he",
         "Add Event":"הוספת אירוע",
         "Login":"התחבר/י",
         "Select Topic":"בחירת קטגוריה",
@@ -59,7 +71,17 @@ i18n.use(LanguageDetector).init({
         "Share":"שיתוף",
         "View Host":"עמוד המארח",
         "Report":"דיווח",
-        "Views":"צפיות"
+        "Views":"צפיות",
+        "Search":"חיפוש",
+        "momenttimelabel":"HH:mm",
+        "Tell us about your event":"תאור קצר:",
+        "Short description of your event...":"כתבו תאור קצר של הלייב שלכם...",
+        "When is it?":"מתי זה?",
+        "Event Date":"בחרו תאריך:",
+        "Start Time":"זמן התחלה:",
+        "End Time":"זמן סיום:",
+        "Enter your event's URL":"הזינו לינק לאירוע:",
+        "Choose Category":"בחרו קטגוריה:"
       }
     }
   },

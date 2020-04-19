@@ -72,11 +72,11 @@ class FeedItem extends Component{
 
     const timeObj = moment(this.props.feed.itemStartDateObj).format("DD/MM | HH:mm")
     const timeEnd = moment(this.props.feed.itemStartDateObj).add(this.props.feed.itemDuration, "seconds").format("HH:mm")
-    const timeLabel = moment(this.props.feed.itemStartDateObj).format("h:mmA")
+    const timeLabel = moment(this.props.feed.itemStartDateObj).format(t("momenttimelabel"))
   
     return (
       <div className="feed-item">
-          <img src={this.props.image} alt="Event"/>
+          <img src={this.props.image} alt="Event" className={t("lang") === "he" ? "feed-item-img-rtl" :"feed-item-img"}/>
           <div className="feed-item-title">
             <h2 onClick={() => console.log(timeObj)}>{this.props.feed.itemTitle}</h2>
             <h3>{`${timeObj}-${timeEnd}`}</h3>
