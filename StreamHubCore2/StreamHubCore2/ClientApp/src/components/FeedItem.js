@@ -89,15 +89,15 @@ class FeedItem extends Component{
             <a href={this.props.feed.itemURL} target="_blank" rel="noopener noreferrer">{t("Link to Live Event")}</a>
           </div>
           <div className="feed-item-icons">
-            <div className="feed-item-icons-class" onClick={this.handleSave}>
-              <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.save ? solidStar : faStar} size="lg"/>
+            <div className="feed-item-icons-class" onClick={() => null/*this.handleSave*/} style={{color:"#c7c7c7"}}>
+              <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.save ? solidStar : faStar} size="lg" />
               <h3>{t("Save")}</h3>
             </div>
             <div className="feed-item-icons-class" onClick={this.handleShare}>
               <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.share ? solidShare : faShareSquare} size="lg"/>
               <h3>{t("Share")}</h3>
             </div>
-            <div className="feed-item-icons-class" onClick={this.handleHost}>
+            <div className="feed-item-icons-class" onClick={this.handleHost} style={{color:"#c7c7c7"}}>
               <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.host ? solidUser : faUser} size="lg"/>
               <h3>{t("View Host")}</h3>
             </div>
