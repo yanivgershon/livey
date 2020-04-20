@@ -78,12 +78,15 @@ with open(filename, "w", encoding="utf=16") as f:
                 dt = timeDate.split(", ")
 
                 fullTime = dt.pop().split(" ")
+                print(fullTime)
                 time = fullTime[0]
                 exactTime = fullTime[0].split(":")
                 if fullTime[1] == "PM":
                     exactTime[0] = str(int(exactTime[0])+12)
+                    print(exactTime)
+                    if exactTime[0] == "24":
+                        exactTime[0] = "00"
                     time = ":".join(exactTime)
-
                 fMD = dt.pop().split(" ")
                 if fMD[0] == "Apr":
                     fMD[0] = "4"
@@ -122,6 +125,9 @@ with open(filename, "w", encoding="utf=16") as f:
                 exactTime = fullTime[0].split(":")
                 if fullTime[1] == "PM":
                     exactTime[0] = str(int(exactTime[0])+12)
+                    print(exactTime)
+                    if exactTime[0] == "24":
+                        exactTime[0] = "00"
                     time = ":".join(exactTime)
 
                 fMD = dt.pop()

@@ -82,7 +82,7 @@ with open(filename, "w", encoding="utf=16") as f:
 
         ################# insert to DB code ############################
         datespl = date.split('.')
-        dateSql = datespl[2] + "-" + datespl[1] + "-" + datespl[0] + " " + time
+        dateSql = "2020-" + datespl[1] + "-" + datespl[0] + " " + time
         # print(eCat)
         the_str += date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n";
         print(date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")

@@ -58,6 +58,8 @@ with open(filename, "w", encoding="utf=16") as f:
         if ampm == "PM":
             min = time[-3:]
             time = str(int(time[:-3])+12)+min
+            if time =="24:00":
+                time = "00:00"
 
         titles = event.findAll("span", {"itemprop":"name"})
         title = titles[1].text.strip()
