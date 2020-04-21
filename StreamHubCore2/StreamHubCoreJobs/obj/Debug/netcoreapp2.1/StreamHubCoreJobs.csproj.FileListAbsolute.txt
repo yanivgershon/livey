@@ -9,3 +9,7 @@ D:\programming3\livey\StreamHubCore2\StreamHubCoreJobs\obj\Debug\netcoreapp2.1\S
 D:\programming3\livey\StreamHubCore2\StreamHubCoreJobs\obj\Debug\netcoreapp2.1\StreamHubCoreJobs.AssemblyInfo.cs
 D:\programming3\livey\StreamHubCore2\StreamHubCoreJobs\obj\Debug\netcoreapp2.1\StreamHubCoreJobs.csproj.CopyComplete
 D:\programming3\livey\StreamHubCore2\StreamHubCoreJobs\obj\Debug\netcoreapp2.1\StreamHubCoreJobs.genruntimeconfig.cache
+D:\programming3\livey\StreamHubCore2\StreamHubCoreJobs\bin\Debug\netcoreapp2.1\StreamHubCoreJobs.pdb
+D:\programming3\livey\StreamHubCore2\StreamHubCoreJobs\obj\Debug\netcoreapp2.1\StreamHubCoreJobs.csproj.CoreCompileInputs.cache
+D:\programming3\livey\StreamHubCore2\StreamHubCoreJobs\obj\Debug\netcoreapp2.1\StreamHubCoreJobs.dll
+D:\programming3\livey\StreamHubCore2\StreamHubCoreJobs\obj\Debug\netcoreapp2.1\StreamHubCoreJobs.pdb
