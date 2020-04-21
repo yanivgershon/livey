@@ -41,9 +41,6 @@ class CategoryPanel extends Component{
         this.props.cat(null)
     }
 
-    componentWillMount(){
-    }
-
     render(){
 
         const { t } = this.props

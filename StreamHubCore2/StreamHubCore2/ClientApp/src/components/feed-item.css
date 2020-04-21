@@ -2,7 +2,7 @@
     display: grid;
     grid-template-areas: "img .   .     .   ."
                          "img . title  time ."
-                         "img .   .     .   ."
+                         "img .   .    cat  ."
                          "img . desc   desc ."
                          "img . icons icons ."
                          "img .   .     .   .";
@@ -42,12 +42,22 @@
 .feed-item-title{
     display: grid;
     grid-area: title;
+    
 }
 
-.feed-item-title h2 {
+.feed-item-title-h2 {
     display: flex;
     font-size: 11pt;
     padding-right: 10px;
+}
+
+.feed-item-title-h2-rtl {
+    display: flex;
+    font-size: 11pt;
+    padding-left: 10px;
+    text-align: right;
+    justify-self: right;
+    direction: ltr;
 }
 
 .feed-item-title h3 {
@@ -63,7 +73,14 @@
     width: 100%;
     height: 80%;
     border-radius: 20px;
-    margin-right: 5px;
+}
+
+.feed-item-catlabel {
+    display: grid;
+    grid-area: cat;
+    text-transform: uppercase;
+    font-size: 10pt;
+    justify-self: center;
 }
 
 .feed-item-timelabel h2{

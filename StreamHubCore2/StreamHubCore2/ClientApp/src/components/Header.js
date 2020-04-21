@@ -13,6 +13,7 @@ import AddEventModal from "./AddEventModal"
 function Header(props){
 
     const [showAddEvent, setShowAddEvent] = useState(false)
+    const [showLogin, setShowLogin] = useState(false)
     
     const { t } = useTranslation()
 

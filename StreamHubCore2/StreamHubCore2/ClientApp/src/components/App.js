@@ -4,6 +4,7 @@ import moment from "moment"
 import { useTranslation } from 'react-i18next'
 import ReactGA from 'react-ga'
 
+
 // Components
 import './app.css'
 import Header from "./Header"
@@ -37,15 +38,12 @@ function App() {
   const [language, setLanguage] = useState("en")
   const [searchFilter, setSearchFilter] = useState("")
 
-  
-
-
 
   window.baseUrl="https://stream-hub.net/api/";
  // window.baseUrl="https://localhost:44339/api";
   window.allowPostWithoutLogin=true;
   const fetchItems = async () => {
-    const apiCall = await fetch(`${ window.baseUrl}/items/`);
+    const apiCall = await fetch(`${ window.baseUrl}items/`);
     const items = await apiCall.json()
     setAutoComleteFeed(items)
     setFeedItems(items)

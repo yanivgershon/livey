@@ -43,9 +43,9 @@ import lectures3 from "./categorypics/lectures3.jpg"
 import lectures4 from "./categorypics/lectures4.jpg"
 import lectures5 from "./categorypics/lectures5.jpg"
 import lectures6 from "./categorypics/lectures6.jpg"
-import lectures7 from "./categorypics/lectures7.jpg"
+import lectures7 from "./categorypics/lectures7.jpg"*/
 import lectures8 from "./categorypics/lectures8.jpg"
-import lectures9 from "./categorypics/lectures9.jpg" */
+import lectures9 from "./categorypics/lectures9.jpg" 
 
 
 
@@ -56,16 +56,25 @@ class FeedPanel extends Component{
         super(props)
         this.state = {
             map: null,
-            count: "0 Results"
+            count: "0 Results",
+            itemsFromLoad: 0,
+            itemsToLoad: 100
         }
     }
     
     render(){
 
         const { t } = this.props
-
-        //Feed item (Category / Date / Search) filtering                                // REMOVE faulty item    
-        const feedItems = this.props.feeds && this.props.feeds.map(item => {if (item.itemID != 780){
+        
+        /*
+        const from = this.state.itemsFromLoad
+        const to = this.state.itemsToLoad
+        const feedItems = this.props.feeds.slice(from, to).map(item => {
+            return <FeedItem key={item.itemID} feed={item} image={lectures9} handleCount={this.handleCount}/>})
+        */
+        
+        //Feed item (Category / Date / Search) filtering
+        const feedItems = this.props.feeds && this.props.feeds.map(item => {
             const itemDate = item.itemStartDateObj && item.itemStartDateObj.slice(0,10)
             const itemCategoryArr = eval(item.itemTags)
             const itemCategory = itemCategoryArr && itemCategoryArr[0]
@@ -74,8 +83,9 @@ class FeedPanel extends Component{
             //const stockImage = itemCategory ? categorypics.map(photo => {
             //    itemCategory === photo.
             //})
-            const randomImg = `https://i.picsum.photos/id/${Math.floor(Math.random() * 1000)}/200/300.jpg`  
-            const feedItem = <FeedItem key={item.itemID} feed={item} image={randomImg/*hostImage ? hostImage : stockImage*/} handleCount={this.handleCount}/>   
+            const randomImg = item.itemImgURL ? item.itemImgURL : `https://i.picsum.photos/id/${Math.floor(Math.random() * 1000)}/200/300.jpg`
+            const tempImage =  lectures8
+            const feedItem = <FeedItem key={item.itemID} feed={item} image={randomImg} handleCount={this.handleCount}/>   
             
             if (this.props.dayFilter === itemDate && !this.props.catFilter) {
                 if (!this.props.searchFilter) {
@@ -90,9 +100,7 @@ class FeedPanel extends Component{
                     return feedItem
                 }
             }  else {return null}
-        // REMOVE    
-        } else {return null}
-    })
+        })
         
 
         const filtered = feedItems.filter(function (el) {
