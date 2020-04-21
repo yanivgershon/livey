@@ -22,6 +22,26 @@
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\SampleDataController.cs" />
+    <Compile Remove="Model\Category.cs" />
+    <Compile Remove="Model\Item.cs" />
+    <Compile Remove="Model\ItemCategories.cs" />
+    <Compile Remove="Model\LiveyTvContext.cs" />
+    <Compile Remove="Model\Platform.cs" />
+    <Compile Remove="Model\User.cs" />
+    <Compile Remove="Model\UserFavoriteItem.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Model\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StreamHubCoreDal\StreamHubCoreDal.csproj" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

@@ -26,7 +26,10 @@ myurl = "https://www.baavir.com/"
 if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
     the_path = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"
 else:
-    the_path = "/root/bin/datascrape"
+    if path.exists("D:/programming3/livey/Data-Scrapping"):
+        the_path = "D:/programming3/livey/Data-Scrapping"
+    else:
+        the_path = "/root/bin/datascrape"
 
 #Grapping page
 uClient = uReq(myurl)
@@ -80,7 +83,7 @@ with open(filename, "w", encoding="utf=16") as f:
         # a = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
         data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': catsReal,
                 'ItemStartDate': '0',
-                'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 1, 'ItemImgURL': '',
+                'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 2, 'ItemImgURL': '',
                 'UserFavoriteItemID': 'NULL'}
 
         data = (

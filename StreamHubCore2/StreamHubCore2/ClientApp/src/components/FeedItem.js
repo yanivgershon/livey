@@ -70,6 +70,9 @@ class FeedItem extends Component{
   
     const { t } = this.props
 
+
+    const itemCategoryArr = eval(this.props.feed.itemTags)
+    const itemCategory = itemCategoryArr[0] ? itemCategoryArr[0] : "other"
     const timeObj = moment(this.props.feed.itemStartDateObj).format("DD/MM | HH:mm")
     const timeEnd = moment(this.props.feed.itemStartDateObj).add(this.props.feed.itemDuration, "seconds").format("HH:mm")
     const timeLabel = moment(this.props.feed.itemStartDateObj).format(t("momenttimelabel"))
@@ -78,12 +81,13 @@ class FeedItem extends Component{
       <div className="feed-item">
           <img src={this.props.image} alt="Event" className={t("lang") === "he" ? "feed-item-img-rtl" :"feed-item-img"}/>
           <div className="feed-item-title">
-            <h2 onClick={() => console.log(timeObj)}>{this.props.feed.itemTitle}</h2>
+            <h2 onClick={() => console.log(timeObj)} className={t("lang") === "he" ? "feed-item-title-h2-rtl" : "feed-item-title-h2"}>{this.props.feed.itemTitle}</h2>
             <h3>{`${timeObj}-${timeEnd}`}</h3>
           </div>
           <div className="feed-item-timelabel" style={{background: this.state.catColor}}>
             <h2>{timeLabel}</h2>
           </div>
+          <h2 className="feed-item-catlabel">{itemCategory}</h2>
           <div className="feed-item-description">
             <p>{this.props.feed.itemDescription}</p>
             <a href={this.props.feed.itemURL} target="_blank" rel="noopener noreferrer">{t("Link to Live Event")}</a>
@@ -97,10 +101,10 @@ class FeedItem extends Component{
               <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.share ? solidShare : faShareSquare} size="lg"/>
               <h3>{t("Share")}</h3>
             </div>
-            <div className="feed-item-icons-class" onClick={this.handleHost} style={{color:"#c7c7c7"}}>
+            {/* <div className="feed-item-icons-class" onClick={this.handleHost} style={{color:"#c7c7c7"}}>
               <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.host ? solidUser : faUser} size="lg"/>
               <h3>{t("View Host")}</h3>
-            </div>
+            </div> */}
             <div className="feed-item-icons-class" onClick={this.handleReport}>
               <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.report ? solidFlag : faFlag} size="lg"/>
               <h3>{t("Report")}</h3>
