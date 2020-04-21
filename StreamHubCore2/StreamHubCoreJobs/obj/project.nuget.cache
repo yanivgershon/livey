@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Y++/yuT6nQqtbUvKF14+NcG/XqGSpditQw6G8biTw+CHTL6j4lfrdGPO6H0MFdNjYU+5UjBz2b+PTGSfHLl7aw==",
+  "dgSpecHash": "TGPrUoL8jeS3Spb2kTeAC9Q5IORVSKZd2ngc7pesEOzTIfjvTCCkxfrVpVIWLnkv/yuVy3a3S55X0gO7LPh8Ww==",
   "success": true,
-  "projectFilePath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
+  "projectFilePath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreJobs\\StreamHubCoreJobs.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\yaniv\\.nuget\\packages\\csvhelper\\15.0.5\\csvhelper.15.0.5.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.razor.design\\2.1.2\\microsoft.aspnetcore.razor.design.2.1.2.nupkg.sha512",
+    "C:\\Users\\yaniv\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
+    "C:\\Users\\yaniv\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\yaniv\\.nuget\\packages\\microsoft.entityframeworkcore\\2.1.14\\microsoft.entityframeworkcore.2.1.14.nupkg.sha512",
     "C:\\Users\\yaniv\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\2.1.14\\microsoft.entityframeworkcore.abstractions.2.1.14.nupkg.sha512",
     "C:\\Users\\yaniv\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\2.1.14\\microsoft.entityframeworkcore.analyzers.2.1.14.nupkg.sha512",
@@ -73,7 +76,8 @@
     "C:\\Users\\yaniv\\.nuget\\packages\\system.text.encoding\\4.0.11\\system.text.encoding.4.0.11.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.text.encoding.codepages\\4.5.0\\system.text.encoding.codepages.4.5.0.nupkg.sha512",
     "C:\\Users\\yaniv\\.nuget\\packages\\system.threading\\4.0.11\\system.threading.4.0.11.nupkg.sha512",
-    "C:\\Users\\yaniv\\.nuget\\packages\\system.threading.tasks\\4.0.11\\system.threading.tasks.4.0.11.nupkg.sha512"
+    "C:\\Users\\yaniv\\.nuget\\packages\\system.threading.tasks\\4.0.11\\system.threading.tasks.4.0.11.nupkg.sha512",
+    "C:\\Users\\yaniv\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.2\\system.threading.tasks.extensions.4.5.2.nupkg.sha512"
   ],
   "logs": []
 }

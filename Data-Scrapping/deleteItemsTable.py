@@ -17,7 +17,7 @@ conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                      'PWD=sS8370098;'
                      'Integrated Security=False;'
                      )
-
+g
 ################# connect to DB code ############################
 
 queryStr='delete from Items where PlatformID=2'
