@@ -89,7 +89,7 @@ with open(filename, "w", encoding="utf=16") as f:
         # a = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
         data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': catsReal,
                 'ItemStartDate': '0',
-                'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 1, 'ItemImgURL': '',
+                'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 2, 'ItemImgURL': '',
                 'UserFavoriteItemID': 'NULL'}
 
         data = (
