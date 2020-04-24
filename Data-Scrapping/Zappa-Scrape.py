@@ -78,7 +78,7 @@ with open(filename, "w", encoding="utf=16") as f:
             time = sEvent.pop(0)
             title = sEvent.pop(0)
 
-        eCat = {"shows"}
+        eCat = {"fun"}
 
         ################# insert to DB code ############################
         datespl = date.split('.')
