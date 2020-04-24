@@ -2,18 +2,25 @@
 import React, { useState, useEffect, useRef, createRef } from 'react'
 import { useTranslation } from 'react-i18next' 
 import './header.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
+
 
 // Components
 import LangSelector from "./LangSelector"
-import streamHubLogo from "./StreamHub_Logo.png"
+import streamHubLogo from "../StreamHub_Logo.png"
 import Search from "./Search"
 import AddEventModal from "./AddEventModal"
+import LoginModal from "./LoginModal"
+import UserProfile from "./UserProfile"
 
 
 function Header(props){
 
     const [showAddEvent, setShowAddEvent] = useState(false)
+    const [showMustLogin, setShowMustLogin] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
+    const [showProfile, SetShowProfile] = useState(false)
     
     const { t } = useTranslation()
 
@@ -22,11 +29,34 @@ function Header(props){
     }
 
     const handleShowAddEvent = () => {
-        setShowAddEvent(true)
+        if(props.isLoggedIn){
+            setShowAddEvent(true)
+        } else {
+            setShowMustLogin(true)
+            setTimeout(() => {setShowMustLogin(false)
+            }, 2000)
+        }
     }
 
     const handleHideAddEvent = () => {
         setShowAddEvent(false)
+    }
+
+    const handleShowLogin = () => {
+        setShowLogin(true)
+    }
+
+    const handleHideLogin = () => {
+        setShowLogin(false)
+    }
+
+    const handleShowProfile = () => {
+        SetShowProfile(true)
+        console.log("userData:",props.userData)
+    }
+
+    const handleHideProfile = () => {
+        SetShowProfile(false)
     }
 
     return (
@@ -48,15 +78,53 @@ function Header(props){
                     language={props.language} 
                     changeLanguage={props.changeLanguage}
                 />
-
+                <div style={{position: "relative"}}>
                 <button 
                     className="header-add-event-button" 
                     onClick={handleShowAddEvent}>
                     + {t("Add Event")}
                 </button>
+                {showMustLogin ? <div className="add-event-dropdown-alert">
+                                    <FontAwesomeIcon icon={faExclamationTriangle} size="1x"/>
+                                    <p>Login Required!</p>
+                                 </div> : null}
+                </div>
+                {!props.isLoggedIn ? <button 
+                    className="header-login-button"
+                    onClick={handleShowLogin}>
+                    {t("Login")}
+                </button>
+                :
+                <div> 
+                <button 
+                    className="header-profile-button"
+                    onClick={handleShowProfile}>
+                    <FontAwesomeIcon icon={faUser} size="lg"/>
+                </button>
+                {showProfile ? <UserProfile 
+                                handleHideProfile={handleHideProfile}
+                                showProfile={showProfile}
+                                setIsLoggedIn={props.setIsLoggedIn}
+                                setUserData={props.setUserData}
+                                userData={props.userData}
+                                feed={props.feed}
+                                isLoggedIn={props.isLoggedIn}
+                                setUserData={props.setUserData}
+                                userData={props.userData}
+                               /> : null}
+                </div>}
+                
             </div>
             
-            {showAddEvent ? <AddEventModal handleHideAddEvent={handleHideAddEvent}/> : null}
+            {showAddEvent ? <AddEventModal 
+                             handleHideAddEvent={handleHideAddEvent}
+                             /> : null}
+
+            {showLogin ? <LoginModal 
+                         handleHideLogin={handleHideLogin} 
+                         setIsLoggedIn={props.setIsLoggedIn} 
+                         isLoggedIn={props.isLoggedIn}
+                         /> : null}
             
         </div>
     )

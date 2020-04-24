@@ -3,6 +3,7 @@ import React,{ useState, useEffect, useRef, createRef } from 'react'
 import moment from "moment"
 import { useTranslation } from 'react-i18next'
 import ReactGA from 'react-ga'
+import * as firebase from "firebase/app";
 
 
 // Components
@@ -37,7 +38,31 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [language, setLanguage] = useState("en")
   const [searchFilter, setSearchFilter] = useState("")
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userData, setUserData] = useState({
+    displayName: "",
+    savedItems: "",
+    email: "",
+  })
 
+  useEffect(() => {
+    const authListener = firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        console.log("yes user:",user)
+        setIsLoggedIn(true)
+        setUserData(prevState => ({
+          ...prevState, 
+          displayName: user.displayName,
+          savedItems: user.photoURL,
+          email: user.email
+        }))
+      } else {
+        console.log("no user:",user)
+        setIsLoggedIn(false)
+      }
+    })
+    return authListener
+  }, [])
 
   window.baseUrl="https://stream-hub.net/api/";
  // window.baseUrl="https://localhost:44339/api";
@@ -51,13 +76,7 @@ function App() {
     setIsLoading(false)
     setLanguage(i18n.language)
   }
-
-  // const fetchCategories = async () => {
-  //   const apiCall = await fetch("http://stream-hub.net/api/categories/")
-  //   const _categories = await apiCall.json()
-  //   setCategories(_categories)
-  // }
-
+  
   useEffect(() => {
     if (!isFetchedData){
       setIsFetchedData(true)
@@ -78,6 +97,11 @@ function App() {
         changeLanguage={changeLanguage} 
         setSearchFilter={setSearchFilter}
         searchFilter={searchFilter}
+        setIsLoggedIn={setIsLoggedIn}
+        isLoggedIn={isLoggedIn}
+        setUserData={setUserData}
+        userData={userData}
+        feed={feedItems}
         />
       </div>
       <div className="app-categories-container">
@@ -94,10 +118,13 @@ function App() {
       </div>
       <div className="app-feed-container">
         <FeedPanel 
-        feeds={feedItems} 
+        feed={feedItems} 
         dayFilter={daySelected} 
         catFilter={catSelected} 
         searchFilter={searchFilter}
+        isLoggedIn={isLoggedIn}
+        setUserData={setUserData}
+        userData={userData}
         />
       </div>
     </div>

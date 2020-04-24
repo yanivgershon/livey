@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import "./add-event-modal.css"
 import { useTranslation } from 'react-i18next'
 //import { loadReCaptcha } from 'react-recaptcha-v3'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileUpload, faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
-import random9 from "./categorypics/random9.jpg"
 import moment from "moment"
 
 function AddEventModal(props){
@@ -27,6 +26,7 @@ function AddEventModal(props){
     const [isErrorHighlight, setIsErrorHighlight] = useState(false)
     const [isImageLoad, setIsImageLoad] = useState(false)
     const [isImageDisplay, setIsImageDisplay] = useState(false)
+    const [isImageError, setIsImageError] = useState(false)
 
 
     const { t } = useTranslation()
@@ -72,9 +72,11 @@ function AddEventModal(props){
         const {value, name, type} = event.target
         if(type === "text") {
             setState(prevState => ({ ...prevState, itemImgURL: value }))
-        } else if(name === "upload") {
+        } else if(name === "upload" && state.itemImgURL) {
             setIsImageLoad(false)
             setIsImageDisplay(true)
+        } else if (name === "upload") {
+            setIsImageError(true)
         } else if(name === "cancel") {
             setIsImageLoad(false)
             setIsImageDisplay(false)
@@ -139,9 +141,11 @@ function AddEventModal(props){
                             </button>
                             {isImageLoad ? <div className="modal-form-img-popup">
                                 <div className="modal-form-img-input-cont">
+                                    <div style={{display: "flex",flexDirection: "row"}}>
                                     <input type="text" placeholder="www.photo-url.com/image.jpg" onChange={handleImageUpload} />
                                     <button type="button" name="upload" className="modal-form-img-input-cont-button-upload" onClick={handleImageUpload}>Upload</button>
                                     <button type="button" name="cancel" className="modal-form-img-input-cont-button-cancel" onClick={handleImageUpload}>Cancel</button>
+                                    </div>
                                 </div>
                             </div> : null}
                         </div>  

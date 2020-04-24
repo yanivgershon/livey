@@ -1,18 +1,17 @@
+// Deps
 import React, { Component } from 'react';
 import moment from "moment"
 import { withTranslation } from 'react-i18next';
-import './feed-item.css';
+import './user-profile-feed-item.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShareSquare, faUser, faStar, faFlag } from '@fortawesome/free-regular-svg-icons'
-import { faShareSquare as solidShare, faUser as solidUser, faStar as solidStar, faFlag as solidFlag } from '@fortawesome/free-solid-svg-icons'
+import { faShareSquare as solidShare, faUser as solidUser, faStar as solidStar, faFlag as solidFlag, faMinus, faTimes, faLink } from '@fortawesome/free-solid-svg-icons'
 import * as firebase from "firebase/app";
 import "firebase/auth"
 import fire from "../fire"; //required!
 
-
-//{props.feed.itemTitle}
-
-class FeedItem extends Component{
+// Class Component
+class UserProfileFeedItem extends Component{
   constructor(props){
     super(props)
     this.state = {
@@ -103,49 +102,29 @@ class FeedItem extends Component{
     const timeObj = moment(this.props.feed.itemStartDateObj).format("DD/MM | HH:mm")
     const timeEnd = moment(this.props.feed.itemStartDateObj).add(this.props.feed.itemDuration, "seconds").format("HH:mm")
     const timeLabel = moment(this.props.feed.itemStartDateObj).format(t("momenttimelabel"))
-    const saveState = this.props.userData.savedItems ? this.props.userData.savedItems.includes(this.props.feed.itemID) ? solidStar : faStar : faStar
     
+    // this.props.feed.itemURL          
+
     return (
-      <div className="feed-item">
-          <img src={this.props.image} alt="Event" className={t("lang") === "he" ? "feed-item-img-rtl" :"feed-item-img"}/>
-          <div className="feed-item-title">
-            <h2 onClick={() => console.log(timeObj)} className={t("lang") === "he" ? "feed-item-title-h2-rtl" : "feed-item-title-h2"}>{this.props.feed.itemTitle}</h2>
+      <div className="profile-feed-item">
+          <img src={this.props.image} alt="Event" className="profile-feed-item-img"/>
+          <div className="profile-feed-item-title">
+            <h2 onClick={() => console.log(timeObj)} className={t("lang") === "he" ? "profile-feed-item-title-h2-rtl" : "profile-feed-item-title-h2"}>{this.props.feed.itemTitle}</h2>
             <h3>{`${timeObj}-${timeEnd}`}</h3>
-          </div>
-          <div className="feed-item-timelabel" style={{background: this.state.catColor}}>
-            <h2>{timeLabel}</h2>
-          </div>
-          <h2 className="feed-item-catlabel">{itemCategory}</h2>
-          <div className="feed-item-description">
-            <p>{this.props.feed.itemDescription}</p>
             <a href={this.props.feed.itemURL} target="_blank" rel="noopener noreferrer">{t("Link to Live Event")}</a>
           </div>
-          <div className="feed-item-icons">
-            <div className="feed-item-icons-class" onClick={this.handleSave} style={this.props.isLoggedIn ? null : {color:"#c7c7c7"}}>
-              <FontAwesomeIcon className="feed-item-icons-class" icon={saveState} size="lg" />
-              <h3>{t("Save")}</h3>
-            </div>
-            <div className="feed-item-icons-class" onClick={this.handleShare}>
-              <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.share ? solidShare : faShareSquare} size="lg"/>
-              <h3>{t("Share")}</h3>
-            </div>
-            {/* <div className="feed-item-icons-class" onClick={this.handleHost} style={{color:"#c7c7c7"}}>
-              <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.host ? solidUser : faUser} size="lg"/>
-              <h3>{t("View Host")}</h3>
-            </div> */}
-            <div className="feed-item-icons-class" onClick={this.handleReport}>
-              <FontAwesomeIcon className="feed-item-icons-class" icon={this.state.report ? solidFlag : faFlag} size="lg"/>
-              <h3>{t("Report")}</h3>
-            </div>
-            <div className="feed-item-icons-counter">
-              <h2>{this.state.views}</h2>
-              <h3>{t("Views")}</h3>
-            </div>
-
+          <div className="profile-feed-item-timelabel" style={{background: this.state.catColor}}>
+            <h2>{timeLabel}</h2>
+          </div>
+          <div className="profile-feed-item-catlabel">
+            <h2>{itemCategory}</h2>
+          </div>
+          <div className="profile-feed-item-right-cont">
+            <FontAwesomeIcon onClick={this.handleSave} icon={faTimes} size="1x" style={{cursor: "pointer"}}/>
           </div>
       </div>
     )
   }
 }
 
-export default withTranslation()(FeedItem)
+export default withTranslation()(UserProfileFeedItem)

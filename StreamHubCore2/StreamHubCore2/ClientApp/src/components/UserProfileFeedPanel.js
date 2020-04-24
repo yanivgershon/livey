@@ -1,9 +1,12 @@
+// Deps
 import React, {Component} from "react"
 import { withTranslation } from 'react-i18next';
-import FeedItem from "./FeedItem";
-import './feed-panel.css';
-import { th } from "date-fns/locale";
+import './user-profile-feed-panel.css';
 
+// Componenets
+import UserProfileFeedItem from "./UserProfileFeedItem";
+
+// Images
 const fitness0 = "https://i.ibb.co/GPLBKBP/fitness0.jpg" 
 const fitness1 = "https://i.ibb.co/QYNpdxZ/fitness1.jpg" 
 const fitness2 = "https://i.ibb.co/Nyb1tNF/fitness2.jpg" 
@@ -55,7 +58,8 @@ const other7 = "https://i.ibb.co/2hdkWQR/random7.jpg"
 const other8 = "https://i.ibb.co/KN1YqcJ/random8.jpg" 
 const other9 = "https://i.ibb.co/cYXtgmX/random9.jpg" 
 
-class FeedPanel extends Component{
+// Class Component
+class UserProfileFeedPanel extends Component{
     constructor(props){
         super(props)
         this.state = {
@@ -83,59 +87,32 @@ class FeedPanel extends Component{
         
         const availableCats = ["kids","lectures","fitness","fun"]
 
-        //Feed item (Category / Date / Search) filtering
-        const feedItems = this.props.feed && this.props.feed.map(item => {
-            const itemDate = item.itemStartDateObj && item.itemStartDateObj.slice(0,10)
+        // Feed item (Category / Date / Search) filtering
+        const feedItems = this.props.feed && this.props.feed.map(item => {if(this.props.userData.savedItems.includes(item.itemID)) {
+
             const itemCategoryArr = eval(item.itemTags)
             const itemCategory = itemCategoryArr && availableCats.indexOf(itemCategoryArr[0]) !== -1 ? itemCategoryArr[0] : null
-            const itemSearch = item.itemTitle.toUpperCase().includes(this.props.searchFilter.toUpperCase())
-            //const randomImage = `https://i.picsum.photos/id/${Math.floor(Math.random() * 1000)}/200/300.jpg`
             const hostImage = item.itemImgURL
             const stockImage = itemCategory ? eval(itemCategory+this.singleDigit(item.itemTitle.length)) : eval("other"+this.singleDigit(item.itemTitle.length))
             const itemImg = hostImage ? hostImage : stockImage
-            const feedItem = <FeedItem 
+            const feedItem = <UserProfileFeedItem 
                                 key={item.itemID} 
                                 feed={item} 
                                 image={itemImg} 
-                                handleCount={this.handleCount} 
                                 isLoggedIn={this.props.isLoggedIn}
                                 setUserData={this.props.setUserData}
                                 userData={this.props.userData}
                              />
-            if (this.props.dayFilter === itemDate && !this.props.catFilter) {
-                if (!this.props.searchFilter) {
-                    return feedItem
-                } else if (itemSearch){
-                    return feedItem
-                }
-            } else if(this.props.dayFilter === itemDate && this.props.catFilter === itemCategory ) {
-                if (!this.props.searchFilter) {
-                    return feedItem
-                } else if (itemSearch){
-                    return feedItem
-                }
-            }  else {return null}
-        })
+            return feedItem
+        }})
         
-
-        const filtered = feedItems.filter(function (el) {
-        return el != null;
-        });
-
-        const results = filtered.length
-
         return(
-            <div className="feed-panel">
-                <h2 className="feed-panel-title">{t("Search Results")}</h2>
-                <h3 className="feed-panel-title-items">{results} {t("Results")}</h3>
-                <div className="feed-scroll-container">
-                    <div className="feed-item-container">
-                        {feedItems}
-                    </div>
-                </div>
+
+            <div className="profile-feed-scroll-container">
+                {feedItems}
             </div>
         )
     }
 }
 
-export default withTranslation()(FeedPanel)
+export default withTranslation()(UserProfileFeedPanel)

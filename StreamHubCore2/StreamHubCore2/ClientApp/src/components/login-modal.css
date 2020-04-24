@@ -1,0 +1,222 @@
+.modal-container-login{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.modal-container-window-parent-login {
+    display: flex;
+    position: relative;
+    width: 350px;
+    height: 300px;
+}
+
+.modal-container-window-login{
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    display: flex;
+    background: #e0e0e0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    flex-direction: column;
+}
+
+.modal-close-button-login{
+    position: absolute;
+    top: 2.5%;
+    left: 93.5%;
+    cursor: pointer;
+    color:rgb(75, 75, 75);
+}
+
+.modal-form-container-login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgb(255, 255, 255); 
+    -webkit-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2); 
+    border-radius: 15px;
+    width: 86%;
+    height: 85%;
+}
+
+.modal-form-container-login div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-form-container-login h2 {
+    margin-bottom: 20px;
+}
+
+.modal-login-loader,
+.modal-login-loader:before,
+.modal-login-loader:after {
+  background: #000000;
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 1em;
+  height: 4em;
+}
+.modal-login-loader {
+  color: #000000;
+  text-indent: -9999em;
+  margin: 88px auto;
+  position: relative;
+  font-size: 11px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.modal-login-loader:before,
+.modal-login-loader:after {
+  position: absolute;
+  top: 0;
+  content: '';
+}
+.modal-login-loader:before {
+  left: -1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.modal-login-loader:after {
+  left: 1.5em;
+}
+@-webkit-keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}
+@keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}
+
+
+/* FACEBOOK */
+
+.Social-login-button-facebook{
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    background: #507CC0;
+    border: none;
+    height:50px;
+    border-radius: 4px;
+    width: calc(100% - 60px);
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 
+                0px 2px 2px 0px rgba(0,0,0,0.14), 
+                0px 1px 5px 0px rgba(0,0,0,0.12);
+    opacity: 1;
+    cursor: pointer;
+    color: white;
+    font-size: 11pt;
+    margin-bottom: 20px;
+}
+
+.Social-login-button-facebook:hover{
+    background: rgb(58, 108, 184);
+}
+
+.Social-login-button-facebook:active{
+    opacity: 0.8;
+}
+
+.Social-login-button-facebook:focus{
+    outline: none;
+}
+
+/* TWITTER */
+
+.Social-login-button-twitter{
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    background: #64CCF1;
+    border: none;
+    height:50px;
+    border-radius: 4px;
+    width: calc(100% - 60px);
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 
+                0px 2px 2px 0px rgba(0,0,0,0.14), 
+                0px 1px 5px 0px rgba(0,0,0,0.12);
+    opacity: 1;
+    cursor: pointer;
+    color: white;
+    font-size: 11pt;
+    margin-bottom: 20px;
+}
+
+.Social-login-button-twitter:hover{
+    background: rgb(58, 185, 231);
+}
+
+.Social-login-button-twitter:active{
+    opacity: 0.8;
+}
+
+.Social-login-button-twitter:focus{
+    outline: none;
+}
+
+/* GOOGLE */
+
+.Social-login-button-google{
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    background: #DF4930;
+    border: none;
+    height:50px;
+    border-radius: 4px;
+    width: calc(100% - 60px);
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 
+                0px 2px 2px 0px rgba(0,0,0,0.14), 
+                0px 1px 5px 0px rgba(0,0,0,0.12);
+    opacity: 1;
+    cursor: pointer;
+    color: white;
+    font-size: 11pt;
+}
+
+.Social-login-button-google:hover{
+    background: rgb(218, 58, 30);
+}
+
+.Social-login-button-google:active{
+    opacity: 0.8;
+}
+
+.Social-login-button-google:focus{
+    outline: none;
+}

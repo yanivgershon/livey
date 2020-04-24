@@ -37,6 +37,7 @@
     top: 1.5%;
     left: 96.5%;
     cursor: pointer;
+    color:rgb(75, 75, 75);
 }
 
 .modal-container-window h1 {
@@ -87,7 +88,6 @@
     display: flex;
     align-content: center;
     justify-content: center; 
-    padding: 10px;
 }
 
 .modal-form-img-input-cont input{
@@ -106,39 +106,41 @@
 }
 
 .modal-form-img-input-cont-button-upload{
-    border: solid 4px rgb(240, 240, 240);
-    border-right: solid 2px rgb(240, 240, 240);
+    border: none;
     height: 33px;
     padding: 5px;
-    background: rgb(177, 255, 219);
+    padding-right: 10px;
+    padding-left: 10px;
+    background: rgb(84, 255, 175);
     font-weight: bold;
     cursor: pointer;
 }
 
 .modal-form-img-input-cont-button-upload:hover{
-    background: rgb(160, 231, 198);
+    background: rgb(54, 207, 136);
 }
 
 .modal-form-img-input-cont-button-upload:active{
-    background: rgb(199, 255, 229);
+    background: rgb(164, 255, 213)
 }
 
 .modal-form-img-input-cont-button-cancel{
-    border: solid 4px rgb(240, 240, 240);
-    border-left: solid 2px rgb(240, 240, 240);
+    border: none;
     height: 33px;
     padding: 5px;
-    background: rgb(247, 181, 181);
+    padding-right: 10px;
+    padding-left: 10px;
+    background: rgb(255, 141, 141);
     border-radius: 0 5px 5px 0;
     cursor: pointer;
 }
 
 .modal-form-img-input-cont-button-cancel:hover{
-    background: rgb(241, 151, 151);
+    background: rgb(230, 97, 97);
 }
 
 .modal-form-img-input-cont-button-cancel:active{
-    background: rgb(248, 199, 199);
+    background: rgb(255, 159, 159);
 }
 
 .modal-form-img-button-remove {
