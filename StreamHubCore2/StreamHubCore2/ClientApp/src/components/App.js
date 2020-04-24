@@ -48,17 +48,26 @@ function App() {
   useEffect(() => {
     const authListener = firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        console.log("yes user:",user)
         setIsLoggedIn(true)
-        setUserData(prevState => ({
-          ...prevState, 
-          displayName: user.displayName,
-          savedItems: user.photoURL,
-          email: user.email
-        }))
+        console.log("User Logged In:",user)
+        if (user.photoURL && user.photoURL.includes("https://")){
+          setUserData(prevState => ({
+            ...prevState, 
+            displayName: user.displayName,
+            savedItems: "",
+            email: user.email
+          }))
+        } else {
+          setUserData(prevState => ({
+            ...prevState, 
+            displayName: user.displayName,
+            savedItems: user.photoURL,
+            email: user.email
+          }))
+        }
       } else {
-        console.log("no user:",user)
         setIsLoggedIn(false)
+        console.log("No User:",user)
       }
     })
     return authListener

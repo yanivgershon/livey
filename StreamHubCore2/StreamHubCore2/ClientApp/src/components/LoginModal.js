@@ -44,8 +44,11 @@ function LoginModal(props){
         .auth()
         .signInWithPopup(provider)
         .then(result => {
+            const isNewUser = result.additionalUserInfo.isNewUser
+            if(isNewUser){
+                firebase.auth().currentUser.updateProfile({photoURL: ""})
+            }
             console.log(result)
-            props.setIsLoggedIn(true)
             handleCloseSuccess()
         })
         .catch(e => setFireErrors(e.message))//.then(console.log("AuthErros:",fireErrors)) 
@@ -64,8 +67,11 @@ function LoginModal(props){
         .auth()
         .signInWithPopup(provider)
         .then(result => {
+            const isNewUser = result.additionalUserInfo.isNewUser
+            if(isNewUser){
+                firebase.auth().currentUser.updateProfile({photoURL: ""})
+            }
             console.log(result)
-            props.setIsLoggedIn(true)
             handleCloseSuccess()
         })
         .catch(e => setFireErrors(e.message))//.then(console.log("AuthErros:",fireErrors))
@@ -84,14 +90,11 @@ function LoginModal(props){
         .auth()
         .signInWithPopup(provider)
         .then(result => {
-            var isNewUser = result.additionalUserInfo.isNewUser
-            console.log("isNewUser:",isNewUser)
-            console.log("photoURL:",firebase.auth().currentUser.photoURL)
+            const isNewUser = result.additionalUserInfo.isNewUser
             if(isNewUser){
                 firebase.auth().currentUser.updateProfile({photoURL: ""})
             }
             console.log(result)
-            props.setIsLoggedIn(true)
             handleCloseSuccess()
         })
         .catch(e => setFireErrors(e.message))//.then(console.log("AuthErros:",fireErrors))  

@@ -128,7 +128,7 @@
 .Social-login-button-facebook{
     display: flex;
     justify-content: space-around;
-    align-content: center;
+    align-items: center;
     background: #507CC0;
     border: none;
     height:50px;
@@ -161,7 +161,7 @@
 .Social-login-button-twitter{
     display: flex;
     justify-content: space-around;
-    align-content: center;
+    align-items: center;
     background: #64CCF1;
     border: none;
     height:50px;
@@ -194,7 +194,7 @@
 .Social-login-button-google{
     display: flex;
     justify-content: space-around;
-    align-content: center;
+    align-items: center;
     background: #DF4930;
     border: none;
     height:50px;

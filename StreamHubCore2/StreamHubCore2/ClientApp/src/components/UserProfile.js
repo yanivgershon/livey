@@ -36,6 +36,7 @@ function UserProfile(props){
     const handleClearAll = () => {
         props.setUserData(prevState => ({...prevState, savedItems: ""}))
         firebase.auth().currentUser.updateProfile({photoURL: ""})
+        handleClearHide()
     }
 
     const savedItemsPanel = <UserProfileFeedPanel 

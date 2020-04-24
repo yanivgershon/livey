@@ -3,7 +3,7 @@ import "./add-event-modal.css"
 import { useTranslation } from 'react-i18next'
 //import { loadReCaptcha } from 'react-recaptcha-v3'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileUpload, faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faFileUpload, faPlus, faTimes, faCheck } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment"
 
 function AddEventModal(props){
@@ -27,6 +27,7 @@ function AddEventModal(props){
     const [isImageLoad, setIsImageLoad] = useState(false)
     const [isImageDisplay, setIsImageDisplay] = useState(false)
     const [isImageError, setIsImageError] = useState(false)
+    const [isSubmitted, setIsSubmitted] = useState(false)
 
 
     const { t } = useTranslation()
@@ -119,7 +120,12 @@ function AddEventModal(props){
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error))
-            .then(props.handleHideAddEvent())
+            .then(setIsSubmitted(true))
+            .then(
+                setTimeout(() => {
+                    setIsSubmitted(false)
+                    props.handleHideAddEvent()
+                    }, 2000))
         } else {
             setIsError(true)
             setIsErrorHighlight(true)
@@ -130,11 +136,11 @@ function AddEventModal(props){
     return(
         <div className="modal-container" name="mainmodal" onClick={handleClose}>
             <div className="modal-container-window-parent">
-                <form className="modal-container-window">
+{!isSubmitted ? <form className="modal-container-window">
                     <div className="modal-close-button" onClick={props.handleHideAddEvent}>
                         <FontAwesomeIcon icon={faTimes} size="1x"/>
                     </div>
-                    <div className="modal-form-container">
+                     <div className="modal-form-container">
                         <div className="modal-form-img">
                             <button className="modal-form-img-button" type="button" onClick={handleShowImageUpload}>{t("Upload Photo")}<br/><br/>
                             <FontAwesomeIcon className="modal-form-img-button-icon" icon={faFileUpload} size="2x"/>
@@ -251,16 +257,26 @@ function AddEventModal(props){
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     {isError ? <h4 style={{color:"red", fontWeight: isErrorHighlight ? "900" : "200"} }>You must complete the form before submitting!</h4> : null}
                     <button className="modal-submit-button" type="submit" onClick={handleSubmit}>
                         <FontAwesomeIcon className={t("lang") === "he" ? "modal-submit-button-icon-rtl" : "modal-submit-button-icon"} icon={faPlus} size="1x"/>
                         {t("Add Event")}
                     </button>
-                </form>
+                </form>:
+                <div className="modal-container-window">
+                    <div className="modal-form-container-login">
+                        <div>
+                            <h2>Event Added successfully!</h2>
+                            <FontAwesomeIcon icon={faCheck} size="2x"/>
+                        </div>
+                    </div>
+                </div>}
             </div>
         </div>
     )
 }
 
 export default AddEventModal
+
+

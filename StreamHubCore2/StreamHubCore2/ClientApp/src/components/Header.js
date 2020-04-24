@@ -5,7 +5,6 @@ import './header.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 
-
 // Components
 import LangSelector from "./LangSelector"
 import streamHubLogo from "../StreamHub_Logo.png"
@@ -51,7 +50,7 @@ function Header(props){
     }
 
     const handleShowProfile = () => {
-        SetShowProfile(true)
+        SetShowProfile(true) ? SetShowProfile(false) : SetShowProfile(true)
         console.log("userData:",props.userData)
     }
 
@@ -59,6 +58,35 @@ function Header(props){
         SetShowProfile(false)
     }
 
+    const savedCount = props.userData.savedItems && props.userData.savedItems.split(',').length-1
+
+    const loginButton = !props.isLoggedIn ? <button 
+                                            className="header-login-button" 
+                                            onClick={handleShowLogin}>
+                                                {t("Login")}
+                                            </button> : null
+    const profileNotification = props.userData.savedItems ? <div 
+                                                            className="header-profile-button-notifications">
+                                                                {savedCount}
+                                                            </div> : null
+    const profileButton = props.isLoggedIn ? <button 
+                                            className="header-profile-button" 
+                                            onClick={handleShowProfile}>
+                                                <FontAwesomeIcon icon={faUser} size="lg"/>
+                                            </button> : null                                  
+    
+    const userProfile = props.isLoggedIn && showProfile ?   <UserProfile 
+                                        handleHideProfile={handleHideProfile}
+                                        showProfile={showProfile}
+                                        setIsLoggedIn={props.setIsLoggedIn}
+                                        setUserData={props.setUserData}
+                                        userData={props.userData}
+                                        feed={props.feed}
+                                        isLoggedIn={props.isLoggedIn}
+                                        setUserData={props.setUserData}
+                                        userData={props.userData}
+                                        /> : null
+    
     return (
         <div className="header-container">
 
@@ -89,31 +117,12 @@ function Header(props){
                                     <p>Login Required!</p>
                                  </div> : null}
                 </div>
-                {!props.isLoggedIn ? <button 
-                    className="header-login-button"
-                    onClick={handleShowLogin}>
-                    {t("Login")}
-                </button>
-                :
-                <div> 
-                <button 
-                    className="header-profile-button"
-                    onClick={handleShowProfile}>
-                    <FontAwesomeIcon icon={faUser} size="lg"/>
-                </button>
-                {showProfile ? <UserProfile 
-                                handleHideProfile={handleHideProfile}
-                                showProfile={showProfile}
-                                setIsLoggedIn={props.setIsLoggedIn}
-                                setUserData={props.setUserData}
-                                userData={props.userData}
-                                feed={props.feed}
-                                isLoggedIn={props.isLoggedIn}
-                                setUserData={props.setUserData}
-                                userData={props.userData}
-                               /> : null}
-                </div>}
-                
+                <div className="header-user-container">
+                    {loginButton}
+                    {profileNotification}
+                    {profileButton}
+                    {userProfile}
+                </div>                
             </div>
             
             {showAddEvent ? <AddEventModal 
@@ -124,6 +133,7 @@ function Header(props){
                          handleHideLogin={handleHideLogin} 
                          setIsLoggedIn={props.setIsLoggedIn} 
                          isLoggedIn={props.isLoggedIn}
+                         setUserData={props.setUserData}
                          /> : null}
             
         </div>

@@ -69,6 +69,10 @@
 
 
 /* LOGIN / PROFILE BUTTONS */
+.header-user-container {
+    position: relative;
+}
+
 .header-login-button{
     background: #e0e0e0;
     border: none;
@@ -120,4 +124,17 @@
 
 .header-profile-button:focus{
     outline: none;
+}
+
+.header-profile-button-notifications{
+    top: 2.5;
+    right: -2.5px;
+    position:absolute;
+    background: rgb(255, 38, 0);
+    border-radius: 50%;
+    height: 13px;
+    width: 13px;
+    color: white;
+    font-size:7pt;
+    text-align: center;
 }
