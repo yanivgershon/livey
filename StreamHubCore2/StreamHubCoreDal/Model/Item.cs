@@ -37,6 +37,7 @@ namespace StreamHubCoreDal.Models
         public int PlatformID { get; set; }
 
         public string ItemImgURL { get; set; }
+        public DateTime createDate { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
         [NotMapped]
