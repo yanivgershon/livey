@@ -26,7 +26,10 @@ namespace StreamHubCoreDal.Models
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
             string _connectionString = string.Empty;
+            _connectionString = AppConfiguration.ConnectionString;
+            /*
             var configurationBuilder = new ConfigurationBuilder();
             var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
             configurationBuilder.AddJsonFile(path, false);
@@ -36,6 +39,8 @@ namespace StreamHubCoreDal.Models
             var appSetting = root.GetSection("ApplicationSettings");
 
            // string conStr = 
+           */
+
             optionsBuilder.UseSqlServer(AppConfiguration.ConnectionString);
         }
 
