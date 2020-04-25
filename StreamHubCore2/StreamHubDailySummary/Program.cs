@@ -42,8 +42,8 @@ namespace StreamHubDailySummary
             const string fromPassword = "pndmrgmvdcxdirxl";
             const string subject = "Trying from core Daily summary";
 
-            string body = createMaiBodyPlain(items);
-            // string body = createMaiBody(items); 
+          
+            string body = createMaiBody(items); 
             try
             {
                 var smtp = new SmtpClient
@@ -94,52 +94,41 @@ namespace StreamHubDailySummary
             //}
         }
 
-        private static string createMaiBodyPlain(List<Item> items)
-        {
-            StringBuilder sb = new StringBuilder();
-            items.ForEach(item =>
-            {
-                sb.AppendLine($@"Title: ${item.ItemTitle} , URL: ${item.ItemURL} ,  StartDate: ${item.ItemStartDateObj.ToString()} , 
-                Duration: ${item.ItemDuration.ToString()} ,  Tages: ${item.ItemTags} ,Owner:  ${item.ItemOwner}, Image URL : ${item.ItemImgURL}");
-                sb.AppendLine(item.ItemTitle);
-            });
-            return sb.ToString();
-        }
-
+      
         private static string createMaiBody(List<Item> items)
         {
             string body=
-            "< html >< head >" +
-                "< style >" +
+            "<html><head>" +
+                "<style>" +
                 "table {font - family: arial, sans - serif;border - collapse: collapse;width: 100 %;}" +
-                "td, th {border: 1px solid #dddddd;text - align: left;padding: 8px;}tr: nth - child(even) {background - color: #dddddd;}</ style >" +
-                "</ head >" +
-                "< body >< h2 > HTML Table </ h2 >" +
-                "< table >< tr >" +
+                "td, th {border: 1px solid #dddddd;text - align: left;padding: 8px;}tr: nth - child(even) {background - color: #dddddd;}</style>" +
+                "</head>" +
+                "<body><h2> HTML Table </h2>" +
+                "<table><tr>" +
 
-                "< th > Title </ th >" +
-                "< th > URL </ th >" +
-                "< th > Description </ th >" +
-                 "< th > Tags </ th >" +
-                 "< th > Start Date </ th >" +
-                 "< th > Owner </ th >" +
-                    "< th > Img URL </ th >" +
-                "</ tr >";
+                "<th> Title </th>" +
+                "<th> URL </th>" +
+                "<th> Description </th>" +
+                 "<th> Tags </th>" +
+                 "<th> Start Date </th>" +
+                 "<th> Owner </th>" +
+                    "<th> Img URL </th>" +
+                "</tr>";
             items.ForEach(item =>
             {
-                body += "< tr >" +
-                            " < td >" + item.ItemTitle + "</ td >" +
-                            " < td >" + item.ItemURL + "</ td >" +
-                            " < td >" + item.ItemDescription + "</ td >" +
-                            " < td >" + item.ItemTags + "</ td >" +
-                            " < td >" + item.ItemStartDateObj.ToString() + "</ td >" +
-                            " < td >" + item.ItemOwner + "</ td >" +
-                            " < td >" + item.ItemImgURL + "</ td >" +
-                        "</ tr >";
+                body += "<tr>" +
+                            " <td>" + item.ItemTitle + "</td>" +
+                            " <td>" + item.ItemURL + "</td>" +
+                            " <td>" + item.ItemDescription + "</td>" +
+                            " <td>" + item.ItemTags + "</td>" +
+                            " <td>" + item.ItemStartDateObj.ToString() + "</td>" +
+                            " <td>" + item.ItemOwner + "</td>" +
+                            " <td>" + item.ItemImgURL + "</td>" +
+                        "</tr>";
             });
 
-            body += "</ table ></body>" +
-             "</ html > ";
+            body += "</table></body>" +
+             "</html> ";
 
             return body;
         }
