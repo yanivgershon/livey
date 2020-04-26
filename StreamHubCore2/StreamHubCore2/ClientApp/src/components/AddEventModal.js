@@ -3,7 +3,7 @@ import "./add-event-modal.css"
 import { useTranslation } from 'react-i18next'
 //import { loadReCaptcha } from 'react-recaptcha-v3'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileUpload, faPlus, faTimes, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faFileUpload, faPlus, faTimes, faCheck, faImage } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment"
 
 function AddEventModal(props){
@@ -142,21 +142,21 @@ function AddEventModal(props){
                     </div>
                      <div className="modal-form-container">
                         <div className="modal-form-img">
-                            <button className="modal-form-img-button" type="button" onClick={handleShowImageUpload}>{t("Upload Photo")}<br/><br/>
-                            <FontAwesomeIcon className="modal-form-img-button-icon" icon={faFileUpload} size="2x"/>
+                            <button className={t("lang") === "he" ? "modal-form-img-button-rtl" : "modal-form-img-button"} type="button" onClick={handleShowImageUpload}>{t("Choose Photo")}<br/><br/>
+                            <FontAwesomeIcon className="modal-form-img-button-icon" icon={faImage} size="2x"/>
                             </button>
                             {isImageLoad ? <div className="modal-form-img-popup">
                                 <div className="modal-form-img-input-cont">
                                     <div style={{display: "flex",flexDirection: "row"}}>
                                     <input type="text" placeholder="www.photo-url.com/image.jpg" onChange={handleImageUpload} />
-                                    <button type="button" name="upload" className="modal-form-img-input-cont-button-upload" onClick={handleImageUpload}>Upload</button>
-                                    <button type="button" name="cancel" className="modal-form-img-input-cont-button-cancel" onClick={handleImageUpload}>Cancel</button>
+                                    <button type="button" name="upload" className="modal-form-img-input-cont-button-upload" onClick={handleImageUpload}>{t("Choose")}</button>
+                                    <button type="button" name="cancel" className="modal-form-img-input-cont-button-cancel" onClick={handleImageUpload}>{t("Cancel")}</button>
                                     </div>
                                 </div>
                             </div> : null}
                         </div>  
                         {isImageDisplay ? <img className={t("lang") === "he" ? "temp-img-rtl" :"temp-img"} alt="" src={state.itemImgURL}/> : null }
-                        {isImageDisplay ? <button type="button" name="remove" className="modal-form-img-button-remove" onClick={handleImageUpload}>Remove</button> : null }
+                        {isImageDisplay ? <button type="button" name="remove" className="modal-form-img-button-remove" onClick={handleImageUpload}>{t("Remove")}</button> : null }
                         <div className="modal-form">
                             <div className="modal-form-inputs">
                                 <h3><span>* </span>{t("Tell us about your event")}</h3>
@@ -258,7 +258,7 @@ function AddEventModal(props){
                             </div>
                         </div>
                     </div> 
-                    {isError ? <h4 style={{color:"red", fontWeight: isErrorHighlight ? "900" : "200"} }>You must complete the form before submitting!</h4> : null}
+                    {isError ? <h4 style={{color:"red", fontWeight: isErrorHighlight ? "900" : "200"} }>{t("You must complete the form before submitting!")}</h4> : null}
                     <button className="modal-submit-button" type="submit" onClick={handleSubmit}>
                         <FontAwesomeIcon className={t("lang") === "he" ? "modal-submit-button-icon-rtl" : "modal-submit-button-icon"} icon={faPlus} size="1x"/>
                         {t("Add Event")}

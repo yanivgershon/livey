@@ -197,6 +197,16 @@
     text-transform: uppercase;
 }
 
+.modal-form-img-button-rtl{
+    background: linear-gradient(135deg, #711778, #007853);
+    border-radius: 0 15px 15px 0;
+    border: none;
+    font-size: 11pt;
+    padding: 20px;
+    color: white;
+    text-transform: uppercase;
+}
+
 .modal-form-img-button:hover{
     outline:none;
     background: linear-gradient(135deg, #4f1053, #015038);

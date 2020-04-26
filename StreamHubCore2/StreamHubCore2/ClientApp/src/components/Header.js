@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, createRef } from 'react'
 import { useTranslation } from 'react-i18next' 
 import './header.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faExclamationTriangle, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 
 // Components
 import LangSelector from "./LangSelector"
@@ -50,7 +50,7 @@ function Header(props){
     }
 
     const handleShowProfile = () => {
-        SetShowProfile(true) ? SetShowProfile(false) : SetShowProfile(true)
+        showProfile ? SetShowProfile(false) : SetShowProfile(true)
         console.log("userData:",props.userData)
     }
 
@@ -113,8 +113,8 @@ function Header(props){
                     + {t("Add Event")}
                 </button>
                 {showMustLogin ? <div className="add-event-dropdown-alert">
-                                    <FontAwesomeIcon icon={faExclamationTriangle} size="1x"/>
-                                    <p>Login Required!</p>
+                                    <FontAwesomeIcon icon={faInfoCircle} size="1x"/>
+                                    <p>{t("Login Required!")}</p>
                                  </div> : null}
                 </div>
                 <div className="header-user-container">
