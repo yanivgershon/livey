@@ -26,7 +26,7 @@ namespace StreamHubCore2.Controllers
         {
             var items = _context.Items;
          
-            var itemsGrouped = items.GroupBy(x => new { x.ItemDescription, x.ItemDuration, x.ItemImgURL, x.ItemOwner, x.ItemStartDate, x.ItemStartDateObj, x.ItemTags, x.ItemTitle, x.ItemURL, x.PlatformID })
+            var itemsGrouped = items.GroupBy(x => new { x.ItemDescription, x.ItemDuration, x.ItemImgURL, x.ItemOwner, x.ItemStartDate, x.ItemStartDateObj, x.ItemTags, x.ItemTitle, x.PlatformID })
            .Select(x => x.First()).OrderBy(x => x.ItemStartDateObj);
             var itemsDateCompared = itemsGrouped.Where(x => x.ItemStartDateObj.Ticks >= DateTime.Now.Ticks);
             var itemsConvertedToList = itemsDateCompared.ToList();
