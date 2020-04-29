@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {}
+    "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {}
   },
   "projects": {
-    "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {
+    "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
+        "projectUniqueName": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
         "projectName": "StreamHubCoreDal",
-        "projectPath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
+        "projectPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
         "packagesPath": "C:\\Users\\yaniv\\.nuget\\packages\\",
-        "outputPath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\obj\\",
+        "outputPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

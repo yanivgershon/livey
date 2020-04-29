@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Y++/yuT6nQqtbUvKF14+NcG/XqGSpditQw6G8biTw+CHTL6j4lfrdGPO6H0MFdNjYU+5UjBz2b+PTGSfHLl7aw==",
+  "dgSpecHash": "C+5GjKHpLk+Uth+q8mhJ+5k6Dk/VlHEnEByU6HrL2NmeISlj7KmIhL6x2FJE1lR2693XHi4SLNcE0xbXUUcopg==",
   "success": true,
-  "projectFilePath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
+  "projectFilePath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
   "expectedPackageFiles": [
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.razor.design\\2.1.2\\microsoft.aspnetcore.razor.design.2.1.2.nupkg.sha512",
     "C:\\Users\\yaniv\\.nuget\\packages\\microsoft.entityframeworkcore\\2.1.14\\microsoft.entityframeworkcore.2.1.14.nupkg.sha512",

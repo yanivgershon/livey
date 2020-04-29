@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreJobs\\StreamHubCoreJobs.csproj": {}
+    "D:\\programming5\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj": {}
   },
   "projects": {
     "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {
@@ -43,27 +43,27 @@
           "dependencies": {
             "Microsoft.AspNetCore.Razor.Design": {
               "target": "Package",
-              "version": "[2.1.2, )"
+              "version": "[2.2.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[2.1.14, )"
+              "version": "[3.1.3, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[2.1.1, )"
+              "version": "[3.1.3, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[2.1.1, )"
+              "version": "[3.1.3, )"
             },
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
-              "version": "[2.1.1, )"
+              "version": "[3.1.3, )"
             },
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
-              "version": "[2.1.1, )"
+              "version": "[3.1.3, )"
             },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
@@ -90,14 +90,14 @@
         }
       }
     },
-    "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreJobs\\StreamHubCoreJobs.csproj": {
+    "D:\\programming5\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreJobs\\StreamHubCoreJobs.csproj",
-        "projectName": "StreamHubCoreJobs",
-        "projectPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreJobs\\StreamHubCoreJobs.csproj",
+        "projectUniqueName": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj",
+        "projectName": "StreamHubDailySummary",
+        "projectPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj",
         "packagesPath": "C:\\Users\\yaniv\\.nuget\\packages\\",
-        "outputPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreJobs\\obj\\",
+        "outputPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubDailySummary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -131,10 +131,6 @@
       "frameworks": {
         "netcoreapp2.1": {
           "dependencies": {
-            "CsvHelper": {
-              "target": "Package",
-              "version": "[15.0.5, )"
-            },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
