@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup as soup
 from datetime import datetime, timedelta
 import io
 from catergoryDict import categories as cDict
+from strictCatDict import strictCat as sCDict
 from os import path
 import pyodbc
 import pandas as pa
@@ -17,17 +18,17 @@ conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                      'PWD=sS8370098;'
                      'Integrated Security=False;'
                      )
-the_str=""
 ################# insert to DB code ############################
 
 print("Scrapping data from: Eventbrite.com")
 
 myurl = "https://www.eventbrite.com/d/online/israel/?page=1"
 
+#Write path depending if on Linux Azure VM or Win laptop
 if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
     the_path = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"
 else:
-    the_path = "/root/bin/datascrape"
+    the_path = "/home/streamhub/datascrape"
 
 #Grapping page
 uClient = uReq(myurl)
@@ -60,33 +61,41 @@ with open(filename, "w", encoding="utf=16") as f:
         # parses the info
         page_soup = soup(page_html, "html.parser")
 
-        #retrieve data
-        events = page_soup.findAll("div", {"class":"eds-media-card-content__content-container eds-l-pad-right-2"})
-        events = events[::2]
+        # retrieve events from page
+        events = page_soup.findAll("article", {"class":"eds-event-card-content--mini"})
         for event in events:
+            print(event)
 
+            ### TITLE ###
             title = event.find("div",{"class":"eds-event-card__formatted-name--is-clamped"}).text
+            # make sure event is not postponed or cancelled
             lTitle = title.lower()
             if lTitle.find("postponed") != -1 or lTitle.find("cancelled") != -1:
                 continue
-            eUrl = event.find("a", {"class":"eds-media-card-content__action-link"})["href"]
+
+            ### URL ###
+            eUrl = event.find("a", {"class": "eds-event-card-content__action-link"})["href"]
 
             timeDate = event.find("div", {"class":"eds-text-color--primary-brand"}).text.strip()
-
-            #if event has specific dates
+            #if event has specific dates and is not today\tmrw
             if timeDate.find(",") != -1:
                 dt = timeDate.split(", ")
 
+                ###TIME##
                 fullTime = dt.pop().split(" ")
-                print(fullTime)
-                time = fullTime[0]
-                exactTime = fullTime[0].split(":")
-                if fullTime[1] == "PM":
+
+                #Time if AM
+                time = fullTime[1]
+                # Time if PM change to 24 hour
+                exactTime = fullTime[1].split(":")
+                if fullTime[2] == "PM":
                     exactTime[0] = str(int(exactTime[0])+12)
-                    print(exactTime)
+                    #24 not allowed in DB
                     if exactTime[0] == "24":
                         exactTime[0] = "00"
                     time = ":".join(exactTime)
+
+                #Change month name to month number
                 fMD = dt.pop().split(" ")
                 if fMD[0] == "Apr":
                     fMD[0] = "4"
@@ -112,24 +121,30 @@ with open(filename, "w", encoding="utf=16") as f:
                     fMD[0] = "2"
                 elif  fMD[0] == "Mar":
                     fMD[0] = "3"
+                ###DATE###
                 date = fMD[1] + "." + fMD[0] + ".2020"
 
+                ###WEEKDAY###
                 weekday = dt.pop()
 
             #if today\tmrw and doesn't have a date
             else:
                 dt = timeDate.split(" at ")
 
+                ### TIME ###
                 fullTime = dt.pop().split(" ")
-                time = fullTime[0]
-                exactTime = fullTime[0].split(":")
-                if fullTime[1] == "PM":
+                time = fullTime[1]
+                exactTime = fullTime[1].split(":")
+                #If am-pm - change to 24 hour
+                if fullTime[2] == "PM":
                     exactTime[0] = str(int(exactTime[0])+12)
-                    print(exactTime)
+                    #24 not allowed in DB
                     if exactTime[0] == "24":
                         exactTime[0] = "00"
                     time = ":".join(exactTime)
 
+                ### DATE ###
+                #Get today \ tmrw's dates
                 fMD = dt.pop()
                 if fMD == "Today":
                     date = datetime.today().strftime('%d.%m.%Y')
@@ -137,22 +152,46 @@ with open(filename, "w", encoding="utf=16") as f:
                     raw_date = datetime.today() + timedelta(days=1)
                     date = raw_date.strftime('%d.%m.%Y')
 
-            titleL = title.lower().split(" ")
-            eCat = {cDict[key] for key in cDict.keys() & set(titleL)}
-#            print(eCat)
+            ### Caterogies ###
+            titleL = set(title.lower().split(" "))
+            eCat = set()
+            # DYNAMIIC search title's words for caterogies
+            for word in titleL:
+                wordCat = {cDict[key] for key in cDict.keys() if word.find(key) != -1}
+                for w in wordCat:
+                    eCat.add(w)
+
+            # STRICT search title's words for caterogies
+            eCatStrict = {sCDict[key] for key in sCDict.keys() & titleL}
+            for c in eCatStrict:
+                eCat.add(c)
+
+            # order for catergory priority - kids > fitness > fun > lectures by
+            eCat = list(eCat)
+            if "kids" in eCat and len(eCat) > 1 and eCat.index("kids") != 0:
+                kids = eCat.pop(eCat.index("kids"))
+                eCat.insert(0, kids)
+            elif "fitness" in eCat and len(eCat) > 1 and eCat.index("fitness") != 0:
+                fitness = eCat.pop(eCat.index("fitness"))
+                eCat.insert(0, fitness)
+            elif "fun" in eCat and len(eCat) > 1 and eCat.index("fun") != 0:
+                fun = eCat.pop(eCat.index("fun"))
+                eCat.insert(0, fun)
+
+            # stringify and "" format for database input
+            eCat = str(eCat).replace("'", "''")
+            print(f"eCat {eCat}")
+
+            ### write data in csv
+            f.write(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl + "\n")
+            print(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl)
 
             ################# insert to DB code ############################
             datespl = date.split('.')
             dateSql = datespl[2] + "-" + datespl[1] + "-" + datespl[0] + " " + time
-            # print(eCat)
-            the_str += date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n";
-            print(date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")
-            # write data in csv
-            f.write(date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")
             cursor = conn.cursor()
-            catsReal = (str(list(eCat))).replace("'", "''")
-            # a = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
-            data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': catsReal,
+
+            data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': eCat,
                     'ItemStartDate': '0',
                     'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 2,
                     'ItemImgURL': '',
@@ -164,11 +203,9 @@ with open(filename, "w", encoding="utf=16") as f:
                 data['PlatformID'], data['ItemImgURL'], data['UserFavoriteItemID']
             )
 
-            # print(data)
             insertStr = "insert into [dbo].[Items] ([ItemTitle],[ItemURL],[ItemDescription],[ItemTags],[ItemStartDate],[ItemStartDateObj],[ItemDuration],[ItemOwner],[PlatformID],[ItemImgURL],[UserFavoriteItemID])VALUES (N'%s', '%s','%s', '%s', '%s', '%s', '%s', '%s','%s','%s',%s)" % data
-            # print(insertStr)
             cursor.execute(insertStr)
             conn.commit()
-        ################# insert to DB code ############################
+            ################# insert to DB code ############################
 
 f.close()

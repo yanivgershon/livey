@@ -4,7 +4,6 @@ from urllib.request import Request
 from bs4 import BeautifulSoup as soup
 import io
 import re
-from catergoryDict import categories as cDict
 from os import path
 import pyodbc
 import pandas as pa
@@ -18,13 +17,13 @@ conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                      'PWD=sS8370098;'
                      'Integrated Security=False;'
                      )
-the_str=""
 ################# insert to DB code ############################
 
 print("Scrapping data from: Zappa.co.il")
 
 myurl = "https://www.zappa-club.co.il/content/the-show-must-go-on/"
 
+#Write path depending if on Linux Azure VM or Win laptop
 if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
     the_path = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"
 else:
@@ -46,52 +45,63 @@ with open(filename, "w", encoding="utf=16") as f:
     #csv headers
     headers = "Date., Time., Title., Caterogies., Url\n"
     f.write(headers)
-    #retrieve data
+
+    ### URL ###
     eUrl = myurl
 
+    #retrieve page content
     ref = page_soup.find("div", {"class":"content_group wide_-content"})
+    #filter all event p's
     events = ref.findAll("p")
+    #find נתון לשינויים for reference (next day's event comes right after)
     pattern = re.compile("נתון לשינויים")
+    #get נתון לשינויים's index by it's p
     eIndex = 0
     for i, e in enumerate(events):
         if pattern.search(str(e)) is not None:
-#            print(e)
             eIndex = i
-    # dateday = events[eIndex+1].find("strong").text.split("-")
 
-
+    #get next day's event based on נתון לשינויים's index
     eList = str(events[eIndex+2]).split("<br/>")
     eList = [soup(l, "html.parser").text for l in eList]
     dateDay = eList.pop(0).split(" - ")
+    ### DATE ###
     date = dateDay.pop().strip()
+
+    ### WEEKDAY ### (not interesting)
     day = dateDay.pop().strip()
-    # print("day " + day)
-    # print("date " + date)
+
 
     for event in eList:
         if event.count("-") == 1:
             sEvent = event.split(" - ")
+            ### TITLE ###
             title = sEvent.pop()
+            ### TIME ###
             time = sEvent.pop()
         elif event.count("-") > 1:
             sEvent = event.split(" - ")
+            ### TIME ###
             time = sEvent.pop(0)
+            ### TITLE ###
             title = sEvent.pop(0)
 
-        eCat = {"fun"}
+        ### CATEGORY ###
+        #Inputting manually, no title to search and is always FUN
+        eCat = ['fun']
+        eCat = str(eCat).replace("'", "''")
+        # print(eCat)
+
+        print(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl)
+        # write data in csv
+        f.write(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl + "\n")
 
         ################# insert to DB code ############################
         datespl = date.split('.')
+        #unlike all other scrapes, ZAPPA doesn't have year in date
         dateSql = "2020-" + datespl[1] + "-" + datespl[0] + " " + time
-        # print(eCat)
-        the_str += date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n";
-        print(date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")
-        # write data in csv
-        f.write(date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")
         cursor = conn.cursor()
-        catsReal = (str(list(eCat))).replace("'", "''")
-        # a = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
-        data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': catsReal,
+        data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': eCat,
                 'ItemStartDate': '0',
                 'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 1, 'ItemImgURL': '',
                 'UserFavoriteItemID': 'NULL'}
@@ -107,6 +117,6 @@ with open(filename, "w", encoding="utf=16") as f:
         # print(insertStr)
         cursor.execute(insertStr)
         conn.commit()
-    ################# insert to DB code ############################
+        ################# insert to DB code ############################
 
 f.close()

@@ -33,7 +33,7 @@ function LoginModal(props){
     }
 
     const handleLoginFacebook = () => {            
-        const provider = new firebase.auth.FacebookAuthProvider;     
+        const provider = new firebase.auth.FacebookAuthProvider();     
 
         setIsLoginLoading(true)
         firebase
@@ -116,7 +116,7 @@ function LoginModal(props){
                         onClick={handleLoginFacebook}
                         >
                             <FontAwesomeIcon icon={faFacebookF} size="lg"/>
-                            <span style={{paddingRight:40}}>Login with Facebook</span>
+                            <span style={t("lang") === "he" ? {paddingLeft:40} : {paddingRight:40}}>{t("Login with Facebook")}</span>
                         </button>
                         <button 
                         type="button"
@@ -125,7 +125,7 @@ function LoginModal(props){
                         onClick={handleLoginTwitter}
                         >
                             <FontAwesomeIcon icon={faTwitter} size="lg"/>
-                            <span style={{paddingRight:40}}>Login with Twitter</span>
+                            <span style={t("lang") === "he" ? {paddingLeft:40} : {paddingRight:40}}>{t("Login with Twitter")}</span>
                         </button>
                         <button 
                         type="button"
@@ -134,7 +134,7 @@ function LoginModal(props){
                         onClick={handleLoginGoogle}
                         >
                             <FontAwesomeIcon icon={faGoogle} size="lg"/>
-                            <span style={{paddingRight:40}}>Login with Google</span>
+                            <span style={t("lang") === "he" ? {paddingLeft:40} : {paddingRight:40}}>{t("Login with Google")}</span>
                         </button>
                     </div>
                     : 

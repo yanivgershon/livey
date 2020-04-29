@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\programming5\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
         "packagesPath": "C:\\Users\\yaniv\\.nuget\\packages\\",
         "outputPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\obj\\",
+=======
+    "D:\\programming6\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj": {}
+  },
+  "projects": {
+    "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
+        "projectName": "StreamHubCoreDal",
+        "projectPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
+        "packagesPath": "C:\\Users\\yaniv\\.nuget\\packages\\",
+        "outputPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\obj\\",
+>>>>>>> 20aed989ee8817040bc118311ac876257b850cf6
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -43,6 +57,7 @@
           "dependencies": {
             "Microsoft.AspNetCore.Razor.Design": {
               "target": "Package",
+<<<<<<< HEAD
               "version": "[2.2.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
@@ -64,6 +79,29 @@
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[3.1.3, )"
+=======
+              "version": "[2.1.2, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.1.14, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+>>>>>>> 20aed989ee8817040bc118311ac876257b850cf6
             },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
@@ -90,6 +128,7 @@
         }
       }
     },
+<<<<<<< HEAD
     "D:\\programming5\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -98,6 +137,16 @@
         "projectPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj",
         "packagesPath": "C:\\Users\\yaniv\\.nuget\\packages\\",
         "outputPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubDailySummary\\obj\\",
+=======
+    "D:\\programming6\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj",
+        "projectName": "StreamHubDailySummary",
+        "projectPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj",
+        "packagesPath": "C:\\Users\\yaniv\\.nuget\\packages\\",
+        "outputPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubDailySummary\\obj\\",
+>>>>>>> 20aed989ee8817040bc118311ac876257b850cf6
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -116,8 +165,13 @@
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
+<<<<<<< HEAD
               "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {
                 "projectPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj"
+=======
+              "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {
+                "projectPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj"
+>>>>>>> 20aed989ee8817040bc118311ac876257b850cf6
               }
             }
           }

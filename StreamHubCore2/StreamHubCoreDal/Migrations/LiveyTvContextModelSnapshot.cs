@@ -50,8 +50,11 @@ namespace StreamHubCoreDal.Migrations
 
                     b.Property<int>("ItemDuration");
 
+<<<<<<< HEAD
                     b.Property<DateTime>("ItemEndDateObj");
 
+=======
+>>>>>>> 20aed989ee8817040bc118311ac876257b850cf6
                     b.Property<string>("ItemImgURL");
 
                     b.Property<string>("ItemOwner");
@@ -69,10 +72,17 @@ namespace StreamHubCoreDal.Migrations
 
                     b.Property<int>("PlatformID");
 
+<<<<<<< HEAD
                     b.Property<string>("ScarpingSource");
 
                     b.Property<int?>("UserFavoriteItemID");
 
+=======
+                    b.Property<int?>("UserFavoriteItemID");
+
+                    b.Property<DateTime>("createDate");
+
+>>>>>>> 20aed989ee8817040bc118311ac876257b850cf6
                     b.HasKey("ItemID");
 
                     b.HasIndex("PlatformID");

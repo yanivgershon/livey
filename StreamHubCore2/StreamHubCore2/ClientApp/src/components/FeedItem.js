@@ -21,7 +21,7 @@ class FeedItem extends Component{
       share:false,
       host: false,
       report: false,
-      views: Math.round(Math.random() * 500)
+      views: Math.ceil(this.props.feed.itemTitle.length * this.props.feed.itemTitle.length / 100 * 1.5)
 
     }
   this.handleSave = this.handleSave.bind(this)
@@ -97,14 +97,14 @@ class FeedItem extends Component{
   
     const { t } = this.props
 
-
+    const availableCats = ["kids","lectures","fitness","fun"]
     const itemCategoryArr = eval(this.props.feed.itemTags)
-    const itemCategory = itemCategoryArr[0] ? itemCategoryArr[0] : "other"
+    const itemCategory = itemCategoryArr && availableCats.indexOf(itemCategoryArr[0]) !== -1 ? itemCategoryArr[0] : "other"
     const timeObj = moment(this.props.feed.itemStartDateObj).format("DD/MM | HH:mm")
     const timeEnd = moment(this.props.feed.itemStartDateObj).add(this.props.feed.itemDuration, "seconds").format("HH:mm")
     const timeLabel = moment(this.props.feed.itemStartDateObj).format(t("momenttimelabel"))
     const saveState = this.props.userData.savedItems ? this.props.userData.savedItems.includes(this.props.feed.itemID) ? solidStar : faStar : faStar
-    
+
     return (
       <div className="feed-item">
           <img src={this.props.image} alt="Event" className={t("lang") === "he" ? "feed-item-img-rtl" :"feed-item-img"}/>
@@ -115,7 +115,7 @@ class FeedItem extends Component{
           <div className="feed-item-timelabel" style={{background: this.state.catColor}}>
             <h2>{timeLabel}</h2>
           </div>
-          <h2 className="feed-item-catlabel">{itemCategory}</h2>
+          <h2 className="feed-item-catlabel">{t(itemCategory)}</h2>
           <div className="feed-item-description">
             <p>{this.props.feed.itemDescription}</p>
             <a href={this.props.feed.itemURL} target="_blank" rel="noopener noreferrer">{t("Link to Live Event")}</a>

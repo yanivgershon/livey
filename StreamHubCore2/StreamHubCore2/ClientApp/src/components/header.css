@@ -47,7 +47,7 @@
     outline: none;
     background: #e0e0e0;
 }
-
+/* EVENT ADD - LOGIN ALERT */
 .add-event-dropdown-alert{
     display: flex;
     flex-direction: row;
@@ -65,8 +65,8 @@
 
 .add-event-dropdown-alert p {
     padding-left: 10px;
+    padding-right: 10px;
 }
-
 
 /* LOGIN / PROFILE BUTTONS */
 .header-user-container {

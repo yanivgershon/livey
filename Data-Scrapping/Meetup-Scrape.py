@@ -3,6 +3,7 @@ from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import io
 from catergoryDict import categories as cDict
+from strictCatDict import strictCat as sCDict
 from os import path
 import pyodbc
 import pandas as pa
@@ -16,19 +17,19 @@ conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                      'PWD=sS8370098;'
                      'Integrated Security=False;'
                      )
-the_str=""
 ################# insert to DB code ############################
 
 print("Scrapping data from: Meetup.com")
 
-myurl = "https://www.meetup.com/find/events/?allMeetups=true&radius=100&userFreeform=Tel+Aviv%2C+Israel&mcName=Tel+Aviv%2C+IL&lat=32.066498&lon=34.765198"
+myurl = "https://www.meetup.com/find/events/?allMeetups=true&radius=100&userFreeform=tel&mcId=c1017962&change=yes"
 
+#Write path depending if on Linux Azure VM or Win laptop
 if path.exists("C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"):
     the_path = "C:/Users/omerm/Desktop/Hackorona/Data-Scrapping"
 else:
     the_path = "/root/bin/datascrape"
 
-#Grapping page
+#Grabbing page
 uClient = uReq(myurl)
 page_html = uClient.read()
 uClient.close()
@@ -44,50 +45,81 @@ with open(filename, "w", encoding="utf=16") as f:
     headers = "Date., Time., Title., Caterogies., Url\n"
     f.write(headers)
 
-    #retrieve data
+    #retrieve events from page
     events = page_soup.findAll("li", {"itemtype":"http://data-vocabulary.org/Event"})
     # event1 = events[0]
 
     for event in events:
-
+        ### DATE ###
         date = event["data-day"] + "." + event["data-month"] + "." + event["data-year"].strip()
 
+        ### TIME ###
+        #turning am-pm to 24 hour writing
         fullTime = event.find("time").text.strip().split('\n')
         ampm = fullTime.pop()
         time = fullTime.pop()
         if ampm == "PM":
             min = time[-3:]
-            time = str(int(time[:-3])+12)+min
-            if time =="24:00":
-                time = "00:00"
+            hour = str(int(time[:-3])+12)
+            if hour == "24":
+                hour = "00"
+            time = hour+min
 
+        ### TITLE ###
         titles = event.findAll("span", {"itemprop":"name"})
         title = titles[1].text.strip()
+        #make sure event is not postponed or cancelled
         lTitle = title.lower()
         if lTitle.find("postponed") != -1 or lTitle.find("cancelled") != -1 or lTitle.find("canceled") != -1:
             continue
 
+        ### ORGANIZATION ### (Not interesting)
         organization = titles[0].text.strip()
 
+        ### URL ###
         urls = event.findAll("a", {"itemprop":"url"})
         eUrl = urls[1]["href"].strip()
 
-        titleL = title.lower().split(" ")
-        eCat = {cDict[key] for key in cDict.keys() & set(titleL)}
-#        print(eCat)
+        ###Caterogies###
+        titleL = set(title.lower().split(" "))
+        eCat = set()
+        # DYNAMIIC search title's words for caterogies
+        for word in titleL:
+            wordCat = {cDict[key] for key in cDict.keys() if word.find(key) != -1}
+            for w in wordCat:
+                eCat.add(w)
+
+        # STRICT search title's words for caterogies
+        eCatStrict = {sCDict[key] for key in sCDict.keys() & titleL}
+        for c in eCatStrict:
+            eCat.add(c)
+
+        # order for catergory priority - kids > fitness > fun > lectures by
+        eCat = list(eCat)
+        if "kids" in eCat and len(eCat) > 1 and eCat.index("kids") != 0:
+            kids = eCat.pop(eCat.index("kids"))
+            eCat.insert(0, kids)
+        elif "fitness" in eCat and len(eCat) > 1 and eCat.index("fitness") != 0:
+            fitness = eCat.pop(eCat.index("fitness"))
+            eCat.insert(0, fitness)
+        elif "fun" in eCat and len(eCat) > 1 and eCat.index("fun") != 0:
+            fun = eCat.pop(eCat.index("fun"))
+            eCat.insert(0, fun)
+
+        #stringify and "" format for database input
+        eCat = str(eCat).replace("'", "''")
+        print(f"eCat {eCat}")
+
+        # write data in csv
+        f.write(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl + "\n")
+        print(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl)
 
         ################# insert to DB code ############################
         datespl = date.split('.')
         dateSql = datespl[2] + "-" + datespl[1] + "-" + datespl[0] + " " + time
-        # print(eCat)
-        the_str += date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n";
-        print(date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")
-        # write data in csv
-        f.write(date + ".," + time + ".," + title + ".," + str(list(eCat)) + ".," + eUrl + "\n")
         cursor = conn.cursor()
-        catsReal = (str(list(eCat))).replace("'", "''")
-        # a = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
-        data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': catsReal,
+
+        data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': eCat,
                 'ItemStartDate': '0',
                 'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 2, 'ItemImgURL': '',
                 'UserFavoriteItemID': 'NULL'}
@@ -98,11 +130,9 @@ with open(filename, "w", encoding="utf=16") as f:
             data['PlatformID'], data['ItemImgURL'], data['UserFavoriteItemID']
         )
 
-        # print(data)
         insertStr = "insert into [dbo].[Items] ([ItemTitle],[ItemURL],[ItemDescription],[ItemTags],[ItemStartDate],[ItemStartDateObj],[ItemDuration],[ItemOwner],[PlatformID],[ItemImgURL],[UserFavoriteItemID])VALUES (N'%s', '%s','%s', '%s', '%s', '%s', '%s', '%s','%s','%s',%s)" % data
-        # print(insertStr)
         cursor.execute(insertStr)
         conn.commit()
-    ################# insert to DB code ############################
+        ################# insert to DB code ############################
 
 f.close()
