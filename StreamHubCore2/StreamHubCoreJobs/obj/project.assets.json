@@ -4038,19 +4038,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreJobs\\StreamHubCoreJobs.csproj",
+      "projectUniqueName": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreJobs\\StreamHubCoreJobs.csproj",
       "projectName": "StreamHubCoreJobs",
-      "projectPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreJobs\\StreamHubCoreJobs.csproj",
+      "projectPath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreJobs\\StreamHubCoreJobs.csproj",
       "packagesPath": "C:\\Users\\yaniv\\.nuget\\packages\\",
-      "outputPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreJobs\\obj\\",
-=======
-      "projectUniqueName": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreJobs\\StreamHubCoreJobs.csproj",
-      "projectName": "StreamHubCoreJobs",
-      "projectPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreJobs\\StreamHubCoreJobs.csproj",
-      "packagesPath": "C:\\Users\\yaniv\\.nuget\\packages\\",
-      "outputPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreJobs\\obj\\",
->>>>>>> 20aed989ee8817040bc118311ac876257b850cf6
+      "outputPath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreJobs\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -4069,13 +4061,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-<<<<<<< HEAD
-            "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {
-              "projectPath": "D:\\programming5\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj"
-=======
-            "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {
-              "projectPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj"
->>>>>>> 20aed989ee8817040bc118311ac876257b850cf6
+            "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {
+              "projectPath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj"
             }
           }
         }

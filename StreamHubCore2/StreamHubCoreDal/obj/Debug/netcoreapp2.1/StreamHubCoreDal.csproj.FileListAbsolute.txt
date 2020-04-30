@@ -1,28 +1,8 @@
-D:\programming3\livey\StreamHubCore2\StreamHubCoreDal\bin\Debug\netcoreapp2.1\StreamHubCoreDal.deps.json
-D:\programming3\livey\StreamHubCore2\StreamHubCoreDal\bin\Debug\netcoreapp2.1\StreamHubCoreDal.dll
+D:\programming3\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.csproj.CoreCompileInputs.cache
 D:\programming3\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.AssemblyInfoInputs.cache
 D:\programming3\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.AssemblyInfo.cs
+D:\programming3\livey\StreamHubCore2\StreamHubCoreDal\bin\Debug\netcoreapp2.1\StreamHubCoreDal.deps.json
+D:\programming3\livey\StreamHubCore2\StreamHubCoreDal\bin\Debug\netcoreapp2.1\StreamHubCoreDal.dll
 D:\programming3\livey\StreamHubCore2\StreamHubCoreDal\bin\Debug\netcoreapp2.1\StreamHubCoreDal.pdb
 D:\programming3\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.dll
 D:\programming3\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.pdb
-D:\programming3\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.csproj.CoreCompileInputs.cache
-<<<<<<< HEAD
-D:\programming5\livey\StreamHubCore2\StreamHubCoreDal\bin\Debug\netcoreapp2.1\StreamHubCoreDal.deps.json
-D:\programming5\livey\StreamHubCore2\StreamHubCoreDal\bin\Debug\netcoreapp2.1\StreamHubCoreDal.dll
-D:\programming5\livey\StreamHubCore2\StreamHubCoreDal\bin\Debug\netcoreapp2.1\StreamHubCoreDal.pdb
-D:\programming5\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.csprojAssemblyReference.cache
-D:\programming5\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.csproj.CoreCompileInputs.cache
-D:\programming5\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.AssemblyInfoInputs.cache
-D:\programming5\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.AssemblyInfo.cs
-D:\programming5\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.dll
-D:\programming5\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.pdb
-=======
-D:\programming6\livey\StreamHubCore2\StreamHubCoreDal\bin\Debug\netcoreapp2.1\StreamHubCoreDal.deps.json
-D:\programming6\livey\StreamHubCore2\StreamHubCoreDal\bin\Debug\netcoreapp2.1\StreamHubCoreDal.dll
-D:\programming6\livey\StreamHubCore2\StreamHubCoreDal\bin\Debug\netcoreapp2.1\StreamHubCoreDal.pdb
-D:\programming6\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.csproj.CoreCompileInputs.cache
-D:\programming6\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.AssemblyInfoInputs.cache
-D:\programming6\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.AssemblyInfo.cs
-D:\programming6\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.dll
-D:\programming6\livey\StreamHubCore2\StreamHubCoreDal\obj\Debug\netcoreapp2.1\StreamHubCoreDal.pdb
->>>>>>> 20aed989ee8817040bc118311ac876257b850cf6
