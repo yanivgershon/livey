@@ -308,6 +308,8 @@ categories = {
     'יזמים': 'lectures',
     'embedded': 'lectures',
     'design': 'lectures',
+    'קורס': 'lectures',
+    'course': 'lectures',
 
 ### Shows #####################################
 

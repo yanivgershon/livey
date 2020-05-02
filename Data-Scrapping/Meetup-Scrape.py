@@ -1,6 +1,6 @@
-import bs4
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
+from datetime import datetime, timedelta
 import io
 from catergoryDict import categories as cDict
 from strictCatDict import strictCat as sCDict
@@ -9,15 +9,15 @@ import pyodbc
 import pandas as pa
 import json
 import requests
-################# insert to DB code ############################
-conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
-                    'Server=stream-hub.database.windows.net;'
-                    'Database=streamHub;'
-                     'UID=stream-hub;'
-                     'PWD=sS8370098;'
-                     'Integrated Security=False;'
-                     )
-################# insert to DB code ############################
+# ################# insert to DB code ############################
+# conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
+#                     'Server=stream-hub.database.windows.net;'
+#                     'Database=streamHub;'
+#                      'UID=stream-hub;'
+#                      'PWD=sS8370098;'
+#                      'Integrated Security=False;'
+#                      )
+# ################# insert to DB code ############################
 
 print("Scrapping data from: Meetup.com")
 
@@ -51,7 +51,7 @@ with open(filename, "w", encoding="utf=16") as f:
 
     for event in events:
         ### DATE ###
-        date = event["data-day"] + "." + event["data-month"] + "." + event["data-year"].strip()
+        # date = event["data-day"] + "-" + event["data-month"] + "-" + event["data-year"].strip()
 
         ### TIME ###
         #turning am-pm to 24 hour writing
@@ -59,11 +59,22 @@ with open(filename, "w", encoding="utf=16") as f:
         ampm = fullTime.pop()
         time = fullTime.pop()
         if ampm == "PM":
-            min = time[-3:]
-            hour = str(int(time[:-3])+12)
-            if hour == "24":
-                hour = "00"
-            time = hour+min
+            if time[:-3] != "12":
+                minutes = time[-2:]
+                hour = str(int(time[:-3])+12)
+                if hour == "24":
+                    hour = "00"
+                time = hour + ":" + minutes
+
+        ### FINAL DATE AND TIME IN UTC ###
+        # 2017-11-28 23:55:59
+        finalDT = datetime(int(event["data-year"]), int(event["data-month"]), int(event["data-day"]), int(hour), int(minutes))
+        finalDT = str(finalDT - timedelta(hours=3))[:-3]
+        print(finalDT)
+
+        showTimeDate = finalDT.split(" ")
+        utcDate = showTimeDate[0]
+        utcTime = showTimeDate[1]
 
         ### TITLE ###
         titles = event.findAll("span", {"itemprop":"name"})
@@ -111,28 +122,30 @@ with open(filename, "w", encoding="utf=16") as f:
         print(f"eCat {eCat}")
 
         # write data in csv
-        f.write(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl + "\n")
-        print(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl)
+        f.write(utcDate + ".," + utcTime + ".," + title + ".," + eCat + ".," + eUrl + "\n")
+        print(utcDate + ".," + utcTime + ".," + title + ".," + eCat + ".," + eUrl)
 
-        ################# insert to DB code ############################
-        datespl = date.split('.')
-        dateSql = datespl[2] + "-" + datespl[1] + "-" + datespl[0] + " " + time
-        cursor = conn.cursor()
+        # ################# insert to DB code ############################
+        # datespl = date.split('.')
+        # dateSql = datespl[2] + "-" + datespl[1] + "-" + datespl[0] + " " + time
 
-        data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': eCat,
-                'ItemStartDate': '0',
-                'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 2, 'ItemImgURL': '',
-                'UserFavoriteItemID': 'NULL'}
 
-        data = (
-            data['ItemTitle'], data['ItemURL'], data['ItemDescription'], data['ItemTags'],
-            data['ItemStartDate'], data['ItemStartDateObj'], data['ItemDuration'], data['ItemOwner'],
-            data['PlatformID'], data['ItemImgURL'], data['UserFavoriteItemID']
-        )
-
-        insertStr = "insert into [dbo].[Items] ([ItemTitle],[ItemURL],[ItemDescription],[ItemTags],[ItemStartDate],[ItemStartDateObj],[ItemDuration],[ItemOwner],[PlatformID],[ItemImgURL],[UserFavoriteItemID])VALUES (N'%s', '%s','%s', '%s', '%s', '%s', '%s', '%s','%s','%s',%s)" % data
-        cursor.execute(insertStr)
-        conn.commit()
-        ################# insert to DB code ############################
+        # cursor = conn.cursor()
+        #
+        # data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': eCat,
+        #         'ItemStartDate': '0',
+        #         'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 2, 'ItemImgURL': '',
+        #         'UserFavoriteItemID': 'NULL'}
+        #
+        # data = (
+        #     data['ItemTitle'], data['ItemURL'], data['ItemDescription'], data['ItemTags'],
+        #     data['ItemStartDate'], data['ItemStartDateObj'], data['ItemDuration'], data['ItemOwner'],
+        #     data['PlatformID'], data['ItemImgURL'], data['UserFavoriteItemID']
+        # )
+        #
+        # insertStr = "insert into [dbo].[Items] ([ItemTitle],[ItemURL],[ItemDescription],[ItemTags],[ItemStartDate],[ItemStartDateObj],[ItemDuration],[ItemOwner],[PlatformID],[ItemImgURL],[UserFavoriteItemID])VALUES (N'%s', '%s','%s', '%s', '%s', '%s', '%s', '%s','%s','%s',%s)" % data
+        # cursor.execute(insertStr)
+        # conn.commit()
+        # ################# insert to DB code ############################
 
 f.close()
