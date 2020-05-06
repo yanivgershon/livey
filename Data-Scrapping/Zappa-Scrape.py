@@ -1,7 +1,7 @@
-import bs4
 from urllib.request import urlopen as uReq
 from urllib.request import Request
 from bs4 import BeautifulSoup as soup
+from datetime import datetime, timedelta
 import io
 import re
 from os import path
@@ -9,15 +9,15 @@ import pyodbc
 import pandas as pa
 import json
 import requests
-################# insert to DB code ############################
-conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
-                    'Server=stream-hub.database.windows.net;'
-                    'Database=streamHub;'
-                     'UID=stream-hub;'
-                     'PWD=sS8370098;'
-                     'Integrated Security=False;'
-                     )
-################# insert to DB code ############################
+# ################# insert to DB code ############################
+# conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
+#                     'Server=stream-hub.database.windows.net;'
+#                     'Database=streamHub;'
+#                      'UID=stream-hub;'
+#                      'PWD=sS8370098;'
+#                      'Integrated Security=False;'
+#                      )
+# ################# insert to DB code ############################
 
 print("Scrapping data from: Zappa.co.il")
 
@@ -86,37 +86,57 @@ with open(filename, "w", encoding="utf=16") as f:
             ### TITLE ###
             title = sEvent.pop(0)
 
+        ### FINAL DATE AND TIME IN UTC ###
+        # 2017-11-28 23:55:59
+        utcTime = time.split(":")
+        hour = utcTime[0]
+        minutes = utcTime[1]
+        utcDate = date.split(".")
+        dateDay = utcDate[0]
+        dateMonth = utcDate[1]
+
+        finalDT = datetime(2020, int(dateMonth), int(dateDay), int(hour), int(minutes))
+        finalDT = str(finalDT - timedelta(hours=3))[:-3]
+        print(finalDT)
+
+        showTimeDate = finalDT.split(" ")
+        utcDate = showTimeDate[0]
+        utcTime = showTimeDate[1]
+
+
         ### CATEGORY ###
         #Inputting manually, no title to search and is always FUN
         eCat = ['fun']
         eCat = str(eCat).replace("'", "''")
         # print(eCat)
 
-        print(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl)
+        print(utcDate + ".," + utcTime + ".," + title + ".," + eCat + ".," + eUrl)
         # write data in csv
-        f.write(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl + "\n")
+        f.write(utcDate + ".," + utcTime + ".," + title + ".," + eCat + ".," + eUrl + "\n")
 
         ################# insert to DB code ############################
-        datespl = date.split('.')
-        #unlike all other scrapes, ZAPPA doesn't have year in date
-        dateSql = "2020-" + datespl[1] + "-" + datespl[0] + " " + time
-        cursor = conn.cursor()
-        data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': eCat,
-                'ItemStartDate': '0',
-                'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 1, 'ItemImgURL': '',
-                'UserFavoriteItemID': 'NULL'}
+        # datespl = date.split('.')
+        # #unlike all other scrapes, ZAPPA doesn't have year in date
+        # dateSql = "2020-" + datespl[1] + "-" + datespl[0] + " " + time
 
-        data = (
-            data['ItemTitle'], data['ItemURL'], data['ItemDescription'], data['ItemTags'],
-            data['ItemStartDate'], data['ItemStartDateObj'], data['ItemDuration'], data['ItemOwner'],
-            data['PlatformID'], data['ItemImgURL'], data['UserFavoriteItemID']
-        )
 
-        # print(data)
-        insertStr = "insert into [dbo].[Items] ([ItemTitle],[ItemURL],[ItemDescription],[ItemTags],[ItemStartDate],[ItemStartDateObj],[ItemDuration],[ItemOwner],[PlatformID],[ItemImgURL],[UserFavoriteItemID])VALUES (N'%s', '%s','%s', '%s', '%s', '%s', '%s', '%s','%s','%s',%s)" % data
-        # print(insertStr)
-        cursor.execute(insertStr)
-        conn.commit()
-        ################# insert to DB code ############################
+        # cursor = conn.cursor()
+        # data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': eCat,
+        #         'ItemStartDate': '0',
+        #         'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 1, 'ItemImgURL': '',
+        #         'UserFavoriteItemID': 'NULL'}
+        #
+        # data = (
+        #     data['ItemTitle'], data['ItemURL'], data['ItemDescription'], data['ItemTags'],
+        #     data['ItemStartDate'], data['ItemStartDateObj'], data['ItemDuration'], data['ItemOwner'],
+        #     data['PlatformID'], data['ItemImgURL'], data['UserFavoriteItemID']
+        # )
+        #
+        # # print(data)
+        # insertStr = "insert into [dbo].[Items] ([ItemTitle],[ItemURL],[ItemDescription],[ItemTags],[ItemStartDate],[ItemStartDateObj],[ItemDuration],[ItemOwner],[PlatformID],[ItemImgURL],[UserFavoriteItemID])VALUES (N'%s', '%s','%s', '%s', '%s', '%s', '%s', '%s','%s','%s',%s)" % data
+        # # print(insertStr)
+        # cursor.execute(insertStr)
+        # conn.commit()
+        # ################# insert to DB code ############################
 
 f.close()

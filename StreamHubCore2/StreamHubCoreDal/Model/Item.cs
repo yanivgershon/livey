@@ -30,6 +30,7 @@ namespace StreamHubCoreDal.Models
         [Column(TypeName = "bigint")]
         public int ItemStartDate { get; set; }
         public DateTime ItemStartDateObj { get; set; }
+        public DateTime ItemEndDateObj { get; set; }
         public int ItemDuration { get; set; }
 
         public string ItemOwner { get; set; }
@@ -37,7 +38,11 @@ namespace StreamHubCoreDal.Models
         public int PlatformID { get; set; }
 
         public string ItemImgURL { get; set; }
+
+        public string ScarpingSource { get; set; }
+
         public DateTime createDate { get; set; }
+
 
         public virtual ICollection<Category> Categories { get; set; }
         [NotMapped]

@@ -24,10 +24,13 @@ namespace StreamHubCore2.Controllers
         [HttpGet]
         public IEnumerable<Item> GetItems()
         {
-            return _context.Items.Where(x => x.ItemStartDateObj >= DateTime.Now).OrderBy(x => x.ItemStartDateObj)
-           .GroupBy(x => new {x.ItemDescription, x.ItemDuration, x.ItemImgURL, x.ItemOwner, x.ItemStartDate, x.ItemStartDateObj, x.ItemTags, x.ItemTitle, x.ItemURL, x.PlatformID })
-           .Select(x => x.First())
-                .ToList();
+            var items = _context.Items;
+         
+            var itemsGrouped = items.GroupBy(x => new { x.ItemDescription, x.ItemDuration, x.ItemImgURL, x.ItemOwner, x.ItemStartDate, x.ItemStartDateObj, x.ItemTags, x.ItemTitle, x.PlatformID })
+           .Select(x => x.First()).OrderBy(x => x.ItemStartDateObj);
+            var itemsDateCompared = itemsGrouped.Where(x => x.ItemStartDateObj.Ticks >= DateTime.Now.Ticks);
+            var itemsConvertedToList = itemsDateCompared.ToList();
+            return itemsConvertedToList;
         }
 
         // GET: api/Items/5

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StreamHubCoreDal.Models;
 
 namespace StreamHubCoreDal.Migrations
 {
     [DbContext(typeof(LiveyTvContext))]
-    partial class LiveyTvContextModelSnapshot : ModelSnapshot
+    [Migration("20200429093359_add 2 fields to item")]
+    partial class add2fieldstoitem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,9 +52,7 @@ namespace StreamHubCoreDal.Migrations
 
                     b.Property<int>("ItemDuration");
 
-
                     b.Property<DateTime>("ItemEndDateObj");
-
 
                     b.Property<string>("ItemImgURL");
 
@@ -71,13 +71,9 @@ namespace StreamHubCoreDal.Migrations
 
                     b.Property<int>("PlatformID");
 
-
                     b.Property<string>("ScarpingSource");
 
                     b.Property<int?>("UserFavoriteItemID");
-
-                    b.Property<DateTime>("createDate");
-
 
                     b.HasKey("ItemID");
 

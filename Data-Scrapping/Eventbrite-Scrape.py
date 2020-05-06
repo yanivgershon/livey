@@ -1,4 +1,3 @@
-import bs4
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 from datetime import datetime, timedelta
@@ -10,15 +9,16 @@ import pyodbc
 import pandas as pa
 import json
 import requests
-################# insert to DB code ############################
-conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
-                    'Server=stream-hub.database.windows.net;'
-                    'Database=streamHub;'
-                     'UID=stream-hub;'
-                     'PWD=sS8370098;'
-                     'Integrated Security=False;'
-                     )
-################# insert to DB code ############################
+
+# ################# insert to DB code ############################
+# conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
+#                     'Server=stream-hub.database.windows.net;'
+#                     'Database=streamHub;'
+#                      'UID=stream-hub;'
+#                      'PWD=sS8370098;'
+#                      'Integrated Security=False;'
+#                      )
+# ################# insert to DB code ############################
 
 print("Scrapping data from: Eventbrite.com")
 
@@ -64,7 +64,6 @@ with open(filename, "w", encoding="utf=16") as f:
         # retrieve events from page
         events = page_soup.findAll("article", {"class":"eds-event-card-content--mini"})
         for event in events:
-            print(event)
 
             ### TITLE ###
             title = event.find("div",{"class":"eds-event-card__formatted-name--is-clamped"}).text
@@ -77,38 +76,40 @@ with open(filename, "w", encoding="utf=16") as f:
             eUrl = event.find("a", {"class": "eds-event-card-content__action-link"})["href"]
 
             timeDate = event.find("div", {"class":"eds-text-color--primary-brand"}).text.strip()
+            print(timeDate)
             #if event has specific dates and is not today\tmrw
             if timeDate.find(",") != -1:
                 dt = timeDate.split(", ")
 
-                ###TIME##
+                ### TIME ##
                 fullTime = dt.pop().split(" ")
 
-                #Time if AM
-                time = fullTime[1]
-                # Time if PM change to 24 hour
-                exactTime = fullTime[1].split(":")
+                # If AM stays untouched
+                time = fullTime[1].split(":")
+
+                # Time if PM (and not 12, then change to 24 hour)
                 if fullTime[2] == "PM":
-                    exactTime[0] = str(int(exactTime[0])+12)
-                    #24 not allowed in DB
-                    if exactTime[0] == "24":
-                        exactTime[0] = "00"
-                    time = ":".join(exactTime)
+                    #Noon is written as 12:00pm
+                    if time[0] != "12":
+                        time[0] = str(int(time[0])+12)
+                        #24 not allowed in DB
+                        if time[0] == "24":
+                            time[0] = "00"
 
                 #Change month name to month number
                 fMD = dt.pop().split(" ")
                 if fMD[0] == "Apr":
-                    fMD[0] = "4"
+                    fMD[0] = "04"
                 elif  fMD[0] == "May":
-                    fMD[0] = "5"
+                    fMD[0] = "05"
                 elif  fMD[0] == "Jun":
-                    fMD[0] = "6"
+                    fMD[0] = "06"
                 elif fMD[0] == "Jul":
-                    fMD[0] = "7"
+                    fMD[0] = "07"
                 elif  fMD[0] == "Aug":
-                    fMD[0] = "8"
+                    fMD[0] = "08"
                 elif  fMD[0] == "Sep":
-                    fMD[0] = "9"
+                    fMD[0] = "09"
                 elif  fMD[0] == "Oct":
                     fMD[0] = "10"
                 elif  fMD[0] == "Nov":
@@ -116,41 +117,59 @@ with open(filename, "w", encoding="utf=16") as f:
                 elif  fMD[0] == "Dec":
                     fMD[0] = "12"
                 elif  fMD[0] == "Jan":
-                    fMD[0] = "1"
+                    fMD[0] = "01"
                 elif  fMD[0] == "Feb":
-                    fMD[0] = "2"
+                    fMD[0] = "02"
                 elif  fMD[0] == "Mar":
-                    fMD[0] = "3"
-                ###DATE###
-                date = fMD[1] + "." + fMD[0] + ".2020"
+                    fMD[0] = "03"
+                ### DATE ###
+                # date = "2020-" + fMD[0] + "-" + fMD[1]
 
-                ###WEEKDAY###
-                weekday = dt.pop()
+                ### UTC ###
+                utc = timeDate.split("(").pop()[:-1]
+                utcPlusMinus = utc[:1]
+                utcTime = utc.split(":")
+                utcHours = float(utcTime[0][1:])
+                if utcTime[1] == "30":
+                    utcHours += .5
+
+                ### FINAL DATE AND TIME IN UTC ###
+                # 2017-11-28 23:55:59
+                finalDT = datetime(2020, int(fMD[0]), int(fMD[1]), int(time[0]), int(time[1]))
+                if utcPlusMinus == "+":
+                    finalDT = str(finalDT + timedelta(hours=utcHours))[:-3]
+                elif utcPlusMinus == "-":
+                    finalDT = str(finalDT - timedelta(hours=utcHours))[:-3]
+                print(finalDT)
+
+                showTimeDate = finalDT.split(" ")
+                utcDate = showTimeDate[0]
+                utcTime = showTimeDate[1]
 
             #if today\tmrw and doesn't have a date
-            else:
-                dt = timeDate.split(" at ")
-
-                ### TIME ###
-                fullTime = dt.pop().split(" ")
-                time = fullTime[1]
-                exactTime = fullTime[1].split(":")
-                #If am-pm - change to 24 hour
-                if fullTime[2] == "PM":
-                    exactTime[0] = str(int(exactTime[0])+12)
-                    #24 not allowed in DB
-                    if exactTime[0] == "24":
-                        exactTime[0] = "00"
-                    time = ":".join(exactTime)
-
-                ### DATE ###
-                #Get today \ tmrw's dates
-                fMD = dt.pop()
-                if fMD == "Today":
-                    date = datetime.today().strftime('%d.%m.%Y')
-                elif fMD == "Tomorrow":
-                    raw_date = datetime.today() + timedelta(days=1)
-                    date = raw_date.strftime('%d.%m.%Y')
+            # else:
+            #     dt = timeDate.split(" at ")
+            #
+            #     ### TIME ###
+            #     fullTime = dt.pop().split(" ")
+            #     time = fullTime[1]
+            #     exactTime = fullTime[1].split(":")
+            #     #If am-pm - change to 24 hour
+            #     if fullTime[2] == "PM":
+            #         exactTime[0] = str(int(exactTime[0])+12)
+            #         #24 not allowed in DB
+            #         if exactTime[0] == "24":
+            #             exactTime[0] = "00"
+            #         time = ":".join(exactTime)
+            #
+            #     ### DATE ###
+            #     #Get today \ tmrw's dates
+            #     fMD = dt.pop()
+            #     if fMD == "Today":
+            #         date = datetime.today().strftime('%d.%m.%Y')
+            #     elif fMD == "Tomorrow":
+            #         raw_date = datetime.today() + timedelta(days=1)
+            #         date = raw_date.strftime('%d.%m.%Y')
 
             ### Caterogies ###
             titleL = set(title.lower().split(" "))
@@ -180,32 +199,35 @@ with open(filename, "w", encoding="utf=16") as f:
 
             # stringify and "" format for database input
             eCat = str(eCat).replace("'", "''")
-            print(f"eCat {eCat}")
+            # print(f"eCat {eCat}")
 
             ### write data in csv
-            f.write(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl + "\n")
-            print(date + ".," + time + ".," + title + ".," + eCat + ".," + eUrl)
+            f.write(utcDate + ".," + utcTime + ".," + title + ".," + eCat + ".," + eUrl + "\n")
+            print(utcDate + ".," + utcTime + ".," + title + ".," + eCat + ".," + eUrl + "\n")
 
-            ################# insert to DB code ############################
-            datespl = date.split('.')
-            dateSql = datespl[2] + "-" + datespl[1] + "-" + datespl[0] + " " + time
-            cursor = conn.cursor()
+            # ################# insert to DB code ############################
+            ###IRRELEVANT---v
+            # datespl = date.split('.')
+            # dateSql = datespl[2] + "-" + datespl[1] + "-" + datespl[0] + " " + time
 
-            data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': eCat,
-                    'ItemStartDate': '0',
-                    'ItemStartDateObj': dateSql, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 2,
-                    'ItemImgURL': '',
-                    'UserFavoriteItemID': 'NULL'}
 
-            data = (
-                data['ItemTitle'], data['ItemURL'], data['ItemDescription'], data['ItemTags'],
-                data['ItemStartDate'], data['ItemStartDateObj'], data['ItemDuration'], data['ItemOwner'],
-                data['PlatformID'], data['ItemImgURL'], data['UserFavoriteItemID']
-            )
-
-            insertStr = "insert into [dbo].[Items] ([ItemTitle],[ItemURL],[ItemDescription],[ItemTags],[ItemStartDate],[ItemStartDateObj],[ItemDuration],[ItemOwner],[PlatformID],[ItemImgURL],[UserFavoriteItemID])VALUES (N'%s', '%s','%s', '%s', '%s', '%s', '%s', '%s','%s','%s',%s)" % data
-            cursor.execute(insertStr)
-            conn.commit()
-            ################# insert to DB code ############################
+            # cursor = conn.cursor()
+            #
+            # data = {'ItemTitle': title.replace("'", "''"), 'ItemURL': eUrl, 'ItemDescription': '', 'ItemTags': eCat,
+            #         'ItemStartDate': '0',
+            #         'ItemStartDateObj': finalDT, 'ItemDuration': 3600, 'ItemOwner': '', 'PlatformID': 2,
+            #         'ItemImgURL': '',
+            #         'UserFavoriteItemID': 'NULL'}
+            #
+            # data = (
+            #     data['ItemTitle'], data['ItemURL'], data['ItemDescription'], data['ItemTags'],
+            #     data['ItemStartDate'], data['ItemStartDateObj'], data['ItemDuration'], data['ItemOwner'],
+            #     data['PlatformID'], data['ItemImgURL'], data['UserFavoriteItemID']
+            # )
+            #
+            # insertStr = "insert into [dbo].[Items] ([ItemTitle],[ItemURL],[ItemDescription],[ItemTags],[ItemStartDate],[ItemStartDateObj],[ItemDuration],[ItemOwner],[PlatformID],[ItemImgURL],[UserFavoriteItemID])VALUES (N'%s', '%s','%s', '%s', '%s', '%s', '%s', '%s','%s','%s',%s)" % data
+            # cursor.execute(insertStr)
+            # conn.commit()
+            # ################# insert to DB code ############################
 
 f.close()

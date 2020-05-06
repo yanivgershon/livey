@@ -3831,11 +3831,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
+      "projectUniqueName": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
       "projectName": "StreamHubCoreDal",
-      "projectPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
+      "projectPath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj",
       "packagesPath": "C:\\Users\\yaniv\\.nuget\\packages\\",
-      "outputPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\obj\\",
+      "outputPath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

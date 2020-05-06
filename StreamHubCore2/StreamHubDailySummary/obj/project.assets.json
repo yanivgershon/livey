@@ -3849,11 +3849,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj",
+      "projectUniqueName": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj",
       "projectName": "StreamHubDailySummary",
-      "projectPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj",
+      "projectPath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubDailySummary\\StreamHubDailySummary.csproj",
       "packagesPath": "C:\\Users\\yaniv\\.nuget\\packages\\",
-      "outputPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubDailySummary\\obj\\",
+      "outputPath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubDailySummary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -3872,8 +3872,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {
-              "projectPath": "D:\\programming6\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj"
+            "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj": {
+              "projectPath": "D:\\programming3\\livey\\StreamHubCore2\\StreamHubCoreDal\\StreamHubCoreDal.csproj"
             }
           }
         }
