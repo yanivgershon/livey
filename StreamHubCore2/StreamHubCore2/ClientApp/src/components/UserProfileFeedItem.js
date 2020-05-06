@@ -23,7 +23,7 @@ class UserProfileFeedItem extends Component{
       views: Math.round(Math.random() * 500)
 
     }
-  this.handleSave = this.handleSave.bind(this)
+  this.handleSave = this.handleRemoveSave.bind(this)
   this.handleShare = this.handleShare.bind(this)
   this.handleHost = this.handleHost.bind(this)
   this.handleReport = this.handleReport.bind(this)
@@ -39,32 +39,13 @@ class UserProfileFeedItem extends Component{
     else if(itemCategory === "other"){this.setState({catColor: "rgba(51, 190, 46, 0.65)"})}
     } 
   
-  handleSave(){
-    if(this.props.isLoggedIn && 
-      this.props.userData.savedItems && 
-      !this.props.userData.savedItems.includes(this.props.feed.itemID)){
-        const savedItemsArr = this.props.userData.savedItems.split(',')
-        savedItemsArr.push(this.props.feed.itemID)
-        const SaveList = savedItemsArr.join(',')
-
-        this.props.setUserData(prevState => ({...prevState, savedItems: SaveList}))
-        firebase.auth().currentUser.updateProfile({photoURL: SaveList})
-        
-        console.log("Original Firebase List:",firebase.auth().currentUser.photoURL) 
-        console.log("Original List:",this.props.userData.savedItems) 
-        console.log("Array:",savedItemsArr) 
-        console.log("New List:",SaveList) 
-        console.log("SAVE:",this.props.userData.savedItems.includes(this.props.feed.itemID))
-        
-      } else if(this.props.isLoggedIn && !this.props.userData.savedItems){
-        this.props.setUserData(prevState => ({...prevState, savedItems: ","+this.props.feed.itemID}))
-        firebase.auth().currentUser.updateProfile({photoURL: ","+this.props.feed.itemID})
-      } else if(this.props.isLoggedIn){
-      const unSavedList = this.props.userData.savedItems.replace(","+this.props.feed.itemID, "")
-
-      this.props.setUserData(prevState => ({...prevState, savedItems: unSavedList}))
-      firebase.auth().currentUser.updateProfile({photoURL: unSavedList})
-    }
+  handleRemoveSave = () => {
+    const savedItemsArr = this.props.userData.savedItems.split(',')
+    const toDelete = savedItemsArr.indexOf(this.props.feed.itemID.toString())
+    savedItemsArr.splice(toDelete, 1)
+    const newList = savedItemsArr.join(',')
+    this.props.setUserData(prevState => ({...prevState, savedItems: newList}))
+    firebase.auth().currentUser.updateProfile({photoURL: newList})
   }
 
   handleShare(){
@@ -120,7 +101,7 @@ class UserProfileFeedItem extends Component{
             <h2>{itemCategory}</h2>
           </div>
           <div className="profile-feed-item-right-cont">
-            <FontAwesomeIcon onClick={this.handleSave} icon={faTimes} size="1x" style={{cursor: "pointer"}}/>
+            <FontAwesomeIcon onClick={this.handleRemoveSave} icon={faTimes} size="1x" style={{cursor: "pointer"}}/>
           </div>
       </div>
     )

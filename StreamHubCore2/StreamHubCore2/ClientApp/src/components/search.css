@@ -32,3 +32,23 @@
     bottom:12px;
     left:20px;
 }
+
+/* RESPONSIVE QUERIES */
+
+@media screen and (max-width: 850px) {
+
+    .header-search{
+        width: 10vw;
+    }
+
+
+}
+
+@media screen and (max-width: 480px) {
+
+    .header-search{
+        width: calc(100vw - 80px);
+    }
+
+
+}

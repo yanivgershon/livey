@@ -4,7 +4,7 @@
                          "img . title  time . rpanel ."
                          "img . title  cat  . rpanel ."
                          "img .   .     .   . rpanel .";
-    grid-template-columns: 1fr 15px 200px 70px 15px 20px 10px;
+    grid-template-columns: 1fr 15px 180px 60px 10px 20px 10px;
     grid-template-rows: 20px 40px 1fr 10px;
     background: rgb(255, 255, 255); 
     border-bottom: rgb(230, 230, 230) solid 1px;

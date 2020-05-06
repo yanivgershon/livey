@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import moment from "moment"
+import moment from 'moment';
+import 'moment-timezone';
 import { withTranslation } from 'react-i18next';
 import './feed-item.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,6 +9,7 @@ import { faShareSquare as solidShare, faUser as solidUser, faStar as solidStar, 
 import * as firebase from "firebase/app";
 import "firebase/auth"
 import fire from "../fire"; //required!
+import SharePanel from "./SharePanel"
 
 
 //{props.feed.itemTitle}
@@ -40,41 +42,66 @@ class FeedItem extends Component{
     else if(itemCategory === "other"){this.setState({catColor: "rgba(51, 190, 46, 0.65)"})}
     } 
   
+  // handleSave(){
+  //   if(this.props.isLoggedIn && 
+  //     this.props.userData.savedItems && 
+  //     !this.props.userData.savedItems.includes(this.props.feed.itemID)){
+  //       const savedItemsArr = this.props.userData.savedItems.split(',')
+  //       savedItemsArr.push(this.props.feed.itemID)
+  //       const SaveList = savedItemsArr.join(',')
+
+  //       this.props.setUserData(prevState => ({...prevState, savedItems: SaveList}))
+  //       firebase.auth().currentUser.updateProfile({photoURL: SaveList})
+        
+  //       console.log("Original Firebase List:",firebase.auth().currentUser.photoURL) 
+  //       console.log("Original List:",this.props.userData.savedItems) 
+  //       console.log("Array:",savedItemsArr) 
+  //       console.log("New List:",SaveList) 
+  //       console.log("SAVE:",this.props.userData.savedItems.includes(this.props.feed.itemID))
+        
+  //     } else if(this.props.isLoggedIn && !this.props.userData.savedItems){
+  //       this.props.setUserData(prevState => ({...prevState, savedItems: ","+this.props.feed.itemID}))
+  //       firebase.auth().currentUser.updateProfile({photoURL: ","+this.props.feed.itemID})
+  //     } else if(this.props.isLoggedIn){
+  //     const unSavedList = this.props.userData.savedItems.replace(","+this.props.feed.itemID, "")
+
+  //     this.props.setUserData(prevState => ({...prevState, savedItems: unSavedList}))
+  //     firebase.auth().currentUser.updateProfile({photoURL: unSavedList})
+  //   }
+  // }
+
   handleSave(){
-    if(this.props.isLoggedIn && 
-      this.props.userData.savedItems && 
-      !this.props.userData.savedItems.includes(this.props.feed.itemID)){
-        const savedItemsArr = this.props.userData.savedItems.split(',')
+    if(this.props.isLoggedIn){
+      if(!this.props.userData.savedItems ||
+        !this.props.userData.savedItems.includes(this.props.feed.itemID)){
+        const savedItemsArr = this.props.userData.savedItems ? this.props.userData.savedItems.split(',') : []
         savedItemsArr.push(this.props.feed.itemID)
         const SaveList = savedItemsArr.join(',')
 
         this.props.setUserData(prevState => ({...prevState, savedItems: SaveList}))
         firebase.auth().currentUser.updateProfile({photoURL: SaveList})
-        
-        console.log("Original Firebase List:",firebase.auth().currentUser.photoURL) 
-        console.log("Original List:",this.props.userData.savedItems) 
-        console.log("Array:",savedItemsArr) 
-        console.log("New List:",SaveList) 
-        console.log("SAVE:",this.props.userData.savedItems.includes(this.props.feed.itemID))
-        
-      } else if(this.props.isLoggedIn && !this.props.userData.savedItems){
-        this.props.setUserData(prevState => ({...prevState, savedItems: ","+this.props.feed.itemID}))
-        firebase.auth().currentUser.updateProfile({photoURL: ","+this.props.feed.itemID})
-      } else if(this.props.isLoggedIn){
-      const unSavedList = this.props.userData.savedItems.replace(","+this.props.feed.itemID, "")
 
-      this.props.setUserData(prevState => ({...prevState, savedItems: unSavedList}))
-      firebase.auth().currentUser.updateProfile({photoURL: unSavedList})
-    }
+
+      } else if(this.props.isLoggedIn){
+        const savedItemsArr = this.props.userData.savedItems.split(',')
+        const toDelete = savedItemsArr.indexOf(this.props.feed.itemID.toString())
+        savedItemsArr.splice(toDelete, 1)
+        const newList = savedItemsArr.join(',')
+        this.props.setUserData(prevState => ({...prevState, savedItems: newList}))
+        firebase.auth().currentUser.updateProfile({photoURL: newList})
+
+      }
+    } else {return null}
   }
 
   handleShare(){
-    this.setState({share: true})
-    const shareURL = `https://www.facebook.com/sharer/sharer.php?u=${this.props.feed.itemURL}`
-    setTimeout(() => {
-      window.open(shareURL, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')
-      this.setState({share: false})
-    }, 200);
+    this.setState(prevState => ({
+      share: !prevState.share
+    }));
+    // setTimeout(() => {
+    //   window.open(shareURL, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')
+    //   this.setState({share: false})
+    // }, 200);
   }
 
   handleHost(){
@@ -100,6 +127,8 @@ class FeedItem extends Component{
     const availableCats = ["kids","lectures","fitness","fun"]
     const itemCategoryArr = eval(this.props.feed.itemTags)
     const itemCategory = itemCategoryArr && availableCats.indexOf(itemCategoryArr[0]) !== -1 ? itemCategoryArr[0] : "other"
+    // to add converted time change all instances of {this.props.feed.itemStartDateObj} to {itemConvertedTime}
+    const itemConvertedTime = moment.utc(this.props.feed.itemStartDateObj).local().format('YYYY-MM-DDTHH:mm:ss')
     const timeObj = moment(this.props.feed.itemStartDateObj).format("DD/MM | HH:mm")
     const timeEnd = moment(this.props.feed.itemStartDateObj).add(this.props.feed.itemDuration, "seconds").format("HH:mm")
     const timeLabel = moment(this.props.feed.itemStartDateObj).format(t("momenttimelabel"))
@@ -109,7 +138,7 @@ class FeedItem extends Component{
       <div className="feed-item">
           <img src={this.props.image} alt="Event" className={t("lang") === "he" ? "feed-item-img-rtl" :"feed-item-img"}/>
           <div className="feed-item-title">
-            <h2 onClick={() => console.log(timeObj)} className={t("lang") === "he" ? "feed-item-title-h2-rtl" : "feed-item-title-h2"}>{this.props.feed.itemTitle}</h2>
+            <h2 onClick={this.handleHost} className={t("lang") === "he" ? "feed-item-title-h2-rtl" : "feed-item-title-h2"}>{this.props.feed.itemTitle}</h2>
             <h3>{`${timeObj}-${timeEnd}`}</h3>
           </div>
           <div className="feed-item-timelabel" style={{background: this.state.catColor}}>
@@ -141,7 +170,7 @@ class FeedItem extends Component{
               <h2>{this.state.views}</h2>
               <h3>{t("Views")}</h3>
             </div>
-
+            {this.state.share ? <SharePanel closeShare={this.handleShare} item={this.props.feed} image={this.props.image}/> : null}
           </div>
       </div>
     )

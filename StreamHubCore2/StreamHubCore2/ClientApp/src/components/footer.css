@@ -1,0 +1,17 @@
+.footer-container{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 450px;
+}
+
+.footer-container h3{
+    font-weight: 100;
+    color: white;
+    font-size: 11pt;
+}
+
+.footer-terms-link{
+    font-size: 11pt;
+    color: white;
+}

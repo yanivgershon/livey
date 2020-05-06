@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "./add-event-modal.css"
 import { useTranslation } from 'react-i18next'
 //import { loadReCaptcha } from 'react-recaptcha-v3'
@@ -15,7 +15,8 @@ function AddEventModal(props){
         itemURL:"",
         itemImgURL:"",
         itemTags:"[]",
-        platformID:1
+        platformID:1,
+        itemOwner:"",
     })
     const [date, setDate] = useState({
         date:"",
@@ -29,12 +30,15 @@ function AddEventModal(props){
     const [isImageError, setIsImageError] = useState(false)
     const [isSubmitted, setIsSubmitted] = useState(false)
 
+    useEffect(() => {
+        setState(prevState => ({ ...prevState, itemOwner: props.userData.userId }))
+    },[])
 
     const { t } = useTranslation()
 
     const handleChange = (event) => {
         const {name, value} = event.target
-        setState(prevState => ({ ...prevState, [name]: value }))
+        setState(prevState => ({ ...prevState, [name]: value, itemOwner: props.userData.userId}))
     }
 
     const handleDateChange = (event) => {
@@ -49,7 +53,8 @@ function AddEventModal(props){
         const duration = moment.duration(moment(date.endTime,"HH:mm").diff(moment(date.startTime,"HH:mm"))).asSeconds()
         const datetimeFormatted = `${date.date.concat("T",date.startTime)}`
         setState(prevState => ({ ...prevState, itemDuration: duration, itemStartDateObj: datetimeFormatted }))
-        console.log(date)   
+        console.log("date:",date)
+        console.log("duration:",duration)      
     }
 
     const handleDateClear = (event) => {
@@ -69,15 +74,27 @@ function AddEventModal(props){
         setIsImageLoad(true)
     }
 
+    const imageVerification = (src, good, bad) => {
+        const img = new Image();
+        img.onload = good; 
+        img.onerror = bad;
+        img.src = src;        
+    }
+
     const handleImageUpload = (event) => {
         const {value, name, type} = event.target
         if(type === "text") {
             setState(prevState => ({ ...prevState, itemImgURL: value }))
-        } else if(name === "upload" && state.itemImgURL) {
-            setIsImageLoad(false)
-            setIsImageDisplay(true)
-        } else if (name === "upload") {
-            setIsImageError(true)
+        } else if(name === "upload") {
+            imageVerification( 
+                state.itemImgURL, 
+                () => {
+                    setIsImageLoad(false)
+                    setIsImageDisplay(true)}, 
+                () => {
+                    setIsImageError(true)
+                    setTimeout(function(){ setIsImageError(false) }, 2500)} 
+            )
         } else if(name === "cancel") {
             setIsImageLoad(false)
             setIsImageDisplay(false)
@@ -86,7 +103,6 @@ function AddEventModal(props){
             setIsImageDisplay(false)
             setState(prevState => ({ ...prevState, itemImgURL: "" }))
         }
-        
     }
 
 
@@ -96,6 +112,7 @@ function AddEventModal(props){
     }
 
     const handleSubmit = (event) => {
+        console.log("item owner:",state.itemOwner)
         event.preventDefault()
         if(state.itemTitle && 
            state.itemDuration && 
@@ -103,7 +120,7 @@ function AddEventModal(props){
            state.itemURL && 
            state.itemTags != "[]"){
                
-            console.log("All Items Complete!")
+            console.log("All Items Complete! Submitting...")
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json")
 
@@ -137,7 +154,7 @@ function AddEventModal(props){
         <div className="modal-container" name="mainmodal" onClick={handleClose}>
             <div className="modal-container-window-parent">
 {!isSubmitted ? <form className="modal-container-window">
-                    <div className="modal-close-button" onClick={props.handleHideAddEvent}>
+                    <div className={t("lang") === "he" ? "modal-close-button-rtl" : "modal-close-button"} onClick={props.handleHideAddEvent}>
                         <FontAwesomeIcon icon={faTimes} size="1x"/>
                     </div>
                      <div className="modal-form-container">
@@ -147,11 +164,12 @@ function AddEventModal(props){
                             </button>
                             {isImageLoad ? <div className="modal-form-img-popup">
                                 <div className="modal-form-img-input-cont">
-                                    <div style={{display: "flex",flexDirection: "row"}}>
-                                    <input type="text" placeholder="www.photo-url.com/image.jpg" onChange={handleImageUpload} />
-                                    <button type="button" name="upload" className="modal-form-img-input-cont-button-upload" onClick={handleImageUpload}>{t("Choose")}</button>
-                                    <button type="button" name="cancel" className="modal-form-img-input-cont-button-cancel" onClick={handleImageUpload}>{t("Cancel")}</button>
+                                    <div className="modal-form-img-input-cont-inner">
+                                        <input type="text" placeholder="www.photo-url.com/image.jpg" onChange={handleImageUpload} />
+                                        <button type="button" name="upload" className="modal-form-img-input-cont-button-upload" onClick={handleImageUpload}>{t("Choose")}</button>
+                                        <button type="button" name="cancel" className="modal-form-img-input-cont-button-cancel" onClick={handleImageUpload}>{t("Cancel")}</button>
                                     </div>
+                                    {isImageError ? <h4 style={{color:"red", fontWeight: "200"} }>{t("Invalid URL. Please enter a valid image url and retry.")}</h4> : null}
                                 </div>
                             </div> : null}
                         </div>  
@@ -167,8 +185,7 @@ function AddEventModal(props){
                                 value={state.itemTitle}
                                 onChange={handleChange}
                                 />
-                                <p>{state.itemTitle.length}/90</p>
-                                
+                                <p className={t("lang") === "he" ? "modal-form-inputs-p-rtl" : "modal-form-inputs-p"}>{state.itemTitle.length}/90</p>
                             </div>
                             <div className="modal-form-inputs">
                                 <h3><span>* </span>{t("When is it?")}</h3>
@@ -192,7 +209,8 @@ function AddEventModal(props){
                                         placeHolder="12:30" 
                                         className="modal-form-datetime-time" 
                                         onKeyDown={handleDateClear}
-                                        onChange={handleDateChange} 
+                                        onChange={handleDateChange}
+                                        onBlur={handleDateChange}
                                         value={date.startTime}
                                     />
                                     </label>
@@ -206,7 +224,8 @@ function AddEventModal(props){
                                         placeHolder="13:45" 
                                         className="modal-form-datetime-time" 
                                         onKeyDown={handleDateClear}
-                                        onChange={handleDateChange} 
+                                        onChange={handleDateChange}
+                                        onBlur={handleDateChange}
                                         value={date.endTime}
                                     />
                                     </label>

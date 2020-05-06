@@ -45,41 +45,41 @@ function UserProfile(props){
 
     const savedItemsPanel = <UserProfileFeedPanel 
                                 userData={props.userData} 
-                                feed={props.feed} 
+                                feedItems={props.feedItems} 
                                 isLoggedIn={props.isLoggedIn}
                                 setUserData={props.setUserData}
                                 userData={props.userData}
                             />
 
     return(
-        <div className="user-profile-dropdown">
-            <div className={t("lang") === "he" ? "user-profile-container-grid-rtl" : "user-profile-container-grid"}>
-                <div className="modal-close-button-login" onClick={handleCloseMenu}>
-                    <FontAwesomeIcon icon={faTimes} size="1x"/>
-                </div>
-                <div className="user-profile-header">
-                    <h2>{t("Hi")} {props.userData.displayName}</h2>
-                    <h3>{t("Welcome to your personal pannel.")} <br/> {t("Here you can view all your saved items.")}</h3>
-                </div>
-                <div className="user-profile-saved-feed">
-                    {props.userData.savedItems ? savedItemsPanel : <h3 className="user-profile-saved-feed-h3">{t("No Saved Events")}</h3>}
-                </div>
-                {props.userData.savedItems ? !showClearButton  
-                ?<div className="user-profile-saved-feed-clear">
-                    <button type="button" className="user-profile-saved-feed-clear-button" onClick={handleClearShow}>{t("Clear All")}</button>
-                </div>
-                :<div className="user-profile-saved-feed-clear">
-                    <h3>{t("Are you sure?")}</h3>
-                    <div>
-                        <button type="button" className="user-profile-saved-feed-clear-button-red" onClick={handleClearAll}>{t("Clear All")}</button>
-                        <button type="button" className="user-profile-saved-feed-clear-button" onClick={handleClearHide}>{t("Cancel")}</button>
+            <div className="user-profile-dropdown">
+                <div className={t("lang") === "he" ? "user-profile-container-grid-rtl" : "user-profile-container-grid"}>
+                    <div className="modal-close-button-login" onClick={handleCloseMenu}>
+                        <FontAwesomeIcon icon={faTimes} size="1x"/>
                     </div>
-                </div> : null}
-                <div className="user-profile-footer">
-                    <button type="button" className="user-profile-logout-button" onClick={handleSignOut}>{t("Log Out")}</button>
+                    <div className="user-profile-header">
+                        <h2>{t("Hi")} {props.userData.displayName}</h2>
+                        <h3>{t("Welcome to your personal pannel.")} <br/> {t("Here you can view all your saved items.")}</h3>
+                    </div>
+                    <div className="user-profile-saved-feed">
+                        {props.userData.savedItems ? savedItemsPanel : <h3 className="user-profile-saved-feed-h3">{t("No Saved Events")}</h3>}
+                    </div>
+                    {props.userData.savedItems ? !showClearButton  
+                    ?<div className="user-profile-saved-feed-clear">
+                        <button type="button" className="user-profile-saved-feed-clear-button" onClick={handleClearShow}>{t("Clear All")}</button>
+                    </div>
+                    :<div className="user-profile-saved-feed-clear">
+                        <h3>{t("Are you sure?")}</h3>
+                        <div>
+                            <button type="button" className="user-profile-saved-feed-clear-button-red" onClick={handleClearAll}>{t("Clear All")}</button>
+                            <button type="button" className="user-profile-saved-feed-clear-button" onClick={handleClearHide}>{t("Cancel")}</button>
+                        </div>
+                    </div> : null}
+                    <div className="user-profile-footer">
+                        <button type="button" className="user-profile-logout-button" onClick={handleSignOut}>{t("Log Out")}</button>
+                    </div>
                 </div>
             </div>
-        </div>
     )
 }
 

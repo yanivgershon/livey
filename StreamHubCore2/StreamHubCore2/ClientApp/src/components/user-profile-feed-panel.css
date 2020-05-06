@@ -24,3 +24,11 @@
 .profile-feed-scroll-container::-webkit-scrollbar-thumb{
     background-color: #202020;
 }
+
+/* RESPONSIVE QUERIES */
+
+@media screen and (max-width: 480px) {
+    .profile-feed-scroll-container{
+        width: 90vw;
+    }
+}

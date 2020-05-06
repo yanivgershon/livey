@@ -38,9 +38,41 @@
     display: grid;
     grid-column: 1;
     grid-row: 1;
-    grid-template-columns: repeat(auto-fit, 390px);
-    gap: 60px;
+    grid-template-columns: repeat(auto-fit, 364px);
+    gap: 30px;
     box-sizing: border-box;
-    margin: 50px;
     justify-content: center;
+}
+
+/* RESPONSIVE QUERIES */
+
+@media screen and (max-width: 480px) {
+    .feed-item-container{
+        gap: 10px;
+    }
+
+    .feed-panel-title{
+        display: grid;
+        grid-column: 1/4;
+        justify-self: center;
+        padding-top: 10px;
+    }
+
+    .feed-panel-title-items{
+        grid-column: 1/4;
+        justify-self: center;
+        padding-bottom: 10px;
+    }
+
+    .feed-item-container{
+        grid-template-columns: repeat(auto-fit, 100%);
+    }
+
+    .feed-scroll-container{
+        display: grid;
+        grid-column: 1/4;
+        grid-row: 3;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+    }
 }

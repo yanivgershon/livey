@@ -3,6 +3,8 @@ import { withTranslation } from 'react-i18next';
 import FeedItem from "./FeedItem";
 import './feed-panel.css';
 import { th } from "date-fns/locale";
+import moment from 'moment';
+import 'moment-timezone';
 
 const fitness0 = "https://i.ibb.co/GPLBKBP/fitness0.jpg" 
 const fitness1 = "https://i.ibb.co/QYNpdxZ/fitness1.jpg" 
@@ -83,11 +85,35 @@ class FeedPanel extends Component{
         
         const availableCats = ["kids","lectures","fitness","fun"]
 
+
+        // const feedItems2 = this.props.feed && this.props.feed.map(item => {
+        //     const hostImage = item.itemImgURL
+        //     return( <FeedItem 
+        //             key={item.itemID} 
+        //             feed={item} 
+        //             image={hostImage} 
+        //             handleCount={this.handleCount} 
+        //             isLoggedIn={true}
+        //             setUserData={"none"}
+        //             userData={"none"}
+        //             />
+        //     )
+        // })
+        //2020-09-14T01:00:00 
         //Feed item (Category / Date / Search) filtering
         const feedItems = this.props.feed && this.props.feed.map(item => {
-            const itemDate = item.itemStartDateObj && item.itemStartDateObj.slice(0,10)
+
+
+            const itemStartDate = moment.utc(item.itemStartDateObj).local().format('YYYY-MM-DDTHH:mm:ss')
+            const itemDate = itemStartDate && itemStartDate.slice(0,10)
+
+            // console.log("time from DB (UTC):",item.itemStartDateObj)
+            // console.log("time converted from UTC:",itemStartDate)
+            // console.log("item Date:", itemDate)
+
             const itemCategoryArr = eval(item.itemTags)
-            const itemCategory = itemCategoryArr && availableCats.indexOf(itemCategoryArr[0]) !== -1 ? itemCategoryArr[0] : null
+            const itemCategory = itemCategoryArr ? (availableCats.indexOf(itemCategoryArr[0]) !== -1 ? itemCategoryArr[0] : null) : "other"
+
             const itemSearch = item.itemTitle.toUpperCase().includes(this.props.searchFilter.toUpperCase())
             //const randomImage = `https://i.picsum.photos/id/${Math.floor(Math.random() * 1000)}/200/300.jpg`
             const hostImage = item.itemImgURL
@@ -108,13 +134,26 @@ class FeedPanel extends Component{
                 } else if (itemSearch){
                     return feedItem
                 }
-            } else if(this.props.dayFilter === itemDate && this.props.catFilter === itemCategory ) {
+            } else if(this.props.dayFilter === itemDate && this.props.catFilter === itemCategory) {
                 if (!this.props.searchFilter) {
                     return feedItem
                 } else if (itemSearch){
                     return feedItem
                 }
-            }  else {return null}
+            }  else if(!this.props.dayFilter || this.props.dayFilter === "all" && !this.props.catFilter){
+                if (!this.props.searchFilter) {
+                    return feedItem
+                } else if (itemSearch){
+                    return feedItem
+                }
+            }  else if(!this.props.dayFilter || this.props.dayFilter === "all" && this.props.catFilter === itemCategory){
+                if (!this.props.searchFilter) {
+                    return feedItem
+                } else if (itemSearch){
+                    return feedItem
+                }
+            } return null
+
         })
         
 
@@ -126,8 +165,8 @@ class FeedPanel extends Component{
 
         return(
             <div className="feed-panel">
-                <h2 className="feed-panel-title">{t("Search Results")}</h2>
-                <h3 className="feed-panel-title-items">{results} {t("Results")}</h3>
+                {this.props.searchFilter ? <h2 className="feed-panel-title">{t("Search Results")}</h2> : null}
+                {this.props.searchFilter ? <h3 className="feed-panel-title-items">{results} {t("Results")}</h3> : null}
                 <div className="feed-scroll-container">
                     <div className="feed-item-container">
                         {feedItems}

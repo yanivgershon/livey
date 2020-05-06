@@ -1,13 +1,14 @@
 .category-button {
     display: grid;
     grid-row: 1;
-    width: 11vw;
-    height: 9vh;
-    border-radius: 15px;
+    width: min(9vw, 120px);
+    height: 40px;
+    border-radius: 10px;
     align-self: center;
+    align-content: center;
+    justify-content: center;
     opacity: 1;
     cursor: pointer;
-    box-sizing: border-box;
 }
 
 .category-button:hover {
@@ -24,17 +25,33 @@
 }
 
 .category-button-regular {
-    text-align: center;
-    align-self: center;
     text-transform: uppercase;
-    font-size: 1.7vw;
+    font-size: min(1.7vw, 12pt) ;
     font-weight: 300;
 }
 
 .category-button-selected {
-    text-align: center;
-    align-self: center;
     text-transform: uppercase;
-    font-size: 1.7vw;
+    font-size: min(1.7vw, 12pt) ;
     font-weight: 700;
+}
+
+/* RESPONSIVE QUERIES */
+
+@media screen and (max-width: 480px) {
+  
+    .category-button {
+        width: 100%;
+        height: 100%;
+        border-radius: 0px;
+    }
+
+    .category-button-regular {
+        font-size: min(3.5vw, 12pt) ;
+    }
+    
+    .category-button-selected {
+        font-size: min(4vw, 12pt) ;
+    }
+
 }

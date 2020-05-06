@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1;
+    z-index: 1000;
 }
 
 .modal-container-window-parent {
@@ -38,6 +38,16 @@
     left: 96.5%;
     cursor: pointer;
     color:rgb(75, 75, 75);
+    z-index: 1001;
+}
+
+.modal-close-button-rtl{
+    position: absolute;
+    top: 1.5%;
+    right: 96.5%;
+    cursor: pointer;
+    color:rgb(75, 75, 75);
+    z-index: 1001;
 }
 
 .modal-container-window h1 {
@@ -86,8 +96,14 @@
 .modal-form-img-input-cont {
     position: absolute;
     display: flex;
-    align-content: center;
+    flex-direction: column;
+    align-items: center;
     justify-content: center; 
+}
+
+.modal-form-img-input-cont-inner{
+    display: flex;
+    flex-direction: row;
 }
 
 .modal-form-img-input-cont input{
@@ -131,7 +147,6 @@
     padding-right: 10px;
     padding-left: 10px;
     background: rgb(255, 141, 141);
-    border-radius: 0 5px 5px 0;
     cursor: pointer;
 }
 
@@ -167,7 +182,6 @@
 .modal-form-img-button-remove:active {
     background: rgb(253, 86, 114);
 }
-
 
 .temp-img {
     display: grid;
@@ -251,7 +265,6 @@
     display: flex;
     flex-direction: column;
     position: relative;
-
 }
 
 .modal-form-inputs textarea {
@@ -268,11 +281,22 @@
     margin-left: -3px;
 }
 
-.modal-form-inputs p {
+.modal-form-inputs-p {
     position: absolute;
     width: 35px;
     top: 56px;
-    left: 378px;
+    right: 2%;
+    font-style: italic;
+    font-size: 10pt;
+    color: gray;
+    text-align: end;
+}
+
+.modal-form-inputs-p-rtl {
+    position: absolute;
+    width: 35px;
+    top: 56px;
+    left: 2%;
     font-style: italic;
     font-size: 10pt;
     color: gray;
@@ -429,3 +453,78 @@
       border-radius: 50%;
       background: white;
   }
+
+/* RESPONSIVE QUERIES */
+
+@media screen and (max-width: 650px) {
+    .modal-container-window-parent {
+        width: 350px;
+        height: 630px;
+    }
+
+    .modal-form-container{
+        display: grid;
+        grid-template-areas: ".   .    ."
+                             ".  form  ."
+                             ".   .    ."
+                             ".  img   ."
+                             ".   .    .";
+        grid-template-columns: 10px 2.5fr 10px;
+        grid-template-rows: 15px 1fr 20px 100px 15px;
+        width: 95%;
+        height: 87%;
+        margin-bottom: 0;
+    }
+
+    .temp-img, .temp-img-rtl{
+        height: unset;
+        max-height: 100%;
+        width: 100%;
+        border-radius: 15px;
+    }
+    
+    .modal-form-img-button, .modal-form-img-button-rtl{
+        border-radius: 15px;
+        padding: 0;    
+    }
+
+    .modal-form-img-button-remove{
+        top: 80%;
+    }
+
+    .modal-close-button{
+        position: absolute;
+        top: 3%;
+        left: 91%;
+        cursor: pointer;
+        color:rgb(75, 75, 75);
+    }
+
+    .modal-close-button-rtl{
+        position: absolute;
+        top: 3%;
+        right: 91%;
+        cursor: pointer;
+        color:rgb(75, 75, 75);
+    }
+
+    .modal-submit-button{
+        margin-top: 3%;
+    }
+
+    .modal-form-img-input-cont-inner{
+        flex-direction: column;
+    }
+
+    .modal-form-inputs textarea {
+        height: 45px;
+    }
+
+    .modal-form-inputs-p{
+        top: 70px;
+    }
+
+    .modal-form-inputs-p-rtl{
+        top: 70px;
+    }
+}
