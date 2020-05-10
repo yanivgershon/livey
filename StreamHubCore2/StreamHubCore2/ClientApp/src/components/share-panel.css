@@ -1,0 +1,77 @@
+.share-panel-container{
+    position: absolute;
+    top: 110%;
+    left: 0%;
+    display: flex;
+    justify-content: space-around;
+    width: auto;
+    padding: 5px;
+    border: 0;
+    box-shadow: 0;
+    background: white;
+    -webkit-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 20px 10px rgba(0,0,0,0.2); 
+    animation: fadeMenu 0.5s;
+    transition: opacity 0.4s;
+    opacity: 1;
+}
+
+.share-panel-triangle{
+    position: absolute;
+    top: -5px;
+    left: 80px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 5px solid rgb(255, 255, 255);
+}
+
+.share-panel-container img{
+    display: flex;
+    width: 30px;
+    padding: 5px;
+    border: 0;
+    box-shadow: 0;
+    cursor: pointer;
+}
+
+.share-panel-container div{
+    display: flex;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    margin: 5px;
+    border: 0;
+    box-shadow: 0;
+    background: rgb(41, 41, 41);
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.share-panel-copied-alert{
+    position: absolute;
+    top: 110%;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    width: auto;
+    padding: 5px;
+    border: 0;
+    box-shadow: 0;
+    background: rgb(51, 51, 51);
+    -webkit-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 20px 10px rgba(0,0,0,0.2); 
+    animation: fadeMenu 0.5s;
+    transition: opacity 0.4s;
+    opacity: 1;
+    border-radius: 5px;
+    color: white;
+}
+
+

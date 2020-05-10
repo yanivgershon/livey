@@ -7,6 +7,7 @@ i18n.use(LanguageDetector).init({
     en: {
       translations: {
         "lang":"en",
+        "language":"English",
         "Add Event":"Add Event",
         "Login":"Login",
         "Select Topic":"Select Topic",
@@ -50,6 +51,7 @@ i18n.use(LanguageDetector).init({
         "Choose Category":"Choose Category:",
         "Choose Photo":"Choose Photo",
         "You must complete the form before submitting!":"You must complete the form before submitting!",
+        "Invalid URL. Please enter a valid image url and retry.":"Invalid URL. Please enter a valid image url and retry.",
         "Login with Twitter":"Login with Twitter",
         "Login with Facebook":"Login with Facebook",
         "Login with Google":"Login with Google",
@@ -64,11 +66,13 @@ i18n.use(LanguageDetector).init({
         "Clear All":"Clear All",
         "Are you sure?":"Are you sure?",
         "Log Out":"Log Out",
+        "All Events":"All Events",
       }
     },
     he: {
       translations: {
         "lang":"he",
+        "language":"Hebrew",
         "Add Event":"הוספת אירוע",
         "Login":"התחבר/י",
         "Select Topic":"בחירת קטגוריה",
@@ -112,6 +116,7 @@ i18n.use(LanguageDetector).init({
         "Choose Category":"בחרו קטגוריה:",
         "Choose Photo":"בחרו תמונה",
         "You must complete the form before submitting!":"יש להשלים את כלל שדות הטופס לפני הוספה!",
+        "Invalid URL. Please enter a valid image url and retry.":"הקישור שהוזן אינו תקין - אנא הזינו קישור פעיל לתמונה",
         "Login with Twitter":"כניסה באמצעות טוויטר",
         "Login with Facebook":"כניסה באמצעות פייסבוק",
         "Login with Google":"כניסה באמצעות גוגל",
@@ -126,6 +131,7 @@ i18n.use(LanguageDetector).init({
         "Clear All":"איפוס רשימה",
         "Are you sure?":"אתם בטוחים?",
         "Log Out":"התנתקות",
+        "All Events":"כל האירועים"
       }
     }
   },

@@ -10,20 +10,21 @@ function Search(props){
     const { t } = useTranslation()
    
     const handleChange = event => {
-        props.setSearchFilter(event.target.value);
+        props.setSearchTerm(event.target.value);
     };
 
     return(
         <div className="header-search-container">
+            
             <input
             className="header-search"
             type="text"
             placeholder={t("Search")}
-            value={props.searchFilter}
+            value={props.searchTerm}
             onChange={handleChange}
             />
-            
-             <FontAwesomeIcon className={t("lang")==="he" ? "header-search-icon-rtl" : "header-search-icon"} icon={faSearch} size="1x"/>
+
+            <FontAwesomeIcon className={t("lang")==="he" ? "header-search-icon-rtl" : "header-search-icon"} icon={faSearch} size="1x"/>
         </div>
     )
 }

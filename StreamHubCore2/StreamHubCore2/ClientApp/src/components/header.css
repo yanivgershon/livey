@@ -6,6 +6,23 @@
 }
 
 /* LOGO */
+.header-logo-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.header-hamburger-menu{
+    padding: 5px;
+    display: none;
+    color: white;
+    font-size: 25pt;
+}
+
+.header-hamburger-menu:active{
+    background: rgba(0, 0, 0, 0.397);
+}
+
 .header-logo{
     display: flex;
     width: 240px;
@@ -73,6 +90,11 @@
     position: relative;
 }
 
+.header-user-container-mobile {
+    position: relative;
+    display: none;
+}
+
 .header-login-button{
     background: #e0e0e0;
     border: none;
@@ -137,4 +159,41 @@
     color: white;
     font-size:7pt;
     text-align: center;
+}
+
+/* RESPONSIVE QUERIES */
+
+@media screen and (max-width: 480px) {
+  
+    .header-container{
+        flex-direction: column;
+    }
+
+    .header-logo-container{
+        width: 100%;
+    }
+
+    .header-logo{
+        padding-top: 20px;
+        padding-bottom: 20px;
+        width: 170px;
+        margin-bottom: 0;
+    }
+
+    .right-header-container{
+        display: none;
+    }
+    
+    .header-hamburger-menu{
+        display: flex;
+    }
+
+    .header-user-container-mobile {
+        display: flex;
+    }
+
+    .header-add-event-button{
+        width: 150px;
+    }
+
 }

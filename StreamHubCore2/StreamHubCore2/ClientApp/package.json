@@ -23,6 +23,7 @@
     "i18next": "^19.4.1",
     "i18next-browser-languagedetector": "^4.0.2",
     "moment": "^2.24.0",
+    "moment-timezone": "^0.5.28",
     "react": "^16.13.1",
     "react-datepicker": "^2.14.1",
     "react-dom": "^16.13.1",
@@ -31,6 +32,7 @@
     "react-i18next": "^11.3.4",
     "react-input-mask": "^2.0.4",
     "react-recaptcha-v3": "^1.1.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-social-login": "^3.4.6",
     "react-time-picker": "^4.0.0"

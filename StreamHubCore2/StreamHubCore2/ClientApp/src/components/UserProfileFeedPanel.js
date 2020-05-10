@@ -88,7 +88,7 @@ class UserProfileFeedPanel extends Component{
         const availableCats = ["kids","lectures","fitness","fun"]
 
         // Feed item (Category / Date / Search) filtering
-        const feedItems = this.props.feed && this.props.feed.map(item => {if(this.props.userData.savedItems.includes(item.itemID)) {
+        const feedItems = this.props.feedItems && this.props.feedItems.map(item => {if(this.props.userData.savedItems.includes(item.itemID)) {
 
             const itemCategoryArr = eval(item.itemTags)
             const itemCategory = itemCategoryArr && availableCats.indexOf(itemCategoryArr[0]) !== -1 ? itemCategoryArr[0] : null

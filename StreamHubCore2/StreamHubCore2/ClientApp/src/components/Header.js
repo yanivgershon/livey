@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, createRef } from 'react'
 import { useTranslation } from 'react-i18next' 
 import './header.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faExclamationTriangle, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faInfoCircle, faBars } from '@fortawesome/free-solid-svg-icons'
 
 // Components
 import LangSelector from "./LangSelector"
@@ -12,6 +12,7 @@ import Search from "./Search"
 import AddEventModal from "./AddEventModal"
 import LoginModal from "./LoginModal"
 import UserProfile from "./UserProfile"
+import MobileMenu from "./MobileMenu"
 
 
 function Header(props){
@@ -20,6 +21,7 @@ function Header(props){
     const [showMustLogin, setShowMustLogin] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
     const [showProfile, SetShowProfile] = useState(false)
+    const [showMobileMenu, setShowMobileMenu] = useState(false)
     
     const { t } = useTranslation()
 
@@ -30,6 +32,7 @@ function Header(props){
     const handleShowAddEvent = () => {
         if(props.isLoggedIn){
             setShowAddEvent(true)
+            setShowMobileMenu(false)
         } else {
             setShowMustLogin(true)
             setTimeout(() => {setShowMustLogin(false)
@@ -45,30 +48,38 @@ function Header(props){
         setShowLogin(true)
     }
 
+    const handleHideMobileMenu = () => {
+        setShowMobileMenu(false)
+    }
+    
+    const handleShowMobileMenu = () => {
+        setShowMobileMenu(true)
+    }
+
     const handleHideLogin = () => {
         setShowLogin(false)
     }
-
     const handleShowProfile = () => {
         showProfile ? SetShowProfile(false) : SetShowProfile(true)
         console.log("userData:",props.userData)
+        console.log("feedItems:",props.feedItems)
     }
 
     const handleHideProfile = () => {
         SetShowProfile(false)
     }
 
-    const savedCount = props.userData.savedItems && props.userData.savedItems.split(',').length-1
+    const savedCount = props.userData.savedItems && props.userData.savedItems.split(',').length
 
     const loginButton = !props.isLoggedIn ? <button 
                                             className="header-login-button" 
                                             onClick={handleShowLogin}>
                                                 {t("Login")}
                                             </button> : null
-    const profileNotification = props.userData.savedItems ? <div 
+    const profileNotification = props.isLoggedIn ? (props.userData.savedItems ? <div 
                                                             className="header-profile-button-notifications">
                                                                 {savedCount}
-                                                            </div> : null
+                                                            </div> : null) : null
     const profileButton = props.isLoggedIn ? <button 
                                             className="header-profile-button" 
                                             onClick={handleShowProfile}>
@@ -81,7 +92,7 @@ function Header(props){
                                         setIsLoggedIn={props.setIsLoggedIn}
                                         setUserData={props.setUserData}
                                         userData={props.userData}
-                                        feed={props.feed}
+                                        feedItems={props.feedItems}
                                         isLoggedIn={props.isLoggedIn}
                                         setUserData={props.setUserData}
                                         userData={props.userData}
@@ -89,17 +100,25 @@ function Header(props){
     
     return (
         <div className="header-container">
-
-            <img 
-                className="header-logo" 
-                src={streamHubLogo} 
-                alt="StreamHub Logo"  
-                onClick={handleLogoClick}
-            />
+            <div className="header-logo-container">
+                <FontAwesomeIcon className="header-hamburger-menu" icon={faBars} size="4x" onClick={handleShowMobileMenu}/>
+                <img 
+                    className="header-logo" 
+                    src={streamHubLogo} 
+                    alt="StreamHub Logo"  
+                    onClick={handleLogoClick}
+                />
+                <div className="header-user-container-mobile">
+                    {loginButton}
+                    {profileNotification}
+                    {profileButton}
+                    {userProfile}
+                </div>  
+            </div>
 
             <Search 
-                setSearchFilter={props.setSearchFilter}
-                searchFilter={props.searchFilter}
+                setSearchTerm={props.setSearchTerm}
+                searchTerm={props.searchTerm}
             />
             <div className="right-header-container">
                 <LangSelector 
@@ -124,9 +143,18 @@ function Header(props){
                     {userProfile}
                 </div>                
             </div>
+
+            {showMobileMenu ? <MobileMenu 
+                                handleHideMobileMenu={handleHideMobileMenu}
+                                showMustLogin={showMustLogin}
+                                handleShowAddEvent={handleShowAddEvent}
+                                language={props.language} 
+                                changeLanguage={props.changeLanguage}
+                              /> : null}
             
             {showAddEvent ? <AddEventModal 
                              handleHideAddEvent={handleHideAddEvent}
+                             userData={props.userData}
                              /> : null}
 
             {showLogin ? <LoginModal 

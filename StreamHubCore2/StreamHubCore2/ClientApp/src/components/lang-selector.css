@@ -66,3 +66,15 @@
     outline: none;
 }
 
+/* RESPONSIVE QUERIES */
+
+@media screen and (max-width: 480px) {
+    .lang-dropdown-button{
+        width: 150px;
+    }
+
+    .lang-dropdown-menu{
+        width: 150px;
+    }
+}
+

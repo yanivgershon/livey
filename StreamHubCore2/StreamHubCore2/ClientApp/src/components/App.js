@@ -1,10 +1,12 @@
 // Deps
-import React,{ useState, useEffect, useRef, createRef } from 'react'
+import React,{ useState, useEffect } from 'react'
+import { debounce } from "lodash";
 import moment from "moment"
 import { useTranslation } from 'react-i18next'
 import ReactGA from 'react-ga'
 import * as firebase from "firebase/app";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight, faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons'
 
 // Components
 import './app.css'
@@ -13,6 +15,7 @@ import DaysPanel from "./DaysPanel"
 import CategoryPanel from "./CategoryPanel"
 import FeedPanel from './FeedPanel'
 import Loading from "./Loading"
+import Footer from "./Footer"
 
 function App() {
 
@@ -29,40 +32,68 @@ function App() {
   }
   
   const [feedItems, setFeedItems] = useState(null)
-  const [categories, setCategories] = useState(null)
-  const [filteredFeedItems, setFilteredFeedItems] = useState(null)
-  const [isFetchedData,setIsFetchedData]= useState(false)
   const [autoComleteFeed,setAutoComleteFeed]= useState([])
-  const [daySelected, setDaySelected] = useState(moment().format('YYYY-MM-DD'))
+  const [daySelected, setDaySelected] = useState("all") //useState(moment().format('YYYY-MM-DD'))
   const [catSelected, setCatSelected] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [language, setLanguage] = useState("en")
+  const [searchTerm, setSearchTerm] = useState("")
   const [searchFilter, setSearchFilter] = useState("")
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userData, setUserData] = useState({
     displayName: "",
     savedItems: "",
     email: "",
+    userId: "",
   })
+
+
+  useEffect(() => {
+    if(userData.savedItems) {
+      const savedListArr = userData.savedItems.split(",")
+      const tempArr = [...savedListArr]
+      feedItems && savedListArr.map(itemID => {
+        const itemNotFound = feedItems.find(item => item.itemID === parseInt(itemID))
+        if(!itemNotFound){
+          const toDelete = tempArr.indexOf(itemID)
+          tempArr.splice(toDelete, 1)
+          const newList = tempArr.join(',')
+
+          setUserData(prevState => ({...prevState, savedItems: newList}))
+          firebase.auth().currentUser.updateProfile({photoURL: newList})
+
+          console.log("toDelete",toDelete)
+          console.log("ItemToDelete:",itemID)
+          console.log("tempArr:",tempArr)
+          console.log("NewList:",newList)
+          console.log("savedListArr:",savedListArr)
+        }
+      })
+    }
+  }, [feedItems])
+
 
   useEffect(() => {
     const authListener = firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         setIsLoggedIn(true)
-        console.log("User Logged In:",user)
+        console.log("User Authenticated:",user)
         if (user.photoURL && user.photoURL.includes("https://")){
           setUserData(prevState => ({
             ...prevState, 
             displayName: user.displayName,
             savedItems: "",
-            email: user.email
+            email: user.email,
+            userId: user.uid,
           }))
         } else {
+
           setUserData(prevState => ({
             ...prevState, 
             displayName: user.displayName,
             savedItems: user.photoURL,
-            email: user.email
+            email: user.email,
+            userId: user.uid,
           }))
         }
       } else {
@@ -81,18 +112,21 @@ function App() {
     const items = await apiCall.json()
     setAutoComleteFeed(items)
     setFeedItems(items)
-    setFilteredFeedItems(items)
     setIsLoading(false)
     setLanguage(i18n.language)
   }
   
   useEffect(() => {
-    if (!isFetchedData){
-      setIsFetchedData(true)
-      fetchItems()
-      //fetchCategories()
-    }
-  })
+    fetchItems()
+  },[])
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchFilter(searchTerm);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
 
   if (isLoading) return (<Loading />)
   return (
@@ -104,22 +138,25 @@ function App() {
         autoComleteFeed={autoComleteFeed} 
         language={language} 
         changeLanguage={changeLanguage} 
-        setSearchFilter={setSearchFilter}
-        searchFilter={searchFilter}
+        setSearchTerm={setSearchTerm}
+        searchTerm={searchTerm}
         setIsLoggedIn={setIsLoggedIn}
         isLoggedIn={isLoggedIn}
         setUserData={setUserData}
         userData={userData}
-        feed={feedItems}
+        feedItems={feedItems}
         />
       </div>
       <div className="app-categories-container">
         <CategoryPanel 
-        categories={categories} 
         cat={setCatSelected}
         />
       </div>
       <div className="app-days-container">
+        <div className="days-panel-slider-arrows">
+          <FontAwesomeIcon icon={faChevronLeft}/>
+          <FontAwesomeIcon icon={faChevronRight}/>
+        </div>
         <DaysPanel 
         dayChange={setDaySelected} 
         day={setDaySelected}
@@ -135,6 +172,9 @@ function App() {
         setUserData={setUserData}
         userData={userData}
         />
+      </div>
+      <div className="app-footer-container">
+        <Footer />
       </div>
     </div>
 
