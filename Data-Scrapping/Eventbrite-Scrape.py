@@ -9,6 +9,8 @@ import pyodbc
 import pandas as pa
 import json
 import requests
+from eventbrite import Eventbrite
+import re
 
 # ################# insert to DB code ############################
 # conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
@@ -22,6 +24,7 @@ import requests
 
 print("Scrapping data from: Eventbrite.com")
 
+eb = Eventbrite('FKXG73X6Z4XT37PXBFGN')
 myurl = "https://www.eventbrite.com/d/online/israel/?page=1"
 
 #Write path depending if on Linux Azure VM or Win laptop
@@ -65,16 +68,22 @@ with open(filename, "w", encoding="utf=16") as f:
         events = page_soup.findAll("article", {"class":"eds-event-card-content--mini"})
         for event in events:
 
+            ### URL ###
+            eUrl = event.find("a", {"class": "eds-event-card-content__action-link"})["href"]
+            eID = eUrl.split("-")
+            eID = [s.split("?") for s in eID if "?" in s][0][0]
+            eData = eb.get_event(eID)
+            print(eData)
+            eTitle = eData.name
+            print(eTitle)
+            # print(f"api title: {eData.name.text}")
             ### TITLE ###
             title = event.find("div",{"class":"eds-event-card__formatted-name--is-clamped"}).text
             # make sure event is not postponed or cancelled
             lTitle = title.lower()
             if lTitle.find("postponed") != -1 or lTitle.find("cancelled") != -1:
                 continue
-
-            ### URL ###
-            eUrl = event.find("a", {"class": "eds-event-card-content__action-link"})["href"]
-
+            print(f"scrape title: {lTitle}")
             timeDate = event.find("div", {"class":"eds-text-color--primary-brand"}).text.strip()
             print(timeDate)
             #if event has specific dates and is not today\tmrw
